@@ -248,7 +248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02446127, y: -0.60365, z: -10}
+  m_LocalPosition: {x: -0.99999905, y: 1.1936699, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2228,11 +2228,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1, y: 12}
-      - {x: -12.412679, y: 3.7082038}
-      - {x: -8.053422, y: -9.708204}
-      - {x: 6.0534244, y: -9.708203}
-      - {x: 10.412678, y: 3.7082055}
+    - - {x: -21.779919, y: 17.8797}
+      - {x: -24.586916, y: 3.9423242}
+      - {x: -22.802979, y: -15.795322}
+      - {x: 20.212248, y: -18.571089}
+      - {x: 22.143354, y: 18.514378}
 --- !u!50 &1158053539
 Rigidbody2D:
   serializedVersion: 4
@@ -2449,7 +2449,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.094072, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
