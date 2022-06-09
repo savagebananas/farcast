@@ -25,4 +25,5 @@ public class weaponAnimatorController : MonoBehaviour
         currentState = newState;
     }
 
+
 }
