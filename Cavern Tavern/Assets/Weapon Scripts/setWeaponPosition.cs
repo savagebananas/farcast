@@ -15,7 +15,7 @@ public class setWeaponPosition : MonoBehaviour
 
     void setPosition()
     {
-        transform.position = weaponRef.transform.position;
+        transform.position = player.transform.position + new Vector3(0f, -0.5f, 0f);
     }
 
     void setRotation()
@@ -27,13 +27,11 @@ public class setWeaponPosition : MonoBehaviour
         float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0f, 0f, playerToCursorAngle);
-        
-        transform.position = weaponRef.transform.position;
 
         
         if (playerToCursorAngle < -90 || playerToCursorAngle > 90) //if cursor is on the left
         {
-            transform.localRotation = Quaternion.Euler(180, -180, -playerToCursorAngle);
+            transform.localRotation = Quaternion.Euler(180, 0, -playerToCursorAngle);
         }
         
     }

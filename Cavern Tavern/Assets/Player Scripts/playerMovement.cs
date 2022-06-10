@@ -4,26 +4,71 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
-    public int speed = 10;
+    public float moveSpeed;
+
+    private float activeMoveSpeed;
+    public float dashSpeed;
+
+    public float dashLength;
+    public float dashCooldown;
+
+    private float dashCounter;
+    private float dashCoolCounter;
+
+
     private Rigidbody2D characterBody;
-    private Vector2 velocity;
     private Vector2 inputMovement;
+
+    public bool isDashing = false;
 
     void Start()
     {
-        velocity = new Vector2(speed, speed);
+        activeMoveSpeed = moveSpeed;
         characterBody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        inputMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        inputMovement.x = Input.GetAxisRaw("Horizontal");
+        inputMovement.y = Input.GetAxisRaw("Vertical");
+        inputMovement.Normalize();
+
+        characterBody.velocity = inputMovement * activeMoveSpeed;
+
+        dash();
+
+
     }
 
-    private void FixedUpdate()
+    void dash()
     {
-        Vector2 delta = inputMovement * velocity * Time.deltaTime;
-        Vector2 newPosition = characterBody.position + delta; //calculates new position of player by adding vector to position
-        characterBody.MovePosition(newPosition); //moves rigidbody (character)
+        if (Input.GetKeyDown("space")) //Initiate Dash
+        {
+            if (dashCoolCounter <= 0 && dashCounter <= 0)
+            {
+                activeMoveSpeed = dashSpeed;
+                dashCounter = dashLength;
+                isDashing = true;
+            }
+        }
+
+        if (dashCounter > 0) //During Dash
+        {
+            dashCounter -= Time.deltaTime;
+
+            if(dashCounter <= 0) //when dash duration ended
+            {
+                activeMoveSpeed = moveSpeed; //normal speed
+                dashCoolCounter = dashCooldown; //reset cooldown
+                isDashing = false;
+            }
+        }
+
+        if (dashCoolCounter > 0) //Dash Cooldown
+        {
+            dashCoolCounter -= Time.deltaTime;
+        }
+
     }
+        
 }
