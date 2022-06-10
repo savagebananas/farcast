@@ -21,17 +21,10 @@ public class playerMovement : MonoBehaviour
 
     public bool isDashing = false;
 
-    private Renderer rend;
-    private Color characterColor;
-    
-
     void Start()
     {
         activeMoveSpeed = moveSpeed;
         characterBody = GetComponent<Rigidbody2D>();
-
-        rend = GetComponent<Renderer>();
-        characterColor = rend.material.color;
     }
 
     void Update()
@@ -44,7 +37,7 @@ public class playerMovement : MonoBehaviour
 
         dash();
 
-        rend.material.color = characterColor;
+
     }
 
     void dash()
@@ -56,9 +49,6 @@ public class playerMovement : MonoBehaviour
                 activeMoveSpeed = dashSpeed;
                 dashCounter = dashLength;
                 isDashing = true;
-
-                Physics2D.IgnoreLayerCollision(9, 10, true);
-                characterColor.a = 0.75f; //lower opacity of player
             }
         }
 
@@ -71,9 +61,6 @@ public class playerMovement : MonoBehaviour
                 activeMoveSpeed = moveSpeed; //normal speed
                 dashCoolCounter = dashCooldown; //reset cooldown
                 isDashing = false;
-
-                Physics2D.IgnoreLayerCollision(9, 10, false);
-                characterColor.a = 1f;
             }
         }
 
