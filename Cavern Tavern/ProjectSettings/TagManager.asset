@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Player
   - Projectiles
   - Enemy
   - 
@@ -44,7 +44,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: Player, enemies, npcs
     uniqueID: 3442318965
     locked: 0
   - name: Weapon
