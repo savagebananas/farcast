@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    /*--------------------*/
+    /*References to Player*/
+    /*--------------------*/
     public GameObject player;
+    private Vector2 enemyToPlayerVector;
+    private float enemyToPlayerAngle;
 
+    /*----------------*/
+    /*Enemy Components*/
+    /*----------------*/
+    public Rigidbody2D rigidbody;
+    public Animator animator;
+
+    /*------------*/
+    /*Enemy Stats*/
+    /*-----------*/
     public float health;
     public float speed;
-
-    public Rigidbody2D rigidbody;
-
+    public float knockbackDuration; //aka knockback resistance
     public float alertRange;
     public float attackRange;
 
+    /*-----------------*/
+    /*Roaming Variables*/
+    /*-----------------*/
     public float roamingPointRange;
     private Vector2 nextRoamPosition;
     private float timeBetweenRoams;
@@ -22,7 +37,30 @@ public class EnemyBase : MonoBehaviour
     private bool idle;
     private bool isWalking = false;
 
-    public Animator animator;
+    /*----------------------*/
+    /*Hurt and Dead Booleans*/
+    /*----------------------*/
+    private bool isHurt = false;
+    private bool isDead = false;
+
+
+    private float activeMoveSpeed;
+
+    public float knockbackLength;
+    private float knockbackCounter; //timer for during dash
+
+    void knockback()
+    {
+        knockbackCounter = knockbackLength;
+        while (knockbackCounter > 0) //during knockback
+        {
+            knockbackCounter -= Time.deltaTime;
+            activeMoveSpeed = speed * 3;
+            rigidbody.velocity = enemyToPlayerVector * activeMoveSpeed;
+        }
+        rigidbody.velocity = Vector3.zero;
+    }
+
 
     void Start()
     {
@@ -34,28 +72,43 @@ public class EnemyBase : MonoBehaviour
 
     void Update()
     {
-        faceDirection();
+        Vector2 enemyToPlayerVector = player.transform.position - transform.position;
+        enemyToPlayerVector.Normalize();
+        enemyToPlayerAngle = Mathf.Atan2(enemyToPlayerVector.y, enemyToPlayerVector.x); //player to mouse angle in radians
 
-        if (enemydDistanceFromPlayer() <= alertRange)
-        {
-            followPlayer();
+        
 
-        }
-        else if (enemydDistanceFromPlayer() > alertRange)
+
+        if (isHurt)
         {
-            wanderAround();
+            return;
+        }
+        else
+        {
+            faceDirection();
+
+            if (enemydDistanceFromPlayer() <= alertRange)
+            {
+                followPlayer();
+
+            }
+            else if (enemydDistanceFromPlayer() > alertRange)
+            {
+                wanderAround();
+            }
+
+            //Plays walking animation
+            if (isWalking == true)
+            {
+                walkAnimation();
+            }
+            //Plays Idle Animation 
+            if (isWalking == false)
+            {
+                idleAnimation();
+            }
         }
 
-        //Plays walking animation
-        if (isWalking == true)
-        {
-            walkAnimation();
-        }
-        //Plays Idle Animation 
-        if(isWalking == false)
-        {
-            idleAnimation();
-        }
     }
 
     float enemydDistanceFromPlayer()
@@ -114,6 +167,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+
     private void SearchWalkPoint()
     {
         isWalking = true;
@@ -127,6 +181,43 @@ public class EnemyBase : MonoBehaviour
         idle = true;
         yield return new WaitForSeconds(timeBetweenRoams);
         idle = false;
+    }
+
+    //==============================================================================
+    //  Enemy Hurt / Dead (Overrides other states)
+    //==============================================================================
+
+    public void hurt(float damage, float knockbackPower, Vector2 attackingColliderPosition)
+    {
+        isHurt = true;
+        health -= damage;
+        if (health > 0)
+        {
+            Debug.Log("Damged enemy by " + damage);
+            StartCoroutine(knockback(knockbackDuration, knockbackPower, attackingColliderPosition));
+            isHurt = false;
+        }
+        else
+        {
+            Debug.Log("Enemy Dead");
+            isDead = true;
+            //animator.SetTrigger("dead");
+            StartCoroutine(knockback(knockbackDuration, knockbackPower * 2f, attackingColliderPosition));
+        }
+    }
+
+    IEnumerator knockback(float knockbackDuration, float knockbackPower, Vector2 attackingColliderPosition)
+    {
+        float timer = 0;
+        while (knockbackDuration > timer)
+        {
+            timer += Time.deltaTime;
+            Vector2 direction = ((Vector2)transform.position - attackingColliderPosition).normalized;
+            //GetComponent<Rigidbody2D>().AddForce(direction * (knockbackPower));
+            GetComponent<Rigidbody2D>().velocity = direction * knockbackPower;
+        }
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        yield return 0;
     }
 
     //==============================================================================
