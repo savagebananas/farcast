@@ -14,8 +14,8 @@ public class EnemyBase : MonoBehaviour
     /*----------------*/
     /*Enemy Components*/
     /*----------------*/
-    public Rigidbody2D rigidbody;
     public Animator animator;
+    private Rigidbody2D enemyRb;
 
     /*------------*/
     /*Enemy Stats*/
@@ -49,52 +49,52 @@ public class EnemyBase : MonoBehaviour
     public float knockbackLength;
     private float knockbackCounter; //timer for during dash
 
-    void knockback()
+    void knockback(Vector2 attackingColliderPosition)
     {
         knockbackCounter = knockbackLength;
         while (knockbackCounter > 0) //during knockback
         {
             knockbackCounter -= Time.deltaTime;
             activeMoveSpeed = speed * 3;
-            rigidbody.velocity = enemyToPlayerVector * activeMoveSpeed;
+            transform.position = Vector2.MoveTowards(transform.position, ((Vector2)transform.position - attackingColliderPosition.normalized) * 3, activeMoveSpeed);
         }
-        rigidbody.velocity = Vector3.zero;
+        activeMoveSpeed = speed;
     }
 
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        enemyRb = GetComponent<Rigidbody2D>();
 
         oldPositionX = transform.position.x;
+
+        activeMoveSpeed = speed;
     }
 
     void Update()
     {
-        Vector2 enemyToPlayerVector = player.transform.position - transform.position;
+        Vector3 enemyToPlayerVector = player.transform.position - transform.position;
         enemyToPlayerVector.Normalize();
         enemyToPlayerAngle = Mathf.Atan2(enemyToPlayerVector.y, enemyToPlayerVector.x); //player to mouse angle in radians
+    }
 
-        
-
-
-        if (isHurt)
-        {
-            return;
-        }
-        else
+    void FixedUpdate()
+    {
+        while(!isHurt)
         {
             faceDirection();
 
             if (enemydDistanceFromPlayer() <= alertRange)
             {
                 followPlayer();
+                Debug.Log("Following player");
 
             }
             else if (enemydDistanceFromPlayer() > alertRange)
             {
                 wanderAround();
+                Debug.Log("Patrolling...");
             }
 
             //Plays walking animation
@@ -108,7 +108,6 @@ public class EnemyBase : MonoBehaviour
                 idleAnimation();
             }
         }
-
     }
 
     float enemydDistanceFromPlayer()
@@ -142,7 +141,8 @@ public class EnemyBase : MonoBehaviour
     void followPlayer()
     {
         isWalking = true;
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        Vector2 temp = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        GetComponent<Rigidbody2D>().MovePosition(temp - (Vector2)transform.position);
     }
 
     void wanderAround()
@@ -194,8 +194,10 @@ public class EnemyBase : MonoBehaviour
         if (health > 0)
         {
             Debug.Log("Damged enemy by " + damage);
+            //knockback(attackingColliderPosition);
             StartCoroutine(knockback(knockbackDuration, knockbackPower, attackingColliderPosition));
             isHurt = false;
+
         }
         else
         {
@@ -203,20 +205,21 @@ public class EnemyBase : MonoBehaviour
             isDead = true;
             //animator.SetTrigger("dead");
             StartCoroutine(knockback(knockbackDuration, knockbackPower * 2f, attackingColliderPosition));
+            //knockback(attackingColliderPosition);
         }
     }
 
     IEnumerator knockback(float knockbackDuration, float knockbackPower, Vector2 attackingColliderPosition)
     {
         float timer = 0;
+        Vector2 direction = ((Vector2)transform.position - attackingColliderPosition).normalized;
         while (knockbackDuration > timer)
         {
             timer += Time.deltaTime;
-            Vector2 direction = ((Vector2)transform.position - attackingColliderPosition).normalized;
-            //GetComponent<Rigidbody2D>().AddForce(direction * (knockbackPower));
-            GetComponent<Rigidbody2D>().velocity = direction * knockbackPower;
+
+            GetComponent<Rigidbody2D>().AddForce(direction * (knockbackPower));
         }
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<Rigidbody2D>().AddForce(direction * (knockbackPower) * -1);
         yield return 0;
     }
 
