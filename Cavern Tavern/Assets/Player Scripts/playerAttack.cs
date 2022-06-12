@@ -6,7 +6,8 @@ public class playerAttack : MonoBehaviour
 {
     public Rigidbody2D playerRigidbody;
     private playerMovement playerMovement;
-    private float playerToCursorAngle;
+    public float playerToCursorAngle;
+    public Vector2 playerToWeaponReachVector;
 
     public float damage;
     public float weaponReach;
@@ -54,7 +55,7 @@ public class playerAttack : MonoBehaviour
     void Update()
     {
         leftMouseButtonPressed();
-        drawRadiusAroundPlayer();
+        lineFacingMouse();
     }
 
     void leftMouseButtonPressed()
@@ -106,14 +107,16 @@ public class playerAttack : MonoBehaviour
         GameObject clone = (GameObject)Instantiate(swordSlashAnimation, weaponSlashPosition.transform.position, weaponSlashPosition.transform.rotation);
     }
 
-    void drawRadiusAroundPlayer() //IMPORTANT!!! ALLOWS THE THE COVERTION OF POLAR COORDINATES TO BECOME RECTANGULAR
+    void lineFacingMouse() //IMPORTANT!!! ALLOWS THE THE COVERTION OF POLAR COORDINATES TO BECOME RECTANGULAR
     {
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; playerToCursorVector.Normalize();
         playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x); //player to mouse angle in radians
+        playerToWeaponReachVector = new Vector2(weaponReach * Mathf.Cos(playerToCursorAngle), weaponReach * Mathf.Sin(playerToCursorAngle));
 
-        weaponSlashPosition.transform.position = (Vector2)transform.position + new Vector2(weaponReach * Mathf.Cos(playerToCursorAngle), weaponReach * Mathf.Sin(playerToCursorAngle)); //sets postion to the edge of line (pointing at mouse)
+        weaponSlashPosition.transform.position = (Vector2)transform.position + playerToWeaponReachVector; //sets postion to the edge of line (pointing at mouse)
 
-        Debug.DrawRay(transform.position, new Vector3(weaponReach * Mathf.Cos(playerToCursorAngle), weaponReach * Mathf.Sin(playerToCursorAngle)), Color.cyan);
+        Debug.DrawRay(transform.position, playerToWeaponReachVector, Color.cyan);
+        Debug.DrawRay(transform.position, playerToWeaponReachVector * (-0.5f), Color.blue);
     }
 
     void OnDrawGizmosSelected() //displays the area in unity of attack range

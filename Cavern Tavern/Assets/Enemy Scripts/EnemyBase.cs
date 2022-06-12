@@ -22,7 +22,7 @@ public class EnemyBase : MonoBehaviour
     /*-----------*/
     public float health;
     public float speed;
-    public float knockbackDuration; //aka knockback resistance
+    private float activeMoveSpeed;
     public float alertRange;
     public float attackRange;
 
@@ -44,23 +44,13 @@ public class EnemyBase : MonoBehaviour
     private bool isDead = false;
 
 
-    private float activeMoveSpeed;
 
-    public float knockbackLength;
-    private float knockbackCounter; //timer for during dash
-
-    void knockback(Vector2 attackingColliderPosition)
-    {
-        knockbackCounter = knockbackLength;
-        while (knockbackCounter > 0) //during knockback
-        {
-            knockbackCounter -= Time.deltaTime;
-            activeMoveSpeed = speed * 3;
-            transform.position = Vector2.MoveTowards(transform.position, ((Vector2)transform.position - attackingColliderPosition.normalized) * 3, activeMoveSpeed);
-        }
-        activeMoveSpeed = speed;
-    }
-
+    /*----------------*/
+    /*Knockback Values*/
+    /*----------------*/
+    public float knockbackDuration; //aka knockback resistance
+    public float knockbackDistance;
+    private Vector2 knockbackDifference;
 
     void Start()
     {
@@ -77,44 +67,46 @@ public class EnemyBase : MonoBehaviour
         Vector3 enemyToPlayerVector = player.transform.position - transform.position;
         enemyToPlayerVector.Normalize();
         enemyToPlayerAngle = Mathf.Atan2(enemyToPlayerVector.y, enemyToPlayerVector.x); //player to mouse angle in radians
+
+        knockbackDifference = (Vector2)transform.position - (Vector2)(player.GetComponent<playerAttack>().weaponSlashPosition.transform.position) * (-0.25f);
+        knockbackDifference = knockbackDifference.normalized * knockbackDistance;
     }
 
     void FixedUpdate()
     {
-        while(!isHurt)
+        if (!isHurt)
         {
             faceDirection();
 
             if (enemydDistanceFromPlayer() <= alertRange)
             {
                 followPlayer();
-                Debug.Log("Following player");
 
             }
             else if (enemydDistanceFromPlayer() > alertRange)
             {
                 wanderAround();
-                Debug.Log("Patrolling...");
-            }
-
-            //Plays walking animation
-            if (isWalking == true)
-            {
-                walkAnimation();
-            }
-            //Plays Idle Animation 
-            if (isWalking == false)
-            {
-                idleAnimation();
             }
         }
+
+        //Plays walking animation
+        if (isWalking == true)
+        {
+            walkAnimation();
+        }
+        //Plays Idle Animation 
+        if (isWalking == false)
+        {
+            idleAnimation();
+        }
+
     }
 
     float enemydDistanceFromPlayer()
     {
         float differenceX = player.transform.position.x - transform.position.x;
         float differenceY = player.transform.position.y - transform.position.y;
-        return Mathf.Sqrt(differenceX * differenceX + differenceY * differenceX); 
+        return Mathf.Sqrt(differenceX * differenceX + differenceY * differenceY); 
     }
 
     //==============================================================================
@@ -141,8 +133,9 @@ public class EnemyBase : MonoBehaviour
     void followPlayer()
     {
         isWalking = true;
-        Vector2 temp = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        GetComponent<Rigidbody2D>().MovePosition(temp - (Vector2)transform.position);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        //Vector2 temp = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        //GetComponent<Rigidbody2D>().MovePosition(temp - (Vector2)transform.position);
     }
 
     void wanderAround()
@@ -193,34 +186,37 @@ public class EnemyBase : MonoBehaviour
         health -= damage;
         if (health > 0)
         {
-            Debug.Log("Damged enemy by " + damage);
-            //knockback(attackingColliderPosition);
-            StartCoroutine(knockback(knockbackDuration, knockbackPower, attackingColliderPosition));
-            isHurt = false;
-
+            knockback(1f);
+            //animator.SetTrigger("hurt");
+            //idleAnimation();
         }
         else
         {
             Debug.Log("Enemy Dead");
             isDead = true;
             //animator.SetTrigger("dead");
-            StartCoroutine(knockback(knockbackDuration, knockbackPower * 2f, attackingColliderPosition));
-            //knockback(attackingColliderPosition);
+            knockback(5f);
         }
     }
 
-    IEnumerator knockback(float knockbackDuration, float knockbackPower, Vector2 attackingColliderPosition)
+    void knockback(float multiplier)
     {
-        float timer = 0;
-        Vector2 direction = ((Vector2)transform.position - attackingColliderPosition).normalized;
-        while (knockbackDuration > timer)
-        {
-            timer += Time.deltaTime;
+        GetComponent<Rigidbody2D>().AddForce(player.GetComponent<playerAttack>().playerToWeaponReachVector.normalized * knockbackDistance * multiplier, ForceMode2D.Impulse);
+        StartCoroutine(knockbackCo());
+        StartCoroutine(hurtCooldown());
+    }
 
-            GetComponent<Rigidbody2D>().AddForce(direction * (knockbackPower));
-        }
-        GetComponent<Rigidbody2D>().AddForce(direction * (knockbackPower) * -1);
-        yield return 0;
+    private IEnumerator knockbackCo()
+    {
+
+        yield return new WaitForSeconds(knockbackDuration);
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
+    private IEnumerator hurtCooldown()
+    {
+        yield return new WaitForSeconds(1);
+        isHurt = false;
     }
 
     //==============================================================================
