@@ -17934,11 +17934,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -21.779919, y: 17.8797}
-      - {x: -24.586916, y: 3.9423242}
-      - {x: -22.802979, y: -15.795322}
-      - {x: 20.212248, y: -18.571089}
-      - {x: 22.143354, y: 18.514378}
+    - - {x: -49.34446, y: 24.999018}
+      - {x: -49.41326, y: 13.252201}
+      - {x: -47.629322, y: -19.081161}
+      - {x: 47.594242, y: -20.396553}
+      - {x: 48.97771, y: 26.546427}
 --- !u!50 &1158053539
 Rigidbody2D:
   serializedVersion: 4
@@ -18049,6 +18049,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de770d82fd48b44791e6c24e901b947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 211757311}
+  player: {fileID: 1703597351}
 --- !u!4 &1196569140
 Transform:
   m_ObjectHideFlags: 0
@@ -18076,6 +18078,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f24db16dec1ecf4ba2338e0c0542a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 211757311}
+  player: {fileID: 1703597351}
   knockbackDuration: 0.25
   knockbackDistance: 10
   knockbackPower: 0
@@ -18092,6 +18096,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c310a9c7e5ded47a9dab5750a22cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 211757311}
+  player: {fileID: 1703597351}
   attackRange: 1
 --- !u!114 &1196569143
 MonoBehaviour:
@@ -18105,6 +18111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c77762e8cc6dc24f82158ee6405693f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 211757311}
+  player: {fileID: 1703597351}
   roamingPointRange: 5
 --- !u!1 &1475605963
 GameObject:
@@ -18484,7 +18492,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7768924, y: 1}
+    m_SensorSize: {x: 2.3932254, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
