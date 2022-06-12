@@ -2,55 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : StateMachineManager
 {
-    /*--------------------*/
-    /*References to Player*/
-    /*--------------------*/
+    [Header("ReferencesToPlayer")]
+    [Space(5)]
+
     public GameObject player;
     private Vector2 enemyToPlayerVector;
     private float enemyToPlayerAngle;
 
-    /*----------------*/
-    /*Enemy Components*/
-    /*----------------*/
-    public Animator animator;
+    [Header("Enemy State Classes")]
+    [Space(5)]
+
+    public EnemyState WanderState;
+    public EnemyState AttackState;
+    public EnemyState EnemyHurtState;
+    public EnemyState WaitAfterAttack;
+
+    [Header("Enemy Components")]
+    [Space(5)]
+
+    [HideInInspector]  public Animator animator;
     private Rigidbody2D enemyRb;
 
-    /*------------*/
-    /*Enemy Stats*/
-    /*-----------*/
+    [Header("Enemy Stats")]
+    [Space(5)]
+
     public float health;
     public float speed;
     private float activeMoveSpeed;
     public float alertRange;
     public float attackRange;
 
-    /*-----------------*/
-    /*Roaming Variables*/
-    /*-----------------*/
+    [Header("Roaming Variables")]
+    [Space(5)]
+
     public float roamingPointRange;
     private Vector2 nextRoamPosition;
     private float timeBetweenRoams;
-    private float nextRoamTime;
-    private float oldPositionX;
+    
     private bool idle;
     private bool isWalking = false;
 
-    /*----------------------*/
-    /*Hurt and Dead Booleans*/
-    /*----------------------*/
+    [Header("Hurt and Dead Booleans")]
+    [Space(5)]
     private bool isHurt = false;
     private bool isDead = false;
 
-
-
-    /*----------------*/
-    /*Knockback Values*/
-    /*----------------*/
-    public float knockbackDuration; //aka knockback resistance
+    [Header("Knockback Values")]
+    [Space(5)]
+    public float knockbackDuration; 
     public float knockbackDistance;
     private Vector2 knockbackDifference;
+
+    //for calculating where to face
+    private float oldPositionX;
 
     void Start()
     {
@@ -81,7 +87,6 @@ public class EnemyBase : MonoBehaviour
             if (enemydDistanceFromPlayer() <= alertRange)
             {
                 followPlayer();
-
             }
             else if (enemydDistanceFromPlayer() > alertRange)
             {
@@ -109,9 +114,7 @@ public class EnemyBase : MonoBehaviour
         return Mathf.Sqrt(differenceX * differenceX + differenceY * differenceY); 
     }
 
-    //==============================================================================
-    //  FACE DIRECTION 
-    //==============================================================================
+    #region Face Direction Of Movement
     void faceDirection()
     {
         if (transform.position.x > oldPositionX) // moving right
@@ -126,23 +129,21 @@ public class EnemyBase : MonoBehaviour
         oldPositionX = transform.position.x;
     }
 
-    //==============================================================================
-    //  Enemy Behaviors
-    //==============================================================================
+    #endregion
+
+    #region FollowPlayer
 
     void followPlayer()
     {
         isWalking = true;
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        //Vector2 temp = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        //GetComponent<Rigidbody2D>().MovePosition(temp - (Vector2)transform.position);
     }
+    #endregion
 
+    #region WanderAround
     void wanderAround()
     {
         timeBetweenRoams = Random.Range(4f, 8f);
-        float randomX = Random.Range(-roamingPointRange, roamingPointRange);
-        float randomY = Random.Range(-roamingPointRange, roamingPointRange);
 
         if ((Vector2)transform.position == nextRoamPosition)
         {
@@ -160,7 +161,6 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-
     private void SearchWalkPoint()
     {
         isWalking = true;
@@ -173,20 +173,22 @@ public class EnemyBase : MonoBehaviour
     {
         idle = true;
         yield return new WaitForSeconds(timeBetweenRoams);
+        //yield return new WaitUntil(() => boolean)
         idle = false;
     }
 
-    //==============================================================================
-    //  Enemy Hurt / Dead (Overrides other states)
-    //==============================================================================
+    #endregion
 
-    public void hurt(float damage, float knockbackPower, Vector2 attackingColliderPosition)
+    #region Enemy Hurt
+
+    public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
     {
+        SetState(EnemyHurtState);
         isHurt = true;
         health -= damage;
         if (health > 0)
         {
-            knockback(1f);
+            knockback(knockbackPower);
             //animator.SetTrigger("hurt");
             //idleAnimation();
         }
@@ -199,9 +201,9 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    void knockback(float multiplier)
+    void knockback(float power)
     {
-        GetComponent<Rigidbody2D>().AddForce(player.GetComponent<playerAttack>().playerToWeaponReachVector.normalized * knockbackDistance * multiplier, ForceMode2D.Impulse);
+        GetComponent<Rigidbody2D>().AddForce(player.GetComponent<playerAttack>().playerToWeaponReachVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         StartCoroutine(knockbackCo());
         StartCoroutine(hurtCooldown());
     }
@@ -219,9 +221,9 @@ public class EnemyBase : MonoBehaviour
         isHurt = false;
     }
 
-    //==============================================================================
-    //  Enemy Animation States
-    //==============================================================================
+    #endregion
+
+    #region Enemy Animation Triggers
 
     void walkAnimation()
     {
@@ -233,9 +235,9 @@ public class EnemyBase : MonoBehaviour
         animator.SetTrigger("isIdle");
     }
 
-    //==============================================================================
-    //  Drawing Radius
-    //==============================================================================
+    #endregion
+
+    #region Debug Circle
 
     void OnDrawGizmosSelected() //displays the area in of attack range
     {
@@ -243,6 +245,6 @@ public class EnemyBase : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, alertRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-
     }
+    #endregion
 }

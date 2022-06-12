@@ -48,8 +48,6 @@ public class playerAttack : MonoBehaviour
 
         swordWeaponAnimator = swordWeaponReference.GetComponent<weaponAnimatorController>();
         spearWeaponAnimator = spearWeaponReference.GetComponent<weaponAnimatorController>();
-
-
     }
 
     void Update()
@@ -93,7 +91,7 @@ public class playerAttack : MonoBehaviour
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(weaponSlashPosition.transform.position, weaponReach, enemyLayer);
         for (int i = 0; i < enemiesToDamage.Length; i++)
         {
-            enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)transform.position); //calls damage function on every enemy within attack range
+            enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized); //calls damage function on every enemy within attack range
         }
 
     }
