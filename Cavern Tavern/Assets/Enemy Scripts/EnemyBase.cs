@@ -86,11 +86,13 @@ public class EnemyBase : StateMachineManager
 
             if (enemydDistanceFromPlayer() <= alertRange)
             {
-                followPlayer();
+                //followPlayer();
+                SetState(AttackState);
             }
             else if (enemydDistanceFromPlayer() > alertRange)
             {
-                wanderAround();
+                //wanderAround();
+                SetState(WanderState);
             }
         }
 
@@ -183,8 +185,13 @@ public class EnemyBase : StateMachineManager
 
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
     {
-        SetState(EnemyHurtState);
         isHurt = true;
+
+        SetState(EnemyHurtState);
+        StartCoroutine(knockbackCo()); //temp
+        StartCoroutine(hurtCooldown()); //temp
+
+        /*
         health -= damage;
         if (health > 0)
         {
@@ -199,6 +206,7 @@ public class EnemyBase : StateMachineManager
             //animator.SetTrigger("dead");
             knockback(5f);
         }
+        */
     }
 
     void knockback(float power)

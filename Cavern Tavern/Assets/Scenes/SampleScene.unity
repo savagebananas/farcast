@@ -291,6 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baeb61e6f3b779242a7973a21d7e64dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  State: {fileID: 0}
   player: {fileID: 1703597351}
   WanderState: {fileID: 1196569143}
   AttackState: {fileID: 1196569142}
@@ -18055,7 +18056,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1196569138}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

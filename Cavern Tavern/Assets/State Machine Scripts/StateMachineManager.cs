@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class StateMachineManager : MonoBehaviour
 {
-    protected EnemyState State;
+    [SerializeField] protected EnemyState State;
 
     public void Start()
     {

@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class EnemyState : MonoBehaviour
 {
     protected StateMachineManager StateMachine;
-    protected GameObject enemy;
-    protected GameObject player;
+    [SerializeField] public GameObject enemy;
+    [SerializeField] public GameObject player;
     protected Animator animator;
 
     public EnemyState(GameObject Enemy, GameObject Player) 

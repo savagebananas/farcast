@@ -27,7 +27,8 @@ public class AttackPlayer : EnemyState
         }
         if (Vector2.Distance((Vector2)enemy.transform.position, (Vector2)player.transform.position) <= attackRange) //within attack range
         {
-            //attack
+            //attack logic
+
             StateMachine.SetState(WaitAfterAttack);
         }
         
