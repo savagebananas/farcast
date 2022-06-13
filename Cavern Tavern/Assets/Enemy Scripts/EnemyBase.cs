@@ -26,33 +26,16 @@ public class EnemyBase : MonoBehaviour
 
     [Header("Roaming Variables")]
     [Space(5)]
-
     public float roamingPointRange;
-    private Vector2 nextRoamPosition;
-    private float timeBetweenRoams;
     
-    private bool idle;
-    private bool isWalking = false;
-
-    [Header("Hurt and Dead Booleans")]
-    [Space(5)]
-    private bool isHurt = false;
-    private bool isDead = false;
-
     [Header("Knockback Values (for when player hits enemy)")]
     [Space(5)]
     public float knockbackDuration; 
     public float knockbackDistance;
-    private Vector2 knockbackDifference;
 
-    //for calculating where to face
-    private float oldPositionX;
 
     void Start()
     {
-
-
-        oldPositionX = transform.position.x;
 
     }
 
@@ -66,7 +49,6 @@ public class EnemyBase : MonoBehaviour
 
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
     {
-        isHurt = true;
         enemyHurtState.GetComponent<EnemyHurt>().attackingColliderToEnemyVector = attackingColliderToEnemyVector;
         stateMachineManager.setNewState(enemyHurtState);
     }
