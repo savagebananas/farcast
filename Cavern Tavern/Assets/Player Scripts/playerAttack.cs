@@ -64,39 +64,30 @@ public class playerAttack : MonoBehaviour
         }
     }
 
-
-    //==============================================================================
-    //  Attack Functions
-    //==============================================================================
-
     void attack()
     {
         if (Time.time >= nextAttackAllowedTime && playerMovement.isDashing == false)
         {
             swordAttack();
-
-            //trigger sword animator rotation
-            swordWeaponAnimator.weaponAnimator.SetTrigger("Attack_1");
             
-            //Instantiate slash position
-            createSlash();
-
-            //reset cooldown to x seconds after attack
-            nextAttackAllowedTime = Time.time + attackCooldown;
+            nextAttackAllowedTime = Time.time + attackCooldown; //reset cooldown to x seconds after attack
         }
     }
 
+    #region Sword Attack
     void swordAttack()
     {
+        createSwordSlash();
+        swordWeaponAnimator.weaponAnimator.SetTrigger("Attack_1");
+
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(weaponSlashPosition.transform.position, weaponReach, enemyLayer);
         for (int i = 0; i < enemiesToDamage.Length; i++)
         {
             enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized); //calls damage function on every enemy within attack range
         }
-
     }
 
-    void createSlash()
+    void createSwordSlash()
     {
         //rotations
         weaponSlashPosition.transform.rotation = mainWeaponReference.transform.rotation;
@@ -104,6 +95,7 @@ public class playerAttack : MonoBehaviour
         //create prefab
         GameObject clone = (GameObject)Instantiate(swordSlashAnimation, weaponSlashPosition.transform.position, weaponSlashPosition.transform.rotation);
     }
+    #endregion
 
     void lineFacingMouse() //IMPORTANT!!! ALLOWS THE THE COVERTION OF POLAR COORDINATES TO BECOME RECTANGULAR
     {

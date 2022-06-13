@@ -2,30 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StateMachineManager : MonoBehaviour
+public class StateMachineManager : MonoBehaviour
 {
-    [SerializeField] protected EnemyState State;
+    public State CurrentState;
 
-    public void Start()
+    private void Start()
     {
-        if (State != null)
+        if(CurrentState != null)
         {
-            State.Start();
+            CurrentState.OnStart();
         }
     }
-    public void Update()
+
+    private void Update()
     {
-        if(State != null)
+        if(CurrentState != null)
         {
-            State.Update();
+            CurrentState.OnUpdate();
         }
     }
-    public void SetState(EnemyState state)
+
+    private void LateUpdate()
+    {
+        if (CurrentState != null)
+        {
+            CurrentState.OnLateUpdate();
+        }
+    }
+
+    public void setNewState(State state)
     {
         if (state != null)
         {
-            State = state;
-            StartCoroutine(State.Start());
+            CurrentState = state;
+            CurrentState.OnStart();
         }
     }
 }

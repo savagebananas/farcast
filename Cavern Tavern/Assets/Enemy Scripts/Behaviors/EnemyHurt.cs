@@ -2,70 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHurt : EnemyState
+public class EnemyHurt : State
 {
-    public EnemyHurt(GameObject enemy, GameObject player) : base(enemy, player) { }
+    public EnemyBase enemyBase;
+    public playerAttack playerAttack;
+    public State attackState;
+    private Rigidbody2D rb;
 
     private float health;
-    private float damage;
+    private float playerDamage;
 
-    public float knockbackDuration;
-    public float knockbackDistance;
-    public float knockbackPower;
-    public Vector2 attackingColliderToEnemyVector;
+    private float playerKnockbackPower;
+    private float knockbackDistance;
+    private float knockbackDuration;
+    
+    [HideInInspector] public Vector2 attackingColliderToEnemyVector;
 
-    private EnemyState AttackPlayer;
-
-    public override IEnumerator Start()
+    public override void OnStart()
     {
-        health = enemy.GetComponent<EnemyBase>().health;
-        knockbackPower = player.GetComponent<playerAttack>().knockbackPower;
+        rb = enemyBase.GetComponent<Rigidbody2D>();
+        health = enemyBase.health;
+        playerDamage = playerAttack.damage;
+        playerKnockbackPower = playerAttack.knockbackPower;
+        knockbackDistance = enemyBase.knockbackDistance;
+        knockbackDuration = enemyBase.knockbackDuration;
 
-        AttackPlayer = enemy.GetComponent<EnemyBase>().AttackState;
-
-        yield break;
+        hurt(playerDamage, playerKnockbackPower, attackingColliderToEnemyVector);
     }
-    public override IEnumerator Update()
-    {
-        hurt(damage, knockbackPower, attackingColliderToEnemyVector);
 
-        yield break;
+    public override void OnUpdate()
+    {
+
+    }
+    public override void OnLateUpdate()
+    {
+
     }
 
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
     {
+        health -= damage;
+        
         if (health > 0)
         {
-            //animator.SetTrigger("hurt");
             knockback(knockbackPower);
-            StateMachine.SetState(AttackPlayer); //after knockback, transition to attacking state
+            //animator.SetTrigger("hurt");
         }
-        else
+        else 
         {
             Debug.Log("Enemy Dead");
             //animator.SetTrigger("dead");
             knockback(5f);
+            // add particles
         }
     }
 
-    #region knockback functions
     void knockback(float power)
     {
-        GetComponent<Rigidbody2D>().AddForce(player.GetComponent<playerAttack>().playerToWeaponReachVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
+        rb.AddForce(playerAttack.playerToWeaponReachVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         StartCoroutine(knockbackCo());
-        StartCoroutine(hurtCooldown());
     }
 
     private IEnumerator knockbackCo()
     {
 
         yield return new WaitForSeconds(knockbackDuration);
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        rb.velocity = Vector2.zero;
+        stateMachineManager.setNewState(attackState); //after knockback, attack player
     }
 
-    private IEnumerator hurtCooldown()
-    {
-        yield return new WaitForSeconds(1);
-    }
-    #endregion 
+
 }
