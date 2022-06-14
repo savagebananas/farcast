@@ -294,15 +294,16 @@ MonoBehaviour:
   health: 50
   damage: 1
   speed: 8
-  knockbackPower: 1
+  attackSpeed: 1
+  knockbackPower: 2
   alertRange: 10
-  attackRange: 1
+  attackRange: 1.25
   stateMachineManager: {fileID: 1196569143}
   enemyHurtState: {fileID: 1484375062}
   player: {fileID: 1703597351}
   roamingPointRange: 5
   knockbackDuration: 0.25
-  knockbackDistance: 5
+  knockbackDistance: 10
 --- !u!1 &222808938
 GameObject:
   m_ObjectHideFlags: 0
@@ -18155,7 +18156,6 @@ MonoBehaviour:
   playerBase: {fileID: 1703597361}
   enemyBase: {fileID: 211757317}
   followPlayer: {fileID: 1999943935}
-  attackDelay: 0.5
 --- !u!1 &1475605963
 GameObject:
   m_ObjectHideFlags: 0
@@ -18235,7 +18235,7 @@ MonoBehaviour:
   animator: {fileID: 211757314}
   enemyBase: {fileID: 211757317}
   playerAttack: {fileID: 1703597359}
-  attackState: {fileID: 1428352257}
+  followState: {fileID: 1999943935}
   attackingColliderToEnemyVector: {x: 0, y: 0}
 --- !u!1 &1499474808
 GameObject:
@@ -18331,13 +18331,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1703597355}
   - component: {fileID: 1703597354}
+  - component: {fileID: 1703597360}
   - component: {fileID: 1703597353}
   - component: {fileID: 1703597356}
   - component: {fileID: 1703597352}
-  - component: {fileID: 1703597357}
-  - component: {fileID: 1703597359}
   - component: {fileID: 1703597361}
-  - component: {fileID: 1703597360}
+  - component: {fileID: 1703597359}
+  - component: {fileID: 1703597357}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -18549,8 +18549,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3350def627a6ca499cc2722122da6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachineManager: {fileID: 0}
+  movementState: {fileID: 0}
   health: 100
-  knockbackDistance: 10
+  moveSpeed: 10
+  dashSpeed: 30
+  dashLength: 0.15
+  dashCooldown: 1
+  knockbackDistance: 5
+  knockbackDuration: 0.2
+  isHurt: 0
 --- !u!1 &1727371496
 GameObject:
   m_ObjectHideFlags: 0

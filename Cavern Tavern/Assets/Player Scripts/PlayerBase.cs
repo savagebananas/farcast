@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
+    public StateMachineManager stateMachineManager;
+    public State movementState;
+
     public float health = 100;
+
+    public float moveSpeed;
+    public float dashSpeed;
+    public float dashLength;
+    public float dashCooldown;
 
     public float knockbackDistance;
     public float knockbackDuration;
 
-    private bool isHurt = false;
+    public bool isHurt = false;
     private bool isDead = false;
 
     private Rigidbody2D rb;
-
-    private Vector2 enemyToPlayerVector;
 
     void Start()
     {
@@ -29,11 +35,7 @@ public class PlayerBase : MonoBehaviour
     #region hurt functions
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToPlayerVector)
     {
-        enemyToPlayerVector = (Vector2)transform.position - attackingColliderToPlayerVector;
-
         isHurt = true;
-
-        //SetState(PlayerHurtState); <--logic will me migrated to state
 
         health -= damage;
 

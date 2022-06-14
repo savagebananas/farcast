@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
+    private PlayerBase playerBase;
+
     public float moveSpeed;
 
     private float activeMoveSpeed;
@@ -27,24 +29,32 @@ public class playerMovement : MonoBehaviour
 
     void Start()
     {
-        activeMoveSpeed = moveSpeed;
+        playerBase = GetComponent<PlayerBase>();
         characterBody = GetComponent<Rigidbody2D>();
-
         rend = GetComponent<Renderer>();
+
+        activeMoveSpeed = moveSpeed;
+
         characterColor = rend.material.color;
     }
 
     void Update()
     {
-        inputMovement.x = Input.GetAxisRaw("Horizontal");
-        inputMovement.y = Input.GetAxisRaw("Vertical");
-        inputMovement.Normalize();
-
-        characterBody.velocity = inputMovement * activeMoveSpeed;
-
+        movement();
         dash();
 
         rend.material.color = characterColor;
+    }
+
+    void movement()
+    {
+        inputMovement.x = Input.GetAxisRaw("Horizontal");
+        inputMovement.y = Input.GetAxisRaw("Vertical");
+        inputMovement.Normalize();
+        if (playerBase.isHurt == false)
+        {
+            characterBody.velocity = inputMovement * activeMoveSpeed; 
+        }
     }
 
     void dash()
