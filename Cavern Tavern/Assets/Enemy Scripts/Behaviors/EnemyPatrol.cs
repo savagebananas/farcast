@@ -35,9 +35,6 @@ public class EnemyPatrol : State
     {
         enemyDistanceToPlayer = enemyBase.enemydDistanceFromPlayer();
 
-        Debug.Log(enemyTransform.position.x - oldPositionX);
-        FaceDirectionOfMovement();
-
         if (enemyDistanceToPlayer >= alertRange) //enemy doesn't detect player
         {
             WanderAround(); 
@@ -50,24 +47,6 @@ public class EnemyPatrol : State
 
     public override void OnLateUpdate()
     {
-        oldPositionX = enemyTransform.position.x;
-    }
-
-    void FaceDirectionOfMovement()
-    {
-
-        /*
-        if (enemyTransform.position.x > oldPositionX) // moving right
-        {
-            enemyTransform.rotation = Quaternion.identity;
-            Debug.Log("Face Right");
-        }
-        if (enemyTransform.position.x < oldPositionX) //moving left
-        {
-            enemyTransform.rotation = Quaternion.Euler(0, 180, 0);
-            Debug.Log("Face Left");
-        }
-        */
     }
 
     #region Wander Around

@@ -8,7 +8,7 @@ public class AttackPlayer : State
     public EnemyBase enemyBase;
     public State followPlayer;
 
-    public float attackDelay;
+    private float attackDelay;
 
     private float damage;
     private float knockbackPower;
@@ -19,6 +19,7 @@ public class AttackPlayer : State
 
     public override void OnStart()
     {
+        attackDelay = enemyBase.attackSpeed;
         damage = enemyBase.damage;
         playerHealth = playerBase.health;
         attackRange = enemyBase.attackRange;
@@ -42,10 +43,9 @@ public class AttackPlayer : State
     {
         //animator.SetTrigger("attack");
         yield return new WaitForSeconds(attackDelay);
-
         if (enemyToPlayerDistance <= attackRange) //in attack range
         {
-            playerBase.hurt(damage, knockbackPower, enemyBase.transform.position);
+            playerBase.hurt(damage, knockbackPower, playerBase.transform.position - enemyBase.transform.position);
             StartCoroutine(AttackDelay()); //calls the attack again after hitting player
         }
 
@@ -61,7 +61,6 @@ public class AttackPlayer : State
         {
             enemyBase.transform.rotation = Quaternion.identity;
         }
-
         if (enemyBase.transform.position.x > playerBase.transform.position.x)
         {
             enemyBase.transform.rotation = Quaternion.Euler(0, 180, 0);

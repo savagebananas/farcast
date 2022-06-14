@@ -6,7 +6,7 @@ public class EnemyHurt : State
 {
     public EnemyBase enemyBase;
     public playerAttack playerAttack;
-    public State attackState;
+    public State followState;
     private Rigidbody2D rb;
 
     private float health;
@@ -45,21 +45,21 @@ public class EnemyHurt : State
         
         if (health > 0)
         {
-            knockback(knockbackPower);
+            knockback(knockbackPower, attackingColliderToEnemyVector);
             //animator.SetTrigger("hurt");
         }
         else 
         {
             Debug.Log("Enemy Dead");
             //animator.SetTrigger("dead");
-            knockback(5f);
+            knockback(5f, attackingColliderToEnemyVector);
             // add particles
         }
     }
 
-    void knockback(float power)
+    void knockback(float power, Vector2 attackingColliderToEnemyVector)
     {
-        rb.AddForce(playerAttack.playerToWeaponReachVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
+        rb.AddForce(attackingColliderToEnemyVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         StartCoroutine(knockbackCo());
     }
 
@@ -68,8 +68,6 @@ public class EnemyHurt : State
 
         yield return new WaitForSeconds(knockbackDuration);
         rb.velocity = Vector2.zero;
-        stateMachineManager.setNewState(attackState); //after knockback, attack player
+        stateMachineManager.setNewState(followState); //after knockback, attack player
     }
-
-
 }

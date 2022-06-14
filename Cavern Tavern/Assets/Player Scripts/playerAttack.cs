@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerAttack : MonoBehaviour
 {
     public Rigidbody2D playerRigidbody;
+    private PlayerBase playerBase; //temp
     private playerMovement playerMovement;
     public float playerToCursorAngle;
     public Vector2 playerToWeaponReachVector;
@@ -45,7 +46,7 @@ public class playerAttack : MonoBehaviour
     void Start()
     {
         playerMovement = gameObject.GetComponent<playerMovement>();
-
+        playerBase = GetComponent<PlayerBase>(); //temp
         swordWeaponAnimator = swordWeaponReference.GetComponent<weaponAnimatorController>();
         spearWeaponAnimator = spearWeaponReference.GetComponent<weaponAnimatorController>();
     }
@@ -85,6 +86,7 @@ public class playerAttack : MonoBehaviour
         {
             enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized); //calls damage function on every enemy within attack range
         }
+        //playerBase.hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized); <--test to check player knockback (which is broken)
     }
 
     void createSwordSlash()

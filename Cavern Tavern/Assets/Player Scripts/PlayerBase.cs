@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerBase : MonoBehaviour
 {
     public float health = 100;
-    public float knockbackDistance = 10;
+
+    public float knockbackDistance;
+    public float knockbackDuration;
 
     private bool isHurt = false;
     private bool isDead = false;
@@ -25,9 +27,9 @@ public class PlayerBase : MonoBehaviour
     }
 
     #region hurt functions
-    public void hurt(float damage, float knockbackPower, Vector2 enemyPosition)
+    public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToPlayerVector)
     {
-        enemyToPlayerVector = (Vector2)transform.position - enemyPosition;
+        enemyToPlayerVector = (Vector2)transform.position - attackingColliderToPlayerVector;
 
         isHurt = true;
 
@@ -38,35 +40,29 @@ public class PlayerBase : MonoBehaviour
         if (health > 0)
         {
             //animator.SetTrigger("hurt");
-            knockback(knockbackPower);
+            knockback(knockbackPower, attackingColliderToPlayerVector);
         }
         else
         {
             Debug.Log("Player Dead");
             isDead = true;
             //animator.SetTrigger("dead");
-            knockback(5f);
+            knockback(5f, attackingColliderToPlayerVector);
         }
     }
 
-    void knockback(float power)
+    void knockback(float power, Vector2 attackingColliderToPlayerVector)
     {
-        rb.AddForce(enemyToPlayerVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
+        rb.AddForce(attackingColliderToPlayerVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         StartCoroutine(knockbackCo());
-        StartCoroutine(hurtCooldown());
     }
 
     private IEnumerator knockbackCo()
     {
-
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(knockbackDuration);
         rb.velocity = Vector2.zero;
-    }
-
-    private IEnumerator hurtCooldown()
-    {
-        yield return new WaitForSeconds(1);
         isHurt = false;
     }
+
     #endregion
 }

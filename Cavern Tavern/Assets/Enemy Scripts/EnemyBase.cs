@@ -9,6 +9,7 @@ public class EnemyBase : MonoBehaviour
     public float health;
     public float damage;
     public float speed;
+    public float attackSpeed;
     public float knockbackPower;
     public float alertRange;
     public float attackRange;
@@ -45,7 +46,6 @@ public class EnemyBase : MonoBehaviour
         float differenceY = player.transform.position.y - transform.position.y;
         return Mathf.Sqrt(differenceX * differenceX + differenceY * differenceY); 
     }
-
 
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
     {
