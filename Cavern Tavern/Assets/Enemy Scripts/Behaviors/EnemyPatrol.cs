@@ -8,6 +8,8 @@ public class EnemyPatrol : State
     public State followState;
     public Transform enemyTransform;
 
+    public bool randomRoam;
+
     private float speed;
     private float alertRange;
     private float enemyDistanceToPlayer;
@@ -15,13 +17,13 @@ public class EnemyPatrol : State
     [Header("Roaming Variables")]
     [Space(5)]
     public float roamingPointRange;
+    public Transform[] patrolPoints;
     private Vector2 nextRoamPosition;
     private float timeBetweenRoams;
-    private bool isWalking;
-    private bool isIdle;
+    int currentPointIndex;
 
-
-    private float oldPositionX;
+    bool once = false;
+    bool once2 = false;
 
     public override void OnStart()
     {
@@ -37,7 +39,15 @@ public class EnemyPatrol : State
 
         if (enemyDistanceToPlayer >= alertRange) //enemy doesn't detect player
         {
-            WanderAround(); 
+            if(randomRoam == true)
+            {
+                Roam();
+            }
+            if(randomRoam == false)
+            {
+                Patrol();
+            }
+            
         }
         else if (enemyDistanceToPlayer <= alertRange) //enemy detects player
         {
@@ -49,38 +59,101 @@ public class EnemyPatrol : State
     {
     }
 
-    #region Wander Around
-    void WanderAround()
+    #region Patrolling To Set Points
+    void Patrol()
     {
-        timeBetweenRoams = Random.Range(4f, 8f);
-
-        if ((Vector2)enemyBase.transform.position == nextRoamPosition)
+        if (patrolPoints.Length > 0)
         {
-            isWalking = false;
+            if ((Vector2)enemyBase.transform.position != (Vector2)patrolPoints[currentPointIndex].position)
+            {
+                moveTowardsPatrolPoint();
+            }
+            else
+            {
+                animator.SetTrigger("isIdle");
+                if (once == false)
+                {
+                    once = true;
+                    StartCoroutine(patrolCooldown());
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Cannot Find Any Patrol Points!");
         }
 
-        if (!isWalking && !isIdle) //when stopped walking (arrived at position), start idling
+    }
+
+    void moveTowardsPatrolPoint()
+    {
+        animator.SetTrigger("isWalking");
+        enemyBase.transform.position = Vector2.MoveTowards(enemyBase.transform.position, patrolPoints[currentPointIndex].position, speed * Time.deltaTime);
+
+        if (enemyBase.transform.position.x < patrolPoints[currentPointIndex].position.x) //moving right
         {
-            StartCoroutine(roamingCooldown());
-            SearchWalkPoint();
+            enemyTransform.rotation = Quaternion.identity;
         }
-        else //when finished being idle, start walking
+        if (enemyBase.transform.position.x > patrolPoints[currentPointIndex].position.x) //moving left
         {
-            enemyBase.transform.position = Vector2.MoveTowards(enemyBase.transform.position, nextRoamPosition, speed * Time.deltaTime);
-            if (enemyBase.transform.position.x < nextRoamPosition.x) //moving right
+            enemyTransform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+    }
+
+
+
+    private IEnumerator patrolCooldown()
+    {
+        timeBetweenRoams = Random.Range(3f, 6f);
+        yield return new WaitForSeconds(timeBetweenRoams);
+        if (currentPointIndex + 1 < patrolPoints.Length)
+        {
+            currentPointIndex++;
+        }
+        else
+        {
+            currentPointIndex = 0;
+        }
+        once = false; 
+    }
+    #endregion
+
+    #region Roaming To Random Points
+    void Roam()
+    {
+        if ((Vector2)enemyBase.transform.position != (Vector2)nextRoamPosition) //if not at next roam position
+        {
+            moveTowardsRoamPoint();
+        }
+        else
+        {
+            animator.SetTrigger("isIdle");
+            if (once2 == false)
             {
-                enemyTransform.rotation = Quaternion.identity;
+                once2 = true;
+                
+                StartCoroutine(roamingCooldown());
             }
-            if (enemyBase.transform.position.x > nextRoamPosition.x) //moving left
-            {
-                enemyTransform.rotation = Quaternion.Euler(0, 180, 0);
-            }
+        }
+    }
+
+    void moveTowardsRoamPoint()
+    {
+        animator.SetTrigger("isWalking");
+        enemyBase.transform.position = Vector2.MoveTowards(enemyBase.transform.position, nextRoamPosition, speed * Time.deltaTime);
+
+        if (enemyBase.transform.position.x < nextRoamPosition.x) //moving right
+        {
+            enemyTransform.rotation = Quaternion.identity;
+        }
+        if (enemyBase.transform.position.x > nextRoamPosition.x) //moving left
+        {
+            enemyTransform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
     private void SearchWalkPoint()
     {
-        isWalking = true;
         float randomX = Random.Range(-roamingPointRange, roamingPointRange);
         float randomY = Random.Range(-roamingPointRange, roamingPointRange);
         nextRoamPosition = new Vector2(enemyBase.transform.position.x + randomX, enemyBase.transform.position.y + randomY);
@@ -88,9 +161,10 @@ public class EnemyPatrol : State
 
     private IEnumerator roamingCooldown()
     {
-        isIdle = true;
+        timeBetweenRoams = Random.Range(3f, 6f);
         yield return new WaitForSeconds(timeBetweenRoams);
-        isIdle = false;
+        SearchWalkPoint();
+        once2 = false;
     }
-    #endregion 
+    #endregion
 }

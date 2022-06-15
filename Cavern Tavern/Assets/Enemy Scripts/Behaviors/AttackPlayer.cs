@@ -43,19 +43,11 @@ public class AttackPlayer : State
 
     }
 
-    private IEnumerator waitTillPlayerIsNotHurt()
-    {
-        Debug.Log("Waiting for player not hurt");
-        yield return new WaitUntil(() => !playerIsHurt);
-        Debug.Log("Attacking Player");
-        playerBase.hurt(damage, knockbackPower, playerBase.transform.position - enemyBase.transform.position);
-        StartCoroutine(AttackDelay()); //calls the attack again after hitting player
-    }
     private IEnumerator AttackDelay()
     {
         //animator.SetTrigger("attack");
         yield return new WaitForSeconds(attackDelay);
-        Debug.Log(attackRange - enemyToPlayerDistance);
+
         if (enemyToPlayerDistance <= attackRange && !playerIsHurt) 
         {
             playerBase.hurt(damage, knockbackPower, playerBase.transform.position - enemyBase.transform.position);
