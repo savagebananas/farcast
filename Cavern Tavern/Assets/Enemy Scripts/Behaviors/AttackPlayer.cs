@@ -15,7 +15,7 @@ public class AttackPlayer : State
     private float playerHealth;
     private float attackRange;
 
-    private float enemyToPlayerDistance;
+    public float enemyToPlayerDistance;
 
     private bool playerIsHurt;
 
@@ -55,14 +55,14 @@ public class AttackPlayer : State
     {
         //animator.SetTrigger("attack");
         yield return new WaitForSeconds(attackDelay);
+        Debug.Log(attackRange - enemyToPlayerDistance);
         if (enemyToPlayerDistance <= attackRange && !playerIsHurt) 
         {
             playerBase.hurt(damage, knockbackPower, playerBase.transform.position - enemyBase.transform.position);
             StartCoroutine(AttackDelay()); //calls the attack again after hitting player
-            //StartCoroutine(waitTillPlayerIsNotHurt());
         }
 
-        else if (enemyToPlayerDistance > attackRange)//not in attack range
+        else //not in attack range
         {
             stateMachineManager.setNewState(followPlayer);
         }

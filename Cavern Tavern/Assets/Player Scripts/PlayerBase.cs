@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    public StateMachineManager stateMachineManager;
-    public State movementState;
-
     public float health = 100;
 
     public float moveSpeed;

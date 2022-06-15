@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+-Continually sets the weapon reference position (which controls the position of all weapons and types) to be on the player 
+-Rotates weapon based on cursor position and flips the sprite if facing left (similar to the player facing cursor)
+ */
+
 public class setWeaponPosition : MonoBehaviour
 {
     public GameObject player;
@@ -15,7 +20,7 @@ public class setWeaponPosition : MonoBehaviour
 
     void setPosition()
     {
-        transform.position = player.transform.position + new Vector3(0f, -0.5f, 0f);
+        transform.position = player.transform.position + new Vector3(0f, -0.5f, -1f);
     }
 
     void setRotation()

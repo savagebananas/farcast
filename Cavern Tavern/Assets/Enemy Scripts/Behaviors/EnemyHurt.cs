@@ -15,6 +15,10 @@ public class EnemyHurt : State
     private float playerKnockbackPower;
     private float knockbackDistance;
     private float knockbackDuration;
+
+    [Header("To Update Distance From Player and Stop Enemy From Attacking Outside Of Range")]
+    [Space(5)]
+    public AttackPlayer attackState;
     
     [HideInInspector] public Vector2 attackingColliderToEnemyVector;
 
@@ -32,7 +36,7 @@ public class EnemyHurt : State
 
     public override void OnUpdate()
     {
-
+        attackState.enemyToPlayerDistance = enemyBase.enemydDistanceFromPlayer();
     }
     public override void OnLateUpdate()
     {
