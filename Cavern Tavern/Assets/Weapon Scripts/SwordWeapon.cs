@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerAttack : MonoBehaviour
+public class SwordWeapon : Weapon
 {
-    public Weapon currentWeapon;
+    public GameObject player;
 
-    public Rigidbody2D playerRigidbody;
+    private Rigidbody2D playerRigidbody;
     private playerMovement playerMovement;
-    public float playerToCursorAngle;
-    public Vector2 playerToWeaponReachVector;
+    [HideInInspector] public float playerToCursorAngle;
+    [HideInInspector] public Vector2 playerToWeaponReachVector;
 
     public float damage;
     public float weaponReach;
@@ -42,41 +42,28 @@ public class playerAttack : MonoBehaviour
     /*Instantiating slash animation variables*/
     /*---------------------------------------*/
     public GameObject swordSlashAnimation;
-    
 
     void Start()
     {
-        playerMovement = gameObject.GetComponent<playerMovement>();
-        swordWeaponAnimator = swordWeaponReference.GetComponent<weaponAnimatorController>();
-        spearWeaponAnimator = spearWeaponReference.GetComponent<weaponAnimatorController>();
+        playerRigidbody = player.GetComponent<Rigidbody2D>();
+        playerMovement = player.GetComponent<playerMovement>();
     }
 
     void Update()
     {
-        leftMouseButtonPressed();
         lineFacingMouse();
-    }
-
-    void leftMouseButtonPressed()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //currentWeapon.Attack();
-            attack();
-        }
-    }
-
-    void attack()
+    }    
+    
+    public override void Attack()
     {
         if (Time.time >= nextAttackAllowedTime && playerMovement.isDashing == false)
         {
             swordAttack();
-            
+
             nextAttackAllowedTime = Time.time + attackCooldown; //reset cooldown to x seconds after attack
         }
     }
 
-    #region Sword Attack
     void swordAttack()
     {
         createSwordSlash();
@@ -88,7 +75,6 @@ public class playerAttack : MonoBehaviour
             enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized); //calls damage function on every enemy within attack range
         }
     }
-
     void createSwordSlash()
     {
         //rotations
@@ -97,7 +83,6 @@ public class playerAttack : MonoBehaviour
         //create prefab
         GameObject clone = (GameObject)Instantiate(swordSlashAnimation, weaponSlashPosition.transform.position, weaponSlashPosition.transform.rotation);
     }
-    #endregion
 
     void lineFacingMouse() //IMPORTANT!!! ALLOWS THE THE COVERTION OF POLAR COORDINATES TO BECOME RECTANGULAR
     {
@@ -106,15 +91,5 @@ public class playerAttack : MonoBehaviour
         playerToWeaponReachVector = new Vector2(weaponReach * Mathf.Cos(playerToCursorAngle), weaponReach * Mathf.Sin(playerToCursorAngle));
 
         weaponSlashPosition.transform.position = (Vector2)transform.position + playerToWeaponReachVector; //sets postion to the edge of line (pointing at mouse)
-
-        Debug.DrawRay(transform.position, playerToWeaponReachVector, Color.cyan);
-        Debug.DrawRay(transform.position, playerToWeaponReachVector * (-0.5f), Color.blue);
     }
-
-    void OnDrawGizmosSelected() //displays the area in unity of attack range
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere((Vector2)transform.position + new Vector2(weaponReach * Mathf.Cos(playerToCursorAngle), weaponReach * Mathf.Sin(playerToCursorAngle)), weaponReach); //draws sword attack radius
-    }
-
 }

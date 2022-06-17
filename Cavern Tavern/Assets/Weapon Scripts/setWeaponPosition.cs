@@ -25,8 +25,6 @@ public class setWeaponPosition : MonoBehaviour
 
     void setRotation()
     {
-        float weaponRefRotationZ = weaponRef.transform.rotation.z * Mathf.Rad2Deg;
-
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         playerToCursorVector.Normalize();
         float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;

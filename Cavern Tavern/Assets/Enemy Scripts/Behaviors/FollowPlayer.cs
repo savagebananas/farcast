@@ -30,6 +30,7 @@ public class FollowPlayer : State
         }
         else if (enemyBase.enemydDistanceFromPlayer() <= alertRange)
         {
+            animator.SetTrigger("isWalking");
             enemyBase.transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
         else if (enemyBase.enemydDistanceFromPlayer() > alertRange)

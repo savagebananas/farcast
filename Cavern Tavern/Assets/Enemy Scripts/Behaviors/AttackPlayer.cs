@@ -12,7 +12,6 @@ public class AttackPlayer : State
 
     private float damage;
     private float knockbackPower;
-    private float playerHealth;
     private float attackRange;
 
     public float enemyToPlayerDistance;
@@ -23,7 +22,6 @@ public class AttackPlayer : State
     {
         attackDelay = enemyBase.attackSpeed;
         damage = enemyBase.damage;
-        playerHealth = playerBase.health;
         attackRange = enemyBase.attackRange;
         knockbackPower = enemyBase.knockbackPower;
 
