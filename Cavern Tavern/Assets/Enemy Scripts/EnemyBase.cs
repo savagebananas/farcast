@@ -17,7 +17,7 @@ public class EnemyBase : MonoBehaviour
     [Header("State Machine")]
     [Space(5)]
     public StateMachineManager stateMachineManager;
-    public State enemyHurtState;
+    public EnemyHurt enemyHurtState;
 
     [Header("ReferencesToPlayer")]
     [Space(5)]
@@ -49,7 +49,9 @@ public class EnemyBase : MonoBehaviour
 
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
     {
-        enemyHurtState.GetComponent<EnemyHurt>().attackingColliderToEnemyVector = attackingColliderToEnemyVector;
+        enemyHurtState.damage = damage;
+        enemyHurtState.knockbackPower = knockbackPower;
+        enemyHurtState.attackingColliderToEnemyVector = attackingColliderToEnemyVector;
         stateMachineManager.setNewState(enemyHurtState);
     }
 

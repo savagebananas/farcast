@@ -12,6 +12,8 @@ public class RangedWeapon : Weapon
     public Transform firePoint;
     public float fireForce;
 
+    private Vector2 weaponPointToCursorVector;
+
     void Start()
     {
         
@@ -20,13 +22,16 @@ public class RangedWeapon : Weapon
     // Update is called once per frame
     void Update()
     {
-        
+        weaponPointToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
     }    
     public override void Attack()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<Rigidbody2D>().AddForce(playerAttackScript.playerToWeaponReachVector.normalized * fireForce, ForceMode2D.Impulse);
+        bullet.GetComponent<Rigidbody2D>().AddForce(weaponPointToCursorVector.normalized * fireForce, ForceMode2D.Impulse);
         bullet.GetComponent<Projectile>().damage = damage;
     }
+
+
 
 }

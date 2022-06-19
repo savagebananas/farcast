@@ -10,9 +10,9 @@ public class EnemyHurt : State
     private Rigidbody2D rb;
 
     private float health;
-    private float playerDamage;
+    [HideInInspector] public float damage;
 
-    private float playerKnockbackPower;
+    [HideInInspector] public float knockbackPower;
     private float knockbackDistance;
     private float knockbackDuration;
 
@@ -26,12 +26,10 @@ public class EnemyHurt : State
     {
         rb = enemyBase.GetComponent<Rigidbody2D>();
         health = enemyBase.health;
-        playerDamage = playerAttack.damage;
-        playerKnockbackPower = playerAttack.knockbackPower;
         knockbackDistance = enemyBase.knockbackDistance;
         knockbackDuration = enemyBase.knockbackDuration;
 
-        hurt(playerDamage, playerKnockbackPower, attackingColliderToEnemyVector);
+        hurt(damage, knockbackPower, attackingColliderToEnemyVector);
     }
 
     public override void OnUpdate()
@@ -63,13 +61,13 @@ public class EnemyHurt : State
 
     void knockback(float power, Vector2 attackingColliderToEnemyVector)
     {
+        Debug.Log(attackingColliderToEnemyVector);
         rb.AddForce(attackingColliderToEnemyVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         StartCoroutine(knockbackCo());
     }
 
     private IEnumerator knockbackCo()
     {
-
         yield return new WaitForSeconds(knockbackDuration);
         rb.velocity = Vector2.zero;
         stateMachineManager.setNewState(followState); //after knockback, attack player

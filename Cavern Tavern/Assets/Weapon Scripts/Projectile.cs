@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour
         }
         if (collision.gameObject.layer == 10)
         {
-            collision.gameObject.GetComponent<EnemyBase>().hurt(damage, knockbackPower * 0.25f , collision.gameObject.transform.position - transform.position);
+            collision.gameObject.GetComponent<EnemyBase>().hurt(damage, knockbackPower, (collision.gameObject.transform.position - transform.position).normalized);
         }
         Destroy(gameObject);
     }

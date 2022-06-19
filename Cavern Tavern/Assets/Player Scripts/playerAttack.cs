@@ -61,8 +61,8 @@ public class playerAttack : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            //currentWeapon.Attack();
-            attack();
+            currentWeapon.Attack();
+            //attack();
         }
     }
 
