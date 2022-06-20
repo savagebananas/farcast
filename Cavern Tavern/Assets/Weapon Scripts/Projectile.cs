@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    /*
+    Used only in the projectile
+    Checks for collision with player or enemy, calls their hurt function and does a set damage
+    Destroys itself after colliding with anything
+    */
+
     public float damage;
     public float knockbackPower;
     private void OnCollisionEnter2D(Collision2D collision)
@@ -17,6 +23,7 @@ public class Projectile : MonoBehaviour
         {
             collision.gameObject.GetComponent<EnemyBase>().hurt(damage, knockbackPower, (collision.gameObject.transform.position - transform.position).normalized);
         }
+        //add particles
         Destroy(gameObject);
     }
 }

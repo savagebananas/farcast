@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class EnemyHurt : State
 {
+    /*
+    When state is set, script calls OnStart() method which sets all components and calls the hurt() function once
+    Hurt() function 
+    -subtracts damage enemy health
+    -calls the knockback function based on knockback power and the Vector difference from the attackingCollider (arrow come from left, enemy knockback right)
+    Knockback() function
+    -Adds Force to certain vector direction and starts coroutine, which counts down a number of seconds before stopping the velocity (stopping knockback)
+    -After knockback, sets state back to follow state
+    */
+
     public EnemyBase enemyBase;
     public playerAttack playerAttack;
     public State followState;
     private Rigidbody2D rb;
 
     private float health;
-    [HideInInspector] public float damage;
+    public float damage;
 
-    [HideInInspector] public float knockbackPower;
+    public float knockbackPower;
     private float knockbackDistance;
     private float knockbackDuration;
 
@@ -20,7 +30,7 @@ public class EnemyHurt : State
     [Space(5)]
     public AttackPlayer attackState;
     
-    [HideInInspector] public Vector2 attackingColliderToEnemyVector;
+    public Vector2 attackingColliderToEnemyVector;
 
     public override void OnStart()
     {
@@ -61,7 +71,7 @@ public class EnemyHurt : State
 
     void knockback(float power, Vector2 attackingColliderToEnemyVector)
     {
-        Debug.Log(attackingColliderToEnemyVector);
+        Debug.Log(attackingColliderToEnemyVector.normalized);
         rb.AddForce(attackingColliderToEnemyVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         StartCoroutine(knockbackCo());
     }

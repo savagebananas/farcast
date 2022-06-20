@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    /*
+    This script controls the base of the enemy, including all its values such as health, speed, and damage
+    The StateMachineManager class (attached to a child gameobject of enemy) is being called to allow the enemy to transition to different states
+    The only state being called into is the hurt state, which immediately does damage and knocksback no matter the state
+    This script gets called by the other states to access the enemyDistanceFromPlayer method, which then allows it to transiton from either follow, idle, or wandering states
+    */
+
     [Header("Enemy Stats")]
     [Space(5)]
     public float health;
@@ -37,7 +44,7 @@ public class EnemyBase : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     public float enemydDistanceFromPlayer()

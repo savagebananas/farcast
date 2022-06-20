@@ -54,7 +54,7 @@ public class playerAttack : MonoBehaviour
     void Update()
     {
         leftMouseButtonPressed();
-        lineFacingMouse();
+        //lineFacingMouse();
     }
 
     void leftMouseButtonPressed()
@@ -66,6 +66,7 @@ public class playerAttack : MonoBehaviour
         }
     }
 
+    /*
     void attack()
     {
         if (Time.time >= nextAttackAllowedTime && playerMovement.isDashing == false)
@@ -116,5 +117,6 @@ public class playerAttack : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + new Vector2(weaponReach * Mathf.Cos(playerToCursorAngle), weaponReach * Mathf.Sin(playerToCursorAngle)), weaponReach); //draws sword attack radius
     }
+    */
 
 }
