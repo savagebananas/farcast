@@ -302,7 +302,7 @@ MonoBehaviour:
   enemyHurtState: {fileID: 1484375062}
   player: {fileID: 1703597351}
   roamingPointRange: 5
-  knockbackDuration: 0.25
+  knockbackDuration: 0.1
   knockbackDistance: 10
 --- !u!1 &222808938
 GameObject:
@@ -18465,6 +18465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1499474809}
   - component: {fileID: 1499474810}
+  - component: {fileID: 1499474811}
   m_Layer: 0
   m_Name: Dwarven_Greatsword_32x32
   m_TagString: Untagged
@@ -18494,7 +18495,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1499474808}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -18539,6 +18540,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1499474811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499474808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78abe7f8883dd24459168913d9a4f750, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1703597351}
+  playerToCursorAngle: 0
+  playerToWeaponReachVector: {x: 0, y: 0}
+  damage: 1
+  weaponReach: 2
+  knockbackPower: 4
+  attackCooldown: 0.25
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  mainWeaponReference: {fileID: 331002923}
+  weaponSlashPosition: {fileID: 1475605963}
+  swordWeaponReference: {fileID: 486819914}
+  spearWeaponReference: {fileID: 222808938}
+  swordWeaponAnimator: {fileID: 486819917}
+  spearWeaponAnimator: {fileID: 222808941}
+  swordSlashAnimation: {fileID: 2372449231335180230, guid: e242e9ee8e1be2b40bf20e6f56ebafe4, type: 3}
 --- !u!1 &1513535763
 GameObject:
   m_ObjectHideFlags: 0
@@ -18781,7 +18811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4009113eb149e14e94c05d2ad4c0e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeapon: {fileID: 2065394206}
+  currentWeapon: {fileID: 1499474811}
   playerRigidbody: {fileID: 1703597353}
   playerToCursorAngle: 0
   playerToWeaponReachVector: {x: 0, y: 0}
@@ -18887,7 +18917,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7768924, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
