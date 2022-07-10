@@ -66,16 +66,18 @@ public class SwordWeapon : Weapon
 
     void swordAttack()
     {
-        createSwordSlash();
+        //animations
+        createSwordSlash(); 
         swordWeaponAnimator.weaponAnimator.SetTrigger("Attack_1");
 
+        //Hurts all enemies within attack range
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(weaponSlashPosition.transform.position, weaponReach, enemyLayer);
         for (int i = 0; i < enemiesToDamage.Length; i++)
         {
             enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized); //calls damage function on every enemy within attack range
         }
     }
-    void createSwordSlash()
+    void createSwordSlash() //instantiate slash at position set by lineFacingMouse()
     {
         //rotations
         weaponSlashPosition.transform.rotation = mainWeaponReference.transform.rotation;
@@ -84,7 +86,7 @@ public class SwordWeapon : Weapon
         GameObject clone = (GameObject)Instantiate(swordSlashAnimation, weaponSlashPosition.transform.position, weaponSlashPosition.transform.rotation);
     }
 
-    void lineFacingMouse() //IMPORTANT!!! ALLOWS THE THE COVERTION OF POLAR COORDINATES TO BECOME RECTANGULAR
+    void lineFacingMouse() //POLAR COORDINATES (angle and magnitude) TO RECTANGULAR. This helps set the position of slash animation
     {
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; playerToCursorVector.Normalize();
         playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x); //player to mouse angle in radians
