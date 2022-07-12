@@ -6,19 +6,9 @@ public class playerAttack : MonoBehaviour
 {
     public Weapon currentWeapon;
 
-    public Rigidbody2D playerRigidbody;
-    private playerMovement playerMovement;
-
-
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         leftMouseButtonPressed();
-        //lineFacingMouse();
     }
 
     void leftMouseButtonPressed()
@@ -26,7 +16,6 @@ public class playerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             currentWeapon.Attack();
-            //attack();
         }
     }
 

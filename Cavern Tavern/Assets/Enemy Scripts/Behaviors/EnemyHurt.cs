@@ -71,7 +71,6 @@ public class EnemyHurt : State
 
     void knockback(float power, Vector2 attackingColliderToEnemyVector)
     {
-        Debug.Log(attackingColliderToEnemyVector.normalized);
         rb.AddForce(attackingColliderToEnemyVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         StartCoroutine(knockbackCo());
     }

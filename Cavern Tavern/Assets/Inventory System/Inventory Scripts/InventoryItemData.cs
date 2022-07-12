@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryItemData : MonoBehaviour
+[CreateAssetMenu(menuName = "Inventory System/Inventory Item")]
+public class InventoryItemData : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int id;
+    public string displayName;
+    [TextArea(4, 4)]
+    public string description;
+    public Sprite itemIcon;
+    public int maxStackSize;
+    public Weapon wepaonType; //for weapons only, leave empty if not
 }
