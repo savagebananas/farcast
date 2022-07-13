@@ -21,7 +21,7 @@ public class ItemPickup : MonoBehaviour
     {
         var inventory = collision.transform.GetComponent<InventoryHolder>();
         if (!inventory) return;
-        if (inventory.InventorySystem.AddToInventory(itemData, 1)) //add to inventory
+        if (inventory.InventorySystem.AddToInventory(itemData, 1)) //if item was added to inventory
         {
             Destroy(this.gameObject); //destroy gameobject since item is picked up
         }

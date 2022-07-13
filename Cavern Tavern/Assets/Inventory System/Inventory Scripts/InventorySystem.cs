@@ -18,7 +18,7 @@ public class InventorySystem
     public List<InventorySlot> InventorySlots => inventorySlots; //getter
     public int InventorySize => InventorySlots.Count; //getter
 
-    public UnityAction<InventorySlot> OnInventorySlotChanged; //fires event when item is added to inventory
+    public UnityAction<InventorySlot> OnInventorySlotChanged; //helps fire event
 
     public InventorySystem(int size)
     {
@@ -29,10 +29,43 @@ public class InventorySystem
         }
     }
 
-    public bool AddToInventory(InventoryItemData itemToAdd, int amountToAdd)
+    public bool AddToInventory(InventoryItemData itemToAdd, int amountToAdd) //Returns true if item is added
     {
-        //temp
-        inventorySlots[0] = new InventorySlot(itemToAdd, amountToAdd);
-        return true;
+        if (ContainsItem(itemToAdd, out List<InventorySlot> invSlots)) //Check whether item exists in inventory
+        {
+            foreach (var slot in invSlots) //runs through list of slots with item and adds item to one with space
+            {
+                if (slot.RoomLeftInStack(amountToAdd))
+                {
+                    slot.AddToStack(amountToAdd); 
+                    OnInventorySlotChanged?.Invoke(slot); 
+                    return true;
+                }
+            }
+ 
+        }
+
+        if (HasFreeSlot(out InventorySlot freeSlot))
+        {
+            freeSlot.UpdateInventorySlot(itemToAdd, amountToAdd);
+            OnInventorySlotChanged?.Invoke(freeSlot);
+            return true;
+        }
+
+        return false; //no space for item
+    }
+
+    public bool ContainsItem(InventoryItemData itemToAdd, out List<InventorySlot> invSlots)
+    {
+        //Uses System.Linq: Checks all inventory slots, find all slots where item matches and places it in invSlot list
+        invSlots = InventorySlots.Where(slot => slot.ItemData == itemToAdd).ToList();
+
+        return invSlots == null ? false : true;
+    }
+
+    public bool HasFreeSlot(out InventorySlot freeSlot)
+    {
+        freeSlot = InventorySlots.FirstOrDefault(slot => slot.ItemData == null); //finds first slot in list (inventory) that is empty
+        return freeSlot == null ? false : true;
     }
 }
