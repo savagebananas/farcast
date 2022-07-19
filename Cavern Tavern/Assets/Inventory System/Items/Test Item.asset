@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 0
   displayName: Test Item 1
   description: This is a test item
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -1523739717, guid: 445bb2e231d57dd44a5c08857cb335ae, type: 3}
   maxStackSize: 5
   wepaonType: {fileID: 0}
