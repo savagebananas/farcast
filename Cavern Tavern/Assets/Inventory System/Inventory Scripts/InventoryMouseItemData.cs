@@ -17,19 +17,26 @@ public class InventoryMouseItemData : MonoBehaviour
         itemCount.text = "";
     }
 
-    public void UpdateMouseSlot(InventorySlot inventorySlot)
+    public void UpdateMouseSlot(InventorySlot inventorySlot) //if has an item, follow mouse pointer
     {
         assignedInventorySlot.AssignItem(inventorySlot);
         itemSprite.sprite = inventorySlot.ItemData.itemIcon;
-        itemCount.text = inventorySlot.StackSize.ToString();
         itemSprite.color = Color.white;
+        if (inventorySlot.StackSize > 1)
+        {
+            itemCount.text = inventorySlot.StackSize.ToString();
+        }
+
+        itemSprite.transform.SetAsLastSibling();
+        itemCount.transform.SetAsLastSibling();
+
     }
 
     private void Update()
     {
         if (assignedInventorySlot.ItemData != null) //if mouse currently has item
         {
-            transform.position = Input.mousePosition + new Vector3(12, 12);
+            transform.position = Input.mousePosition;
             if (Input.GetMouseButtonDown(0) && !IsPointerOverUIObject())
             {
                 ClearSlot();

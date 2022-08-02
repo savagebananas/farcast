@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+This is a scriptable object that defines the items in the game
+Can be inherited to have branched version of items, such as potions and equipment
+*/
+
 [CreateAssetMenu(menuName = "Inventory System/Inventory Item")]
 public class InventoryItemData : ScriptableObject
 {
@@ -11,5 +16,5 @@ public class InventoryItemData : ScriptableObject
     public string description;
     public Sprite itemIcon;
     public int maxStackSize;
-    public Weapon wepaonType; //for weapons only, leave empty if not
+    public int goldValue;
 }
