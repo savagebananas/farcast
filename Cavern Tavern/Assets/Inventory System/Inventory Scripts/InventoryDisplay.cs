@@ -20,7 +20,7 @@ public abstract class InventoryDisplay : MonoBehaviour
 
     }
 
-    public abstract void AssignedSlot(InventorySystem invToDisplay);
+    public abstract void AssignSlot(InventorySystem invToDisplay);
     protected virtual void UpdateSlot(InventorySlot updatedSlot) 
     {
         foreach (var slot in SlotDictionary)

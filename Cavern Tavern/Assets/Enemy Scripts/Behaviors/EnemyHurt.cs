@@ -18,6 +18,7 @@ public class EnemyHurt : State
     public playerAttack playerAttack;
     public State followState;
     private Rigidbody2D rb;
+    private Renderer rend;
 
     private float health;
     public float damage;
@@ -38,6 +39,7 @@ public class EnemyHurt : State
         health = enemyBase.health;
         knockbackDistance = enemyBase.knockbackDistance;
         knockbackDuration = enemyBase.knockbackDuration;
+        rend = enemyBase.GetComponent<Renderer>();
 
         hurt(damage, knockbackPower, attackingColliderToEnemyVector);
     }
@@ -72,13 +74,24 @@ public class EnemyHurt : State
     void knockback(float power, Vector2 attackingColliderToEnemyVector)
     {
         rb.AddForce(attackingColliderToEnemyVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
+        rend.material.color = new Color(255, 255, 255, 255);
         StartCoroutine(knockbackCo());
+        StartCoroutine(Flash());
     }
 
     private IEnumerator knockbackCo()
     {
         yield return new WaitForSeconds(knockbackDuration);
+        //rend.material.color = Color.white;
         rb.velocity = Vector2.zero;
+        
         stateMachineManager.setNewState(followState); //after knockback, attack player
+    }
+
+    private IEnumerator Flash()
+    {
+        yield return new WaitForSeconds(knockbackDuration * .75f);
+        rend.material.color = Color.white;
+
     }
 }
