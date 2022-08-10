@@ -9,7 +9,7 @@ Every inventory slot has itemData and stackSize
 [System.Serializable]
 public class InventorySlot
 {
-    [SerializeField] private InventoryItemData itemData; //Reference to item data
+    [SerializeField] public InventoryItemData itemData; //Reference to item data
     [SerializeField] private int stackSize; //Amount of items in slot
 
     public InventoryItemData ItemData => itemData;

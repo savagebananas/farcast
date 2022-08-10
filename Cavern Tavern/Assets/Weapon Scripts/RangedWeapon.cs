@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedWeapon : Weapon
+public class RangedWeapon : HotbarItem
 {
-    public playerAttack playerAttackScript;
-
     public float damage;
 
     public GameObject bulletPrefab;
@@ -14,18 +12,15 @@ public class RangedWeapon : Weapon
 
     private Vector2 weaponPointToCursorVector;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         weaponPointToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            UseItem();
+        }
     }    
-    public override void Attack()
+    public override void UseItem()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Rigidbody2D>().AddForce(weaponPointToCursorVector.normalized * fireForce, ForceMode2D.Impulse);

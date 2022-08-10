@@ -15,12 +15,12 @@ public class EnemyHurt : State
     */
 
     public EnemyBase enemyBase;
-    public playerAttack playerAttack;
+    public PlayerHotbar playerAttack;
     public State followState;
     private Rigidbody2D rb;
     private Renderer rend;
 
-    private float health;
+    [SerializeField] private float health;
     public float damage;
 
     public float knockbackPower;
@@ -55,9 +55,9 @@ public class EnemyHurt : State
 
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
     {
-        health -= damage;
+        enemyBase.health -= damage;
         
-        if (health > 0)
+        if (enemyBase.health > 0)
         {
             knockback(knockbackPower, attackingColliderToEnemyVector);
             //animator.SetTrigger("hurt");

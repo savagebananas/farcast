@@ -10,7 +10,6 @@ using UnityEngine;
 public class setWeaponPosition : MonoBehaviour
 {
     public GameObject player;
-    public GameObject weaponRef;
 
     void Update()
     {
@@ -25,7 +24,7 @@ public class setWeaponPosition : MonoBehaviour
 
     void setRotation()
     {
-        Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
         playerToCursorVector.Normalize();
         float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
 

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordWeapon : Weapon
+public class SwordWeapon : HotbarItem
 {
+    [Header("General Variables")]
+    [Space(5)]
     public GameObject player;
-
+    public LayerMask enemyLayer;
     private Rigidbody2D playerRigidbody;
     private playerMovement playerMovement;
     [HideInInspector] public float playerToCursorAngle;
@@ -17,44 +19,25 @@ public class SwordWeapon : Weapon
     public float attackCooldown;
     float nextAttackAllowedTime = 0;
 
-    /*---------------------------*/
-    /*Attacking Enemies Variables*/
-    /*---------------------------*/
-
-    public LayerMask enemyLayer;
-
-    /*--------------------------*/
-    /*Attack Animation Variables*/
-    /*--------------------------*/
+    [Header("Attack Animation Variables")]
+    [Space(5)]
 
     public GameObject mainWeaponReference;
-    public GameObject weaponSlashPosition;
-
-    //General Weapon type references w/ animator attached to it
     public GameObject swordWeaponReference;
-    public GameObject spearWeaponReference;
-
-    //General Weapon Animators to trigger (ex: rotate weapon to look like sword swing)
-    public weaponAnimatorController swordWeaponAnimator;
-    public weaponAnimatorController spearWeaponAnimator;
-
-    /*---------------------------------------*/
-    /*Instantiating slash animation variables*/
-    /*---------------------------------------*/
     public GameObject swordSlashAnimation;
 
     void Start()
     {
+
+        player = GameObject.Find("Player");
         playerRigidbody = player.GetComponent<Rigidbody2D>();
         playerMovement = player.GetComponent<playerMovement>();
-    }
 
-    void Update()
-    {
-        lineFacingMouse();
-    }    
+        mainWeaponReference = GameObject.Find("WeaponRotationReference");
+        swordWeaponReference = GameObject.Find("Sword Weapon Postion Reference");
+    } 
     
-    public override void Attack()
+    public override void UseItem()
     {
         if (Time.time >= nextAttackAllowedTime && playerMovement.isDashing == false)
         {
@@ -67,31 +50,20 @@ public class SwordWeapon : Weapon
     void swordAttack()
     {
         //animations
-        createSwordSlash(); 
-        swordWeaponAnimator.weaponAnimator.SetTrigger("Attack_1");
+        GameObject clone = (GameObject)Instantiate(swordSlashAnimation, UpdateSlashPosition(), mainWeaponReference.transform.rotation); //create sword slash
+        swordWeaponReference.GetComponent<Animator>().SetTrigger("Attack_1");
 
         //Hurts all enemies within attack range
-        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(weaponSlashPosition.transform.position, weaponReach, enemyLayer);
-        for (int i = 0; i < enemiesToDamage.Length; i++)
-        {
-            enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized); //calls damage function on every enemy within attack range
-        }
-    }
-    void createSwordSlash() //instantiate slash at position set by lineFacingMouse()
-    {
-        //rotations
-        weaponSlashPosition.transform.rotation = mainWeaponReference.transform.rotation;
-
-        //create prefab
-        GameObject clone = (GameObject)Instantiate(swordSlashAnimation, weaponSlashPosition.transform.position, weaponSlashPosition.transform.rotation);
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(UpdateSlashPosition(), weaponReach, enemyLayer);
+        for (int i = 0; i < enemiesToDamage.Length; i++) {enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized);}
     }
 
-    void lineFacingMouse() //POLAR COORDINATES (angle and magnitude) TO RECTANGULAR. This helps set the position of slash animation
+    Vector2 UpdateSlashPosition()
     {
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; playerToCursorVector.Normalize();
         playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x); //player to mouse angle in radians
         playerToWeaponReachVector = new Vector2(weaponReach * Mathf.Cos(playerToCursorAngle), weaponReach * Mathf.Sin(playerToCursorAngle));
 
-        weaponSlashPosition.transform.position = (Vector2)transform.position + playerToWeaponReachVector; //sets postion to the edge of line (pointing at mouse)
+        return (Vector2)transform.position + playerToWeaponReachVector; //sets postion to the edge of line (pointing at mouse)
     }
 }

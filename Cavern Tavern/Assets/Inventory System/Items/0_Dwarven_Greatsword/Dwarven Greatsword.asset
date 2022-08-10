@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f19bed9896785e7469150adb1316964e, type: 3}
-  m_Name: Test Item
+  m_Name: Dwarven Greatsword
   m_EditorClassIdentifier: 
   id: 0
-  displayName: Test Item 1
-  description: This is a test item
-  itemIcon: {fileID: -1523739717, guid: 445bb2e231d57dd44a5c08857cb335ae, type: 3}
-  maxStackSize: 5
-  wepaonType: {fileID: 0}
+  displayName: Dwarven Greatsword
+  description: 
+  itemType: Sword
+  itemIcon: {fileID: 21300000, guid: 656b86c7607ecb24d96a28ed6edfcfe5, type: 3}
+  maxStackSize: 1
+  goldValue: 0
+  hotbarItem: {fileID: 3047631613337785294, guid: 75de69e22ad712b458f26f94950197c0, type: 3}

@@ -14,7 +14,10 @@ public class InventoryItemData : ScriptableObject
     public string displayName;
     [TextArea(4, 4)]
     public string description;
+    public string itemType;
     public Sprite itemIcon;
     public int maxStackSize;
     public int goldValue;
+
+    public GameObject hotbarItem;
 }
