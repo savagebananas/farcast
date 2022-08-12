@@ -4,13 +4,18 @@ using UnityEngine;
 
 public abstract class HotbarItem : MonoBehaviour
 {
+    public GameObject player;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("use item");
             UseItem();
-
         }
     }
     public abstract void UseItem();

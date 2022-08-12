@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class characterFaceMouse : MonoBehaviour
 {
-    bool FacingRight  = true;
+    public bool FacingRight  = true;
 
     void Update()
     {

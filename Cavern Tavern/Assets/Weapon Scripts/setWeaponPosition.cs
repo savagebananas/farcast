@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
--Continually sets the weapon reference position (which controls the position of all weapons and types) to be on the player 
+-Continually sets the weapon reference position (which controls the position of most weapons and types) to be on the player 
 -Rotates weapon based on cursor position and flips the sprite if facing left (similar to the player facing cursor)
+IMPORTANT: RANGED WEAPONS WILL NOT BE FLIPPING
  */
 
 public class setWeaponPosition : MonoBehaviour
 {
     public GameObject player;
+    private bool facingRight;
+    private bool facingLeft;
 
     void Update()
     {
@@ -27,14 +30,35 @@ public class setWeaponPosition : MonoBehaviour
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
         playerToCursorVector.Normalize();
         float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        transform.rotation = Quaternion.Euler(0f, 0f, playerToCursorAngle);
-
-        
-        if (playerToCursorAngle < -90 || playerToCursorAngle > 90) //if cursor is on the left
+        if (mousePos.x < transform.position.x)
         {
-            transform.localRotation = Quaternion.Euler(180, 0, -playerToCursorAngle);
+            facingRight = false;
+            facingLeft = true;
+        }
+        if (mousePos.x > transform.position.x)
+        {
+            facingRight = true;
+            facingLeft = false;
+        }
+
+        if (facingRight == true)
+        {
+            transform.localRotation = Quaternion.Euler(0, 0, playerToCursorAngle);
+            Vector3 tmpScale = transform.localScale;
+            tmpScale.y = 1;
+            transform.localScale = tmpScale;
         }
         
+        if (facingLeft == true)
+        {
+            transform.localRotation = Quaternion.Euler(0, 0, (playerToCursorAngle));
+            
+            Vector3 tmpScale = transform.localScale;
+            tmpScale.y = -1;
+            transform.localScale = tmpScale;
+        }
     }
+
 }

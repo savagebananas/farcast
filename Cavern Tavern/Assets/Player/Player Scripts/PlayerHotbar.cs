@@ -74,13 +74,16 @@ public class PlayerHotbar : MonoBehaviour
     {
         if (hotbarSlots[slotNum].itemData.itemType == "Sword")
         {
-            currentItem = (GameObject)Instantiate(hotbarSlots[slotNum].itemData.hotbarItem, swordWeaponReference.transform.position, swordWeaponReference.transform.rotation); ;
+            currentItem = (GameObject)Instantiate(hotbarSlots[slotNum].itemData.hotbarItem, swordWeaponReference.transform.position, Quaternion.Euler(0, 0, 0));
             currentItem.transform.parent = swordWeaponReference.transform;
+            currentItem.transform.localScale = new Vector3(1, 1, 1);
+            
         }
         else if (hotbarSlots[slotNum].itemData.itemType == "Ranged")
         {
             currentItem = (GameObject)Instantiate(hotbarSlots[slotNum].itemData.hotbarItem, rangedWeaponReference.transform.position, rangedWeaponReference.transform.rotation);
             currentItem.transform.parent = rangedWeaponReference.transform;
+            currentItem.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 }

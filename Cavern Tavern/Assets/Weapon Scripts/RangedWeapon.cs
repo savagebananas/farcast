@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RangedWeapon : HotbarItem
 {
+    public GameObject pivotPoint;
+    public GameObject muzzle;
+
     public float damage;
 
     public GameObject bulletPrefab;
-    public Transform firePoint;
     public float fireForce;
 
-    private Vector2 weaponPointToCursorVector;
+    private Vector2 muzzleToCursorVector;
 
     void Update()
     {
-        weaponPointToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        muzzleToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
         if (Input.GetMouseButtonDown(0))
         {
             UseItem();
@@ -22,11 +26,12 @@ public class RangedWeapon : HotbarItem
     }    
     public override void UseItem()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<Rigidbody2D>().AddForce(weaponPointToCursorVector.normalized * fireForce, ForceMode2D.Impulse);
+        Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+        playerToCursorVector.Normalize();
+        float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
+
+        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, playerToCursorAngle - 45));
+        bullet.GetComponent<Rigidbody2D>().AddForce(muzzleToCursorVector.normalized * fireForce, ForceMode2D.Impulse);
         bullet.GetComponent<Projectile>().damage = damage;
     }
-
-
-
 }

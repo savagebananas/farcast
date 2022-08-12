@@ -6,9 +6,7 @@ public class SwordWeapon : HotbarItem
 {
     [Header("General Variables")]
     [Space(5)]
-    public GameObject player;
     public LayerMask enemyLayer;
-    private Rigidbody2D playerRigidbody;
     private playerMovement playerMovement;
     [HideInInspector] public float playerToCursorAngle;
     [HideInInspector] public Vector2 playerToWeaponReachVector;
@@ -23,18 +21,17 @@ public class SwordWeapon : HotbarItem
     [Space(5)]
 
     public GameObject mainWeaponReference;
-    public GameObject swordWeaponReference;
+    public GameObject pivotPoint;
     public GameObject swordSlashAnimation;
 
+    private void Awake()
+    {
+        mainWeaponReference = GameObject.Find("WeaponRotationReference");
+    }
     void Start()
     {
-
         player = GameObject.Find("Player");
-        playerRigidbody = player.GetComponent<Rigidbody2D>();
         playerMovement = player.GetComponent<playerMovement>();
-
-        mainWeaponReference = GameObject.Find("WeaponRotationReference");
-        swordWeaponReference = GameObject.Find("Sword Weapon Postion Reference");
     } 
     
     public override void UseItem()
@@ -50,15 +47,16 @@ public class SwordWeapon : HotbarItem
     void swordAttack()
     {
         //animations
-        GameObject clone = (GameObject)Instantiate(swordSlashAnimation, UpdateSlashPosition(), mainWeaponReference.transform.rotation); //create sword slash
-        swordWeaponReference.GetComponent<Animator>().SetTrigger("Attack_1");
+        CreateSlash();
+        pivotPoint.GetComponent<Animator>().SetTrigger("Attack_1");
 
         //Hurts all enemies within attack range
-        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(UpdateSlashPosition(), weaponReach, enemyLayer);
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(SlashPosition(), weaponReach, enemyLayer);
         for (int i = 0; i < enemiesToDamage.Length; i++) {enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized);}
     }
 
-    Vector2 UpdateSlashPosition()
+    #region Slash Position and Rotation
+    Vector2 SlashPosition()
     {
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; playerToCursorVector.Normalize();
         playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x); //player to mouse angle in radians
@@ -66,4 +64,48 @@ public class SwordWeapon : HotbarItem
 
         return (Vector2)transform.position + playerToWeaponReachVector; //sets postion to the edge of line (pointing at mouse)
     }
+
+    private bool facingLeft;
+    private bool facingRight;
+
+    void CreateSlash()
+    {
+        GameObject slash = (GameObject)Instantiate(swordSlashAnimation, SlashPosition(), Quaternion.Euler(0, 0, 0)); //create sword slash
+
+        #region slash rotation
+        Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+        playerToCursorVector.Normalize();
+        float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (mousePos.x < transform.position.x)
+        {
+            facingRight = false;
+            facingLeft = true;
+        }
+        if (mousePos.x > transform.position.x)
+        {
+            facingRight = true;
+            facingLeft = false;
+        }
+
+        if (facingRight == true)
+        {
+            slash.transform.localRotation = Quaternion.Euler(0, 0, playerToCursorAngle);
+            Vector3 tmpScale = slash.transform.localScale;
+            tmpScale.y = 1;
+            slash.transform.localScale = tmpScale;
+        }
+
+        if (facingLeft == true)
+        {
+            slash.transform.localRotation = Quaternion.Euler(0, 0, (playerToCursorAngle));
+
+            Vector3 tmpScale = slash.transform.localScale;
+            tmpScale.y = -1;
+            slash.transform.localScale = tmpScale;
+        }
+        #endregion
+    }
+    #endregion
 }
