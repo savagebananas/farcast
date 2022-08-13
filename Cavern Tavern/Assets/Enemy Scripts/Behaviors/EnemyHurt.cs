@@ -19,6 +19,7 @@ public class EnemyHurt : State
     public State followState;
     private Rigidbody2D rb;
     private Renderer rend;
+    public GameObject bloodParticles;
 
     [SerializeField] private float health;
     public float damage;
@@ -67,7 +68,7 @@ public class EnemyHurt : State
             Debug.Log("Enemy Dead");
             //animator.SetTrigger("dead");
             knockback(5f, attackingColliderToEnemyVector);
-            // add particles
+
         }
     }
 
@@ -82,9 +83,16 @@ public class EnemyHurt : State
     private IEnumerator knockbackCo()
     {
         yield return new WaitForSeconds(knockbackDuration);
-        //rend.material.color = Color.white;
         rb.velocity = Vector2.zero;
-        
+        // add particles
+        var particles = Instantiate(bloodParticles, transform.position, Quaternion.identity);
+        /*
+        if (enemyBase.health <= 0)
+        {
+            Destroy(enemyBase.gameObject);
+        }
+        */
+
         stateMachineManager.setNewState(followState); //after knockback, attack player
     }
 
@@ -93,5 +101,5 @@ public class EnemyHurt : State
         yield return new WaitForSeconds(knockbackDuration * .75f);
         rend.material.color = Color.white;
 
-    }
+    }                                                                
 }
