@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class EnemyHurt : State
 {
@@ -14,16 +15,18 @@ public class EnemyHurt : State
     -After knockback, sets state back to follow state
     */
 
+    public CinemachineImpulseSource impulse;
+
     public EnemyBase enemyBase;
     public PlayerHotbar playerAttack;
     public State followState;
     private Rigidbody2D rb;
     private Renderer rend;
     public GameObject bloodParticles;
+    public GameObject deathParticles;
 
-    [SerializeField] private float health;
+    public Vector2 attackingColliderToEnemyVector;
     public float damage;
-
     public float knockbackPower;
     private float knockbackDistance;
     private float knockbackDuration;
@@ -31,16 +34,14 @@ public class EnemyHurt : State
     [Header("To Update Distance From Player and Stop Enemy From Attacking Outside Of Range")]
     [Space(5)]
     public AttackPlayer attackState;
-    
-    public Vector2 attackingColliderToEnemyVector;
 
     public override void OnStart()
     {
         rb = enemyBase.GetComponent<Rigidbody2D>();
-        health = enemyBase.health;
         knockbackDistance = enemyBase.knockbackDistance;
         knockbackDuration = enemyBase.knockbackDuration;
         rend = enemyBase.GetComponent<Renderer>();
+        impulse = transform.GetComponent<CinemachineImpulseSource>();
 
         hurt(damage, knockbackPower, attackingColliderToEnemyVector);
     }
@@ -58,48 +59,55 @@ public class EnemyHurt : State
     {
         enemyBase.health -= damage;
         
-        if (enemyBase.health > 0)
-        {
-            knockback(knockbackPower, attackingColliderToEnemyVector);
-            //animator.SetTrigger("hurt");
-        }
-        else 
-        {
-            Debug.Log("Enemy Dead");
-            //animator.SetTrigger("dead");
-            knockback(5f, attackingColliderToEnemyVector);
-
-        }
+        if (enemyBase.health > 0) knockback(knockbackPower, attackingColliderToEnemyVector);
+        else knockback(2f * knockbackPower, attackingColliderToEnemyVector);
     }
 
     void knockback(float power, Vector2 attackingColliderToEnemyVector)
     {
         rb.AddForce(attackingColliderToEnemyVector.normalized * knockbackDistance * power, ForceMode2D.Impulse);
         rend.material.color = new Color(255, 255, 255, 255);
+
         StartCoroutine(knockbackCo());
         StartCoroutine(Flash());
     }
 
     private IEnumerator knockbackCo()
     {
-        yield return new WaitForSeconds(knockbackDuration);
-        rb.velocity = Vector2.zero;
-        // add particles
-        var particles = Instantiate(bloodParticles, transform.position, Quaternion.identity);
-        /*
         if (enemyBase.health <= 0)
         {
-            Destroy(enemyBase.gameObject);
-        }
-        */
+            //Camera Shake
+            impulse.GenerateImpulse(2f);
+            //particles
+            var particle = Instantiate(deathParticles, transform.position, Quaternion.identity);
+            particle.transform.parent = enemyBase.transform;
 
-        stateMachineManager.setNewState(followState); //after knockback, attack player
+            yield return new WaitForSeconds(knockbackDuration);
+            
+            
+            rb.velocity = Vector2.zero; //stop velocity (knockback)
+            particle.transform.parent = null; //Move death particles out of enemy object so it will not get destroyed early
+
+            Destroy(enemyBase.gameObject); //Destroy Enemy Object if dead
+        }
+        else
+        {
+            //Camera Shake
+            impulse.GenerateImpulse(1f);
+            //particles
+            var hurtParticles = Instantiate(bloodParticles, transform.position, Quaternion.identity);
+            hurtParticles.transform.parent = enemyBase.transform;
+
+            yield return new WaitForSeconds(knockbackDuration);
+            
+            rb.velocity = Vector2.zero; //stop velocity (knockback)
+            stateMachineManager.setNewState(followState); //Enemy changes to attack state after hurt
+        }
     }
 
     private IEnumerator Flash()
     {
-        yield return new WaitForSeconds(knockbackDuration * .75f);
+        yield return new WaitForSeconds(knockbackDuration * .5f);
         rend.material.color = Color.white;
-
-    }                                                                
+    }                  
 }
