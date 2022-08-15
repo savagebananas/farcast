@@ -156,7 +156,7 @@ MonoBehaviour:
     m_Bits: 1024
   playerToCursorAngle: 0
   playerToWeaponReachVector: {x: 0, y: 0}
-  damage: 50
+  damage: 5
   weaponReach: 2
   knockbackPower: 4
   attackCooldown: 0.35

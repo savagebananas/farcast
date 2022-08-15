@@ -20,6 +20,8 @@ public class AttackPlayer : State
 
     public override void OnStart()
     {
+        playerBase = GameObject.Find("Player").GetComponent<PlayerBase>();
+
         attackDelay = enemyBase.attackSpeed;
         damage = enemyBase.damage;
         attackRange = enemyBase.attackRange;

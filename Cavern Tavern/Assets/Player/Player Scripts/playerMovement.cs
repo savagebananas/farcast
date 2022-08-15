@@ -5,28 +5,20 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     private PlayerBase playerBase;
-
-    public float moveSpeed;
-
-    private float activeMoveSpeed;
-    public float dashSpeed;
-
-    public float dashLength;
-    public float dashCooldown;
-
-    private float dashCounter;
-    private float dashCoolCounter;
-
-
     private Rigidbody2D characterBody;
     private Vector2 inputMovement;
-
-    public bool isDashing = false;
-
     private Renderer rend;
     private Color characterColor;
-    
 
+    public float moveSpeed;
+    public float dashSpeed;
+    public float dashLength;
+    public float amountOfDashes;
+    public bool isDashing = false;
+
+    
+    private float activeMoveSpeed;
+    
     void Start()
     {
         playerBase = GetComponent<PlayerBase>();
@@ -40,8 +32,8 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown("space") && amountOfDashes > 0) StartCoroutine(dash());
         movement();
-        dash();
 
         rend.material.color = characterColor;
     }
@@ -57,41 +49,23 @@ public class playerMovement : MonoBehaviour
         }
     }
 
-    void dash()
+
+    IEnumerator dash()
     {
-        if (Input.GetKeyDown("space")) //Initiate Dash
-        {
-            if (dashCoolCounter <= 0 && dashCounter <= 0)
-            {
-                activeMoveSpeed = dashSpeed;
-                dashCounter = dashLength;
-                isDashing = true;
+        activeMoveSpeed = dashSpeed;
+        isDashing = true;
+        Physics2D.IgnoreLayerCollision(9, 10, true);
+        characterColor.a = 0.6f;
+        amountOfDashes -= 1;
 
-                Physics2D.IgnoreLayerCollision(9, 10, true);
-                characterColor.a = 0.75f; //lower opacity of player
-            }
-        }
 
-        if (dashCounter > 0) //During Dash
-        {
-            dashCounter -= Time.deltaTime;
+        yield return new WaitForSeconds(dashLength);
 
-            if(dashCounter <= 0) //when dash duration ended
-            {
-                activeMoveSpeed = moveSpeed; //normal speed
-                dashCoolCounter = dashCooldown; //reset cooldown
-                isDashing = false;
+        activeMoveSpeed = moveSpeed; //normal speed
+        isDashing = false;
 
-                Physics2D.IgnoreLayerCollision(9, 10, false);
-                characterColor.a = 1f;
-            }
-        }
-
-        if (dashCoolCounter > 0) //Dash Cooldown
-        {
-            dashCoolCounter -= Time.deltaTime;
-        }
-
+        Physics2D.IgnoreLayerCollision(9, 10, false);
+        characterColor.a = 1f;
     }
         
 }

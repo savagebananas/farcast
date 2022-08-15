@@ -7,13 +7,17 @@ public class RangedWeapon : HotbarItem
 {
     public GameObject pivotPoint;
     public GameObject muzzle;
-
-    public float damage;
-
+    private Vector2 muzzleToCursorVector;
     public GameObject bulletPrefab;
     public float fireForce;
 
-    private Vector2 muzzleToCursorVector;
+    public float effectMultiplier;
+
+    public float damage;
+
+
+
+    
 
     void Update()
     {
@@ -33,5 +37,6 @@ public class RangedWeapon : HotbarItem
         GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, playerToCursorAngle - 45));
         bullet.GetComponent<Rigidbody2D>().AddForce(muzzleToCursorVector.normalized * fireForce, ForceMode2D.Impulse);
         bullet.GetComponent<Projectile>().damage = damage;
+        bullet.GetComponent<Projectile>().effectMultiplier = effectMultiplier;
     }
 }

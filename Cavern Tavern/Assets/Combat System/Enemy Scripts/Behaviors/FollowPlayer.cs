@@ -15,6 +15,8 @@ public class FollowPlayer : State
 
     public override void OnStart()
     {
+        player = GameObject.Find("Player");
+
         speed = enemyBase.speed;
         attackRange = enemyBase.attackRange;
         alertRange = enemyBase.alertRange;

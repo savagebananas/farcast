@@ -15,32 +15,37 @@ public class EnemyHurt : State
     -After knockback, sets state back to follow state
     */
 
-    public CinemachineImpulseSource impulse;
+    
 
     public EnemyBase enemyBase;
     public PlayerHotbar playerAttack;
-    public State followState;
     private Rigidbody2D rb;
-    private Renderer rend;
+    public Renderer rend;
+    public State followState;
+    public AttackPlayer attackState;
+
+    //Visuals
     public GameObject bloodParticles;
     public GameObject deathParticles;
+    public GameObject smokeParticles;
+    public Animator anchorAnimator;
+    public CinemachineImpulseSource impulse;
+    public float weaponMultiplier;
+    public float enemySizeScale;
 
+    //Knockback
     public Vector2 attackingColliderToEnemyVector;
     public float damage;
     public float knockbackPower;
     private float knockbackDistance;
     private float knockbackDuration;
-
-    [Header("To Update Distance From Player and Stop Enemy From Attacking Outside Of Range")]
-    [Space(5)]
-    public AttackPlayer attackState;
+    
 
     public override void OnStart()
     {
         rb = enemyBase.GetComponent<Rigidbody2D>();
         knockbackDistance = enemyBase.knockbackDistance;
         knockbackDuration = enemyBase.knockbackDuration;
-        rend = enemyBase.GetComponent<Renderer>();
         impulse = transform.GetComponent<CinemachineImpulseSource>();
 
         hurt(damage, knockbackPower, attackingColliderToEnemyVector);
@@ -48,7 +53,7 @@ public class EnemyHurt : State
 
     public override void OnUpdate()
     {
-        attackState.enemyToPlayerDistance = enemyBase.enemydDistanceFromPlayer();
+        attackState.enemyToPlayerDistance = enemyBase.enemydDistanceFromPlayer(); //To Update Distance From Player and Stop Enemy From Attacking Outside Of Range
     }
     public override void OnLateUpdate()
     {
@@ -77,37 +82,53 @@ public class EnemyHurt : State
         if (enemyBase.health <= 0)
         {
             //Camera Shake
-            impulse.GenerateImpulse(2f);
+            impulse.GenerateImpulse(2f * weaponMultiplier * enemySizeScale);
+            //animation
+            anchorAnimator.SetTrigger("SquashAndStretch");
             //particles
             var particle = Instantiate(deathParticles, transform.position, Quaternion.identity);
+            particle.transform.localScale = new Vector2(particle.transform.localScale.x * enemySizeScale, particle.transform.localScale.y * enemySizeScale);
             particle.transform.parent = enemyBase.transform;
 
-            yield return new WaitForSeconds(knockbackDuration);
-            
+            yield return new WaitForSeconds(knockbackDuration * weaponMultiplier * enemySizeScale);
             
             rb.velocity = Vector2.zero; //stop velocity (knockback)
-            particle.transform.parent = null; //Move death particles out of enemy object so it will not get destroyed early
+
+            anchorAnimator.SetTrigger("Idle");
+
+            particle.transform.parent = null; //Move blood particles out of enemy object so it will not get destroyed early
+            
+            //smoke death particles
+            var smoke = Instantiate(smokeParticles, transform.position, Quaternion.identity);
+            smoke.transform.localScale = new Vector2(smoke.transform.localScale.x * weaponMultiplier * enemySizeScale, smoke.transform.localScale.y * weaponMultiplier * enemySizeScale);
 
             Destroy(enemyBase.gameObject); //Destroy Enemy Object if dead
         }
         else
         {
             //Camera Shake
-            impulse.GenerateImpulse(1f);
+            impulse.GenerateImpulse(0.5f * weaponMultiplier * enemySizeScale);
+            //animation
+            anchorAnimator.SetTrigger("SquashAndStretch");
             //particles
-            var hurtParticles = Instantiate(bloodParticles, transform.position, Quaternion.identity);
-            hurtParticles.transform.parent = enemyBase.transform;
+            var particle = Instantiate(bloodParticles, transform.position, Quaternion.identity);
+            particle.transform.localScale = new Vector2(particle.transform.localScale.x * enemySizeScale, particle.transform.localScale.y * enemySizeScale);
+            particle.transform.parent = enemyBase.transform;
 
-            yield return new WaitForSeconds(knockbackDuration);
+            yield return new WaitForSeconds(knockbackDuration * weaponMultiplier * enemySizeScale);
             
             rb.velocity = Vector2.zero; //stop velocity (knockback)
+
+            anchorAnimator.SetTrigger("Idle");
+
             stateMachineManager.setNewState(followState); //Enemy changes to attack state after hurt
         }
     }
 
     private IEnumerator Flash()
     {
-        yield return new WaitForSeconds(knockbackDuration * .5f);
+        yield return new WaitForSeconds(knockbackDuration * weaponMultiplier * enemySizeScale);
         rend.material.color = Color.white;
-    }                  
+    }           
+    
 }

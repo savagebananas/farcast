@@ -100,9 +100,10 @@ MonoBehaviour:
   player: {fileID: 0}
   pivotPoint: {fileID: 4271534478255210235}
   muzzle: {fileID: 5656692037784954730}
-  damage: 1
   bulletPrefab: {fileID: 6372731630188926479, guid: ee47e286d20d66a4f9f849ca6da4eb94, type: 3}
   fireForce: 50
+  effectMultiplier: 0.5
+  damage: 1
 --- !u!1 &4271534478255210235
 GameObject:
   m_ObjectHideFlags: 0

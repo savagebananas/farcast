@@ -44,7 +44,7 @@ public class EnemyBase : MonoBehaviour
 
     void Start()
     {
-        
+        player = GameObject.Find("Player");
     }
 
     public float enemydDistanceFromPlayer()
@@ -54,11 +54,12 @@ public class EnemyBase : MonoBehaviour
         return Mathf.Sqrt(differenceX * differenceX + differenceY * differenceY); 
     }
 
-    public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector)
+    public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector, float effectMultipler)
     {
         enemyHurtState.damage = damage;
         enemyHurtState.knockbackPower = knockbackPower;
         enemyHurtState.attackingColliderToEnemyVector = attackingColliderToEnemyVector;
+        enemyHurtState.weaponMultiplier = effectMultipler;
         stateMachineManager.setNewState(enemyHurtState);
     }
 

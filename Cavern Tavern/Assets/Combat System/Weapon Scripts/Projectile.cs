@@ -12,16 +12,19 @@ public class Projectile : MonoBehaviour
 
     public float damage;
     public float knockbackPower;
+    public float effectMultiplier;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
         if (collision.gameObject.layer == 8)
         {
-            collision.gameObject.GetComponent<PlayerBase>().hurt(damage, knockbackPower, collision.gameObject.transform.position - transform.position);
+            collision.gameObject.GetComponent<PlayerBase>().hurt
+                (damage, knockbackPower, collision.gameObject.transform.position - transform.position);
         }
         if (collision.gameObject.layer == 10)
         {
-            collision.gameObject.GetComponent<EnemyBase>().hurt(damage, knockbackPower, (collision.gameObject.transform.position - transform.position).normalized);
+            collision.gameObject.GetComponent<EnemyBase>().hurt
+                (damage, knockbackPower, (collision.gameObject.transform.position - transform.position).normalized, effectMultiplier);
         }
         //add particles
         Destroy(gameObject);

@@ -52,7 +52,7 @@ public class SwordWeapon : HotbarItem
 
         //Hurts all enemies within attack range
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(SlashPosition(), weaponReach, enemyLayer);
-        for (int i = 0; i < enemiesToDamage.Length; i++) {enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized);}
+        for (int i = 0; i < enemiesToDamage.Length; i++) {enemiesToDamage[i].GetComponent<EnemyBase>().hurt(damage, knockbackPower, (Vector2)playerToWeaponReachVector.normalized, 1);}
     }
 
     #region Slash Position and Rotation
