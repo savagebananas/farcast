@@ -4,37 +4,38 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    public float health = 100;
-
-    public float moveSpeed;
-    public float dashSpeed;
-    public float dashLength;
-    public float dashCooldown;
-
+    public float maxHealth = 100;
+    public float health;
+    private Rigidbody2D rb;
+    public HealthBarUI healthBarUI;
+    
     public float knockbackDistance;
     public float knockbackDuration;
 
     public bool isHurt = false;
     private bool isDead = false;
 
-    private Rigidbody2D rb;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = maxHealth;
     }
 
     void Update()
     {
-        
+        health = Mathf.Clamp(health, 0, maxHealth);
+        if (Input.GetKeyDown("x"))
+        {
+            RestoreHealth(Random.Range(5f, 15f));
+        }
     }
 
-    #region hurt functions
+    #region hurt/knockback
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToPlayerVector)
     {
         isHurt = true;
-
         health -= damage;
+        healthBarUI.lerpTimer = 0f;
 
         if (health > 0)
         {
@@ -64,4 +65,10 @@ public class PlayerBase : MonoBehaviour
     }
 
     #endregion
+
+    public void RestoreHealth(float amount)
+    {
+        health += amount;
+        healthBarUI.lerpTimer = 0f;
+    }
 }

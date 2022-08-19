@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     private PlayerBase playerBase;
+    public HealthBarUI healthBarUI;
     private Rigidbody2D characterBody;
     private Vector2 inputMovement;
     private Renderer rend;
@@ -13,9 +14,11 @@ public class playerMovement : MonoBehaviour
     public float moveSpeed;
     public float dashSpeed;
     public float dashLength;
+    public float maxDashes = 2;
     public float amountOfDashes;
+    public float dashRegenLength;
+    private float nextRegenTime;
     public bool isDashing = false;
-
     
     private float activeMoveSpeed;
     
@@ -26,19 +29,28 @@ public class playerMovement : MonoBehaviour
         rend = GetComponent<Renderer>();
 
         activeMoveSpeed = moveSpeed;
-
         characterColor = rend.material.color;
+
+        amountOfDashes = maxDashes;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("space") && amountOfDashes > 0) StartCoroutine(dash());
-        movement();
+        Movement(); 
+        RegenerateDash();
+
+        if (Input.GetKeyDown("space") && amountOfDashes > 0 && 
+            (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))) //space pressed and movement key pressed
+        {
+            StartCoroutine(dash());
+            nextRegenTime = Time.time + dashRegenLength;
+        }
+
 
         rend.material.color = characterColor;
     }
 
-    void movement()
+    void Movement()
     {
         inputMovement.x = Input.GetAxisRaw("Horizontal");
         inputMovement.y = Input.GetAxisRaw("Vertical");
@@ -49,7 +61,6 @@ public class playerMovement : MonoBehaviour
         }
     }
 
-
     IEnumerator dash()
     {
         activeMoveSpeed = dashSpeed;
@@ -57,7 +68,7 @@ public class playerMovement : MonoBehaviour
         Physics2D.IgnoreLayerCollision(9, 10, true);
         characterColor.a = 0.6f;
         amountOfDashes -= 1;
-
+        healthBarUI.dashLerpTimer = 0f;
 
         yield return new WaitForSeconds(dashLength);
 
@@ -67,5 +78,16 @@ public class playerMovement : MonoBehaviour
         Physics2D.IgnoreLayerCollision(9, 10, false);
         characterColor.a = 1f;
     }
-        
+
+    void RegenerateDash()
+    {
+        if (amountOfDashes < maxDashes)
+        {
+            if (Time.time > nextRegenTime)
+            {
+                nextRegenTime = Time.time + dashRegenLength;
+                amountOfDashes++;
+            }
+        }
+    }
 }

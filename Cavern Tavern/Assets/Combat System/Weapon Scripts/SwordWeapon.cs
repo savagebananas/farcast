@@ -7,7 +7,7 @@ public class SwordWeapon : HotbarItem
     [Header("General Variables")]
     [Space(5)]
     public LayerMask enemyLayer;
-    private playerMovement playerMovement;
+    private PlayerMovement playerMovement;
     [HideInInspector] public float playerToCursorAngle;
     [HideInInspector] public Vector2 playerToWeaponReachVector;
 
@@ -31,7 +31,7 @@ public class SwordWeapon : HotbarItem
     void Start()
     {
         player = GameObject.Find("Player");
-        playerMovement = player.GetComponent<playerMovement>();
+        playerMovement = player.GetComponent<PlayerMovement>();
     } 
     
     public override void UseItem()
