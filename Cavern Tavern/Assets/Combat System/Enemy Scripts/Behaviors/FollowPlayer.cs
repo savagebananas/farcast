@@ -26,7 +26,7 @@ public class FollowPlayer : State
     {
         facePlayer();
 
-        if (enemyBase.enemydDistanceFromPlayer() <= attackRange)
+        if (enemyBase.enemydDistanceFromPlayer() <= attackRange) //Enemy is in attack range, then attack player
         {
             stateMachineManager.setNewState(attackState);
         }

@@ -29,7 +29,6 @@ public class Interactor : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.E) && isInteracting == true) //Exits the interaction using the same button
         {
-            invUiController.HideInventory();
             isInteracting = false;
         }
     }

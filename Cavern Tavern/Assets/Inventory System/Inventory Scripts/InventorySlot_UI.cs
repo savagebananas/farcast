@@ -25,6 +25,10 @@ public class InventorySlot_UI : MonoBehaviour
         ParentDisplay = transform.parent.GetComponent<InventoryDisplay>();
     }
 
+    private void Update()
+    {
+        UpdateUISlot();
+    }
     public void Init(InventorySlot slot)
     {
         assignedInventorySlot = slot;

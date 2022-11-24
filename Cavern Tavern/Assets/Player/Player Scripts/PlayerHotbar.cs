@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerHotbar : MonoBehaviour
 {
+    /*
+    Equips specific item from hotbar based on number pressed (1-5)
+    */
+
     public GameObject currentItem;
     public List<InventorySlot> hotbarSlots;
 
+    //Item Position References
     [SerializeField] private GameObject swordWeaponReference;
     [SerializeField] private GameObject rangedWeaponReference;
+    [SerializeField] private GameObject consumableReference;
 
     private int lastKeyPressed;
 
@@ -18,14 +24,23 @@ public class PlayerHotbar : MonoBehaviour
 
         swordWeaponReference = GameObject.Find("Sword Weapon Postion Reference");
         rangedWeaponReference = GameObject.Find("Ranged Weapon Position Reference");
+        consumableReference = GameObject.Find("Consumable Position Reference");
     }
 
     private void Update()
     {
-        SetEquippedItem();
+        HotbarInputController();
+        foreach(InventorySlot slot in hotbarSlots) //if amount of item in a slot is 0, destroy currentItem and update UI
+        {
+            if(slot.StackSize <= 0 && slot.itemData != null)
+            {
+                slot.ClearSlot();
+                Destroy(currentItem);
+            }
+        } 
     }
 
-    void SetEquippedItem()
+    void HotbarInputController()
     {
         if (Input.GetKeyDown("1"))
         {
@@ -72,18 +87,29 @@ public class PlayerHotbar : MonoBehaviour
 
     void InstantiateItem(int slotNum)
     {
-        if (hotbarSlots[slotNum].itemData.itemType == "Sword")
+        InventoryItemData itemData = hotbarSlots[slotNum].itemData;
+
+        if (itemData.itemType == "Sword")
         {
-            currentItem = (GameObject)Instantiate(hotbarSlots[slotNum].itemData.hotbarItem, swordWeaponReference.transform.position, Quaternion.Euler(0, 0, 0));
+            currentItem = (GameObject)Instantiate(itemData.hotbarItem, swordWeaponReference.transform.position, Quaternion.Euler(0, 0, 0));
             currentItem.transform.parent = swordWeaponReference.transform;
             currentItem.transform.localScale = new Vector3(1, 1, 1);
-            
+            currentItem.GetComponent<HotbarItem>().hotbarIndex = slotNum;
+
         }
-        else if (hotbarSlots[slotNum].itemData.itemType == "Ranged")
+        else if (itemData.itemType == "Ranged")
         {
-            currentItem = (GameObject)Instantiate(hotbarSlots[slotNum].itemData.hotbarItem, rangedWeaponReference.transform.position, rangedWeaponReference.transform.rotation);
+            currentItem = (GameObject)Instantiate(itemData.hotbarItem, rangedWeaponReference.transform.position, rangedWeaponReference.transform.rotation);
             currentItem.transform.parent = rangedWeaponReference.transform;
             currentItem.transform.localScale = new Vector3(1, 1, 1);
+            currentItem.GetComponent<HotbarItem>().hotbarIndex = slotNum;
+        }
+        else if (itemData.itemType == "Consumable")
+        {
+            currentItem = (GameObject)Instantiate(itemData.hotbarItem, consumableReference.transform.position, Quaternion.Euler(0, 0, 0));
+            currentItem.transform.parent = consumableReference.transform;
+            currentItem.transform.localScale = new Vector3(1, 1, 1);
+            currentItem.GetComponent<HotbarItem>().hotbarIndex = slotNum;
         }
     }
 }

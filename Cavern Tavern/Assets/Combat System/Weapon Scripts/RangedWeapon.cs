@@ -15,18 +15,11 @@ public class RangedWeapon : HotbarItem
 
     public float damage;
 
-
-
-    
-
-    void Update()
+    public void Update()
     {
         muzzleToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            UseItem();
-        }
+        
+        if (Input.GetMouseButtonDown(0)) UseItem();
     }    
     public override void UseItem()
     {

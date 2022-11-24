@@ -6,12 +6,12 @@ public class InventoryUIController : MonoBehaviour
 {
     public DynamicInventoryDisplay chestInventoryPanel;
     public GameObject chestInventoryUI;
-    public GameObject backpackUi;
+    public GameObject backpackUI;
 
     private void Awake()
     {
         chestInventoryUI.SetActive(false);
-        backpackUi.SetActive(false);
+        backpackUI.SetActive(false);
     }
 
     private void OnEnable()
@@ -26,20 +26,32 @@ public class InventoryUIController : MonoBehaviour
 
     void Update()
     {
-        if (chestInventoryPanel.gameObject.activeInHierarchy && Input.GetKeyDown(KeyCode.G)) chestInventoryPanel.gameObject.SetActive(false);
+        if (backpackUI.activeInHierarchy == false && Input.GetKeyDown(KeyCode.G)) //Opens Inventory UI
+        {
+            backpackUI.SetActive(true);
+        }
+        else if (backpackUI.activeInHierarchy == true && Input.GetKeyDown(KeyCode.G))//Closes Inventory UI
+        {
+            backpackUI.SetActive(false);
+        }
+        if (chestInventoryUI.activeInHierarchy && Input.GetKeyDown(KeyCode.E)) //Closes Chest UI
+        { 
+            chestInventoryUI.SetActive(false);
+            backpackUI.SetActive(false);
+        } 
     }
 
     void DisplayInventory(InventorySystem invToDisplay)
     {
         chestInventoryUI.SetActive(true);
-        backpackUi.SetActive(true);
+        backpackUI.SetActive(true);
         chestInventoryPanel.RefreshDynamicInventory(invToDisplay);
     }
 
     public void HideInventory()
     {
         chestInventoryUI.SetActive(false);
-        backpackUi.SetActive(false);
+        backpackUI.SetActive(false);
     }
 
 

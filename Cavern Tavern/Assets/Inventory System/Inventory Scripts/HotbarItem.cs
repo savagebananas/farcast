@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class HotbarItem : MonoBehaviour
 {
     public GameObject player;
-
+    public int hotbarIndex;
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -16,6 +16,7 @@ public abstract class HotbarItem : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             UseItem();
+            //Debug.Log("use item");
         }
     }
     public abstract void UseItem();
