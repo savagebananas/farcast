@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19bed9896785e7469150adb1316964e, type: 3}
   m_Name: Health Potion
   m_EditorClassIdentifier: 
-  id: 0
-  displayName: 
-  description: 
-  itemType: 
-  itemIcon: {fileID: 0}
-  maxStackSize: 0
-  goldValue: 0
-  hotbarItem: {fileID: 0}
+  id: 2
+  displayName: Health Potion
+  description: A basic red potion...I wonder what it does
+  itemType: Consumable
+  itemIcon: {fileID: -741623664, guid: f880e95d10845d2449a98d486d7f24e8, type: 3}
+  maxStackSize: 10
+  goldValue: 50
+  hotbarItem: {fileID: 4294045515954324394, guid: 7defa7172affbe449a89b6c707f7e1e0, type: 3}
