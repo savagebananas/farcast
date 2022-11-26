@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class HealthConsumable : HotbarItem
 {
+    /*
+    Any item that can be consumed for health 
+    */
+
     public float healthAmount;
     private InventorySlot inventorySlot;
     public Animator referenceAnimator;
+    [SerializeField] SpriteRenderer itemSprite;
+
+    [SerializeField] float cooldownTime;
+    float nextCooldownEndTime = 0f;
 
     public void Start()
     {
@@ -14,16 +22,29 @@ public class HealthConsumable : HotbarItem
         inventorySlot = player.GetComponent<PlayerHotbar>().hotbarSlots[hotbarIndex];
         referenceAnimator = GameObject.Find("Consumable Position Reference").GetComponent<Animator>();
     }
-    public override void UseItem()
+
+    private void Update()
     {
-        player.GetComponent<PlayerBase>().RestoreHealth(healthAmount);
-        referenceAnimator.SetTrigger("ConsumeItem");
-        StartCoroutine(RemoveFromStack());
+        if (Time.time >= nextCooldownEndTime)
+        {
+            itemSprite.color = new Color(1f, 1f, 1f, 1f);
+
+            if (Input.GetMouseButtonDown(0)) UseItem();
+        }
     }
 
-    IEnumerator RemoveFromStack()
+    public override void UseItem()
     {
-        yield return new WaitForSeconds(0.2f);
-        inventorySlot.RemoveFromStack(1);
+            StartCoroutine(ConsumeItem());
+            nextCooldownEndTime = Time.time + cooldownTime;
+    }
+
+    IEnumerator ConsumeItem()
+    {
+        referenceAnimator.SetTrigger("ConsumeItem");//play animation first
+        yield return new WaitForSeconds(0.2f); //wait for animation to end
+        player.GetComponent<PlayerBase>().RestoreHealth(healthAmount); //Add health amount to player health
+        inventorySlot.RemoveFromStack(1); //Take one out of inventory slot
+        itemSprite.color = new Color(1f, 1f, 1f, 0f); //Make sprite invisible until cooldown over
     }
 }

@@ -11,7 +11,7 @@ public class HealthBarUI : MonoBehaviour
     public float health;
     public float lerpTimer;
     public float maxHealth;
-    public float chipSpeed = 2f;
+    public float chipSpeed = 3f;
     public Image frontHealthbar;
     public Image backHealthbar;
     public Color greenColor;
@@ -65,7 +65,7 @@ public class HealthBarUI : MonoBehaviour
         }
     }
 
-    private void UpdateDashUI()
+    private void UpdateDashUI() //Really bad code, needs revamp
     {
         float maxDashes = playerMovement.maxDashes;
         float amountOfDashes = playerMovement.amountOfDashes;

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-    public Transform interactionPoint;
     public LayerMask interactionLayer;
     public float interactionPointRadius = 1f;
     public bool isInteracting = false;
@@ -12,7 +11,7 @@ public class Interactor : MonoBehaviour
 
     private void Update()
     {
-        var colliders = Physics2D.OverlapCircleAll(interactionPoint.position, interactionPointRadius);
+        var colliders = Physics2D.OverlapCircleAll(this.transform.position, interactionPointRadius);
         
         if (Input.GetKeyDown(KeyCode.E) && isInteracting == false) //interacts if button pressed and player is not already interacting
         {
@@ -53,6 +52,6 @@ public class Interactor : MonoBehaviour
     {
         Gizmos.color = Color.green;
         //Gizmos.DrawCircle(interactionPoint.position, interactionPointRadius);
-        Gizmos.DrawWireSphere(interactionPoint.position, interactionPointRadius);
+        Gizmos.DrawWireSphere(this.transform.position, interactionPointRadius);
     }
 }

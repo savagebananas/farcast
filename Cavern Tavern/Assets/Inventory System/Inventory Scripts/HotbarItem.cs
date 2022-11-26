@@ -16,7 +16,6 @@ public abstract class HotbarItem : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             UseItem();
-            //Debug.Log("use item");
         }
     }
     public abstract void UseItem();

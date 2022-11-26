@@ -755,7 +755,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 656b86c7607ecb24d96a28ed6edfcfe5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2284,7 +2284,7 @@ GameObject:
   - component: {fileID: 589761901}
   m_Layer: 0
   m_Name: Bone Bow Item
-  m_TagString: Untagged
+  m_TagString: ItemDrop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2301,8 +2301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48285cc477bb72e4c8d39e48352efe23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRadius: 1
   itemData: {fileID: 11400000, guid: 63bff62f760abf149b1bcc14114ea260, type: 2}
+  amount: 0
 --- !u!58 &589761902
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2313,7 +2313,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -3297,7 +3297,7 @@ GameObject:
   - component: {fileID: 781901763}
   m_Layer: 0
   m_Name: Dwarwen Greatsword Item
-  m_TagString: Untagged
+  m_TagString: ItemDrop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3314,8 +3314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48285cc477bb72e4c8d39e48352efe23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRadius: 1
   itemData: {fileID: 11400000, guid: 1f2cc2566ed14394e90cdb214a8af186, type: 2}
+  amount: 0
 --- !u!58 &781901764
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3326,7 +3326,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -3340,7 +3340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781901762}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.72, y: -5.67, z: -0.1500752}
+  m_LocalPosition: {x: 4.03, y: -6.39, z: -0.1500752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23716,7 +23716,7 @@ GameObject:
   - component: {fileID: 1497366460}
   m_Layer: 0
   m_Name: Health Potion
-  m_TagString: Untagged
+  m_TagString: ItemDrop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23749,8 +23749,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48285cc477bb72e4c8d39e48352efe23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRadius: 1
   itemData: {fileID: 11400000, guid: 78d8870c69710ae4594a7f18e4383919, type: 2}
+  amount: 0
 --- !u!58 &1497366461
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -23761,7 +23761,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -24555,10 +24555,11 @@ GameObject:
   - component: {fileID: 1703597356}
   - component: {fileID: 1703597361}
   - component: {fileID: 1703597352}
+  - component: {fileID: 1703597365}
   - component: {fileID: 1703597359}
-  - component: {fileID: 1703597357}
   - component: {fileID: 1703597362}
   - component: {fileID: 1703597363}
+  - component: {fileID: 1703597357}
   - component: {fileID: 1703597364}
   m_Layer: 8
   m_Name: Player
@@ -24712,7 +24713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b1e56f6f473904c8c1be404d1976e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionPoint: {fileID: 1703597355}
   interactionLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -24798,6 +24798,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1703597365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703597351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39632a2af2ade14409828ab473ce2df5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemGettingPickedUp: {fileID: 0}
+  pickupRadius: 2
+  playerInventory: {fileID: 1314420855}
 --- !u!1001 &1756284840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27562,8 +27577,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.54294235, g: 0.68069655, b: 0.7830189, a: 1}
+  m_Sprite: {fileID: 826637725, guid: da4ea5c568dfdb34dbde2dd053f42705, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -27649,7 +27664,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.776908, y: 1}
+    m_SensorSize: {x: 1.7782102, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
