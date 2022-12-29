@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 4551705367417362828}
   - component: {fileID: 5897000034372175947}
   - component: {fileID: 3498573292529955057}
+  - component: {fileID: 5915159345273167038}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -124,8 +125,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2018037877
-  m_SortingLayer: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 656b86c7607ecb24d96a28ed6edfcfe5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  hotbarIndex: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -163,3 +165,18 @@ MonoBehaviour:
   mainWeaponReference: {fileID: 0}
   pivotPoint: {fileID: 3047631613337785294}
   swordSlashAnimation: {fileID: 2372449231335180230, guid: e242e9ee8e1be2b40bf20e6f56ebafe4, type: 3}
+--- !u!114 &5915159345273167038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581822220707166277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7278995f10a88a44ab801d1a50d4574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 5897000034372175947}
+  offset: 0
+  attachedToPlayer: 1

@@ -140,7 +140,7 @@ public class EnemyPatrol : State
     void moveTowardsRoamPoint()
     {
         animator.SetTrigger("isWalking");
-        enemyBase.transform.position = Vector2.MoveTowards(enemyBase.transform.position, nextRoamPosition, speed * Time.deltaTime);
+        enemyBase.transform.position = Vector2.MoveTowards(enemyBase.transform.position, nextRoamPosition, speed * 0.75f * Time.deltaTime);
 
         if (enemyBase.transform.position.x < nextRoamPosition.x) //moving right
         {

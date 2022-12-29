@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8073929943732261393}
   - component: {fileID: 3804963260078002015}
   - component: {fileID: -6331866955666994138}
+  - component: {fileID: -5056665378573555426}
   m_Layer: 0
   m_Name: Energy Orb
   m_TagString: Untagged
@@ -4842,7 +4843,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 649796965
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4928,6 +4929,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-5056665378573555426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9014620443985367804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7278995f10a88a44ab801d1a50d4574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
+  offset: 0
+  attachedToPlayer: 0
 --- !u!1 &9126032276932441694
 GameObject:
   m_ObjectHideFlags: 0
@@ -4939,6 +4955,7 @@ GameObject:
   - component: {fileID: 5825234915657592696}
   - component: {fileID: 1720590838580542628}
   - component: {fileID: 215241453141482814}
+  - component: {fileID: 1078556308030451391}
   m_Layer: 0
   m_Name: Glow Effect
   m_TagString: Untagged
@@ -9766,7 +9783,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 649796965
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -9798,3 +9815,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1078556308030451391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126032276932441694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7278995f10a88a44ab801d1a50d4574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
+  offset: 0
+  attachedToPlayer: 0
