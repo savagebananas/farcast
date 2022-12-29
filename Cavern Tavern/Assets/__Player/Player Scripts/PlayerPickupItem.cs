@@ -8,6 +8,7 @@ public class PlayerPickupItem : MonoBehaviour
 
     [SerializeField] float pickupRadius;
     [SerializeField] InventoryHolder playerInventory;
+    [SerializeField] InventoryHolder playerHotbar;
 
     // Update is called once per frame
     void Update()
@@ -23,7 +24,9 @@ public class PlayerPickupItem : MonoBehaviour
         if(itemGettingPickedUp = FindNearestItem())
         {
             var itemData = itemGettingPickedUp.GetComponentInChildren<ItemGameObject>();
-            playerInventory.InventorySystem.AddToInventory(itemData.item, itemData.amount);
+            if (playerHotbar.InventorySystem.AddToInventory(itemData.item, itemData.amount)){}
+            else playerInventory.InventorySystem.AddToInventory(itemData.item, itemData.amount);
+            
             Destroy(itemData);
             StartCoroutine(DestroyItemVisuals());
         }
@@ -43,7 +46,7 @@ public class PlayerPickupItem : MonoBehaviour
 
     IEnumerator DestroyItemVisuals()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         Destroy(itemGettingPickedUp);
     }
 

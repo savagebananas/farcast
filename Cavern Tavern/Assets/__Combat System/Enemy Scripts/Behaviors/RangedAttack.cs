@@ -50,14 +50,16 @@ public class RangedAttack : State
 
     void ShootProjectile()
     {
+        //Angles
         Vector2 enemyToPlayerVector = playerBase.transform.position - transform.position;
         enemyToPlayerVector.Normalize();
         float enemyToPlayerAngle = Mathf.Atan2(enemyToPlayerVector.y, enemyToPlayerVector.x) * Mathf.Rad2Deg;
 
+        //Instantiate
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.Euler(0, 0, enemyToPlayerAngle - 45));
         Projectile projectileScript = projectile.GetComponent<Projectile>();
 
-
+        //Assign Values
         projectile.GetComponent<Rigidbody2D>().AddForce(enemyToPlayerVector.normalized * fireForce, ForceMode2D.Impulse);
         projectileScript.damage = damage;
         projectileScript.damagePlayer = true;

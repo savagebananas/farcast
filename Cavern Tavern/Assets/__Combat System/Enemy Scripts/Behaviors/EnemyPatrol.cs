@@ -16,7 +16,7 @@ public class EnemyPatrol : State
 
     [Header("Roaming Variables")]
     [Space(5)]
-    public float roamingPointRange;
+    public float maxRoamingDistance;
     public Transform[] patrolPoints;
     private Vector2 nextRoamPosition;
     private float timeBetweenRoams;
@@ -154,8 +154,8 @@ public class EnemyPatrol : State
 
     private void SearchWalkPoint()
     {
-        float randomX = Random.Range(-roamingPointRange, roamingPointRange);
-        float randomY = Random.Range(-roamingPointRange, roamingPointRange);
+        float randomX = Random.Range(-maxRoamingDistance, maxRoamingDistance);
+        float randomY = Random.Range(-maxRoamingDistance, maxRoamingDistance);
         nextRoamPosition = new Vector2(enemyBase.transform.position.x + randomX, enemyBase.transform.position.y + randomY);
     }
 

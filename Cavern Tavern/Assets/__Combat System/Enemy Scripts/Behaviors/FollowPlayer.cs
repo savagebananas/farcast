@@ -41,9 +41,13 @@ public class FollowPlayer : State
         }
     }
 
-    public override void OnLateUpdate()
-    {
+    public override void OnLateUpdate() { }
 
+    Vector3 randomPositionNearPlayer()
+    {
+        float x = player.transform.position.x + Random.Range(-15,15);
+        float y = player.transform.position.y + Random.Range(-15,15);
+        return new Vector3(x, y, 0);
     }
 
     void facePlayer()
