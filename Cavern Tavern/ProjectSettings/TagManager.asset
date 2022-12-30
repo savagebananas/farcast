@@ -47,12 +47,3 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player, enemies, npcs
-    uniqueID: 3442318965
-    locked: 0
-  - name: Weapon
-    uniqueID: 2276929419
-    locked: 0
-  - name: Particles
-    uniqueID: 649796965
-    locked: 0

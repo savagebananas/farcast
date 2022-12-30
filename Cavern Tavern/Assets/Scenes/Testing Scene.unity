@@ -197,7 +197,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -852648331
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1392994848, guid: 65edb8cd61f8b1d4fa1793555cd1c9d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 6577500}
   offset: 0
+  attachedToPlayer: 0
 --- !u!1 &15308951
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,14 +314,50 @@ MonoBehaviour:
   - name: cave theme 1
     audioClip: {fileID: 8300000, guid: 40646e3e3cee1cb44b0ca23cb447c906, type: 3}
     volume: 1
-    pitch: 0
-    loop: 0
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
-  - name: 
-    audioClip: {fileID: 0}
+  - name: cave theme 2
+    audioClip: {fileID: 8300000, guid: e781f69116f514f43a10ce66966efcc4, type: 3}
     volume: 1
     pitch: 1
-    loop: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: dungeon theme 1
+    audioClip: {fileID: 8300000, guid: 08967e727aba1124497986f7194b41da, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: dungeon theme 2
+    audioClip: {fileID: 8300000, guid: 80cf914452b83ac4eb9ab04001fa07ae, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: field theme 1
+    audioClip: {fileID: 8300000, guid: 2bd0e7df52e0e4d40a1007fc0a70d3ec, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: field theme 2
+    audioClip: {fileID: 8300000, guid: 28a91e10c2da5e344b41287c3ea5b709, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: night theme 1
+    audioClip: {fileID: 8300000, guid: b5a01df52bd9d05418e7cd5caaeb36b7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: night theme 2
+    audioClip: {fileID: 8300000, guid: cf80fcf1935219c4e8c1cbd425194cee, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
 --- !u!224 &20278186 stripped
 RectTransform:
@@ -828,7 +865,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -852648331
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1348572742, guid: 646bf1fc922209747971b4d8a4fe0bee, type: 3}
   m_Color: {r: 0.8254717, g: 0.8661595, b: 1, a: 1}
@@ -2795,7 +2832,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -852648331
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 65c20b7c79169f942952d67e830adbf6, type: 3}
   m_Color: {r: 0.7160768, g: 0.6650944, b: 1, a: 1}
@@ -2837,6 +2874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 664648735}
   offset: -1.5
+  attachedToPlayer: 0
 --- !u!1001 &666198541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3374,7 +3412,7 @@ MonoBehaviour:
   stateMachineManager: {fileID: 2012199314}
   enemyHurtState: {fileID: 1582883987}
   player: {fileID: 0}
-  roamingPointRange: 0
+  roamingPointRange: 5
   knockbackDuration: 0.25
   knockbackDistance: 5
 --- !u!61 &742339863
@@ -23339,8 +23377,9 @@ GameObject:
   - component: {fileID: 1464563173}
   - component: {fileID: 1464563174}
   - component: {fileID: 1464563175}
+  - component: {fileID: 1464563176}
   m_Layer: 8
-  m_Name: Image
+  m_Name: Player Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23400,7 +23439,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -852648331
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3eebd7c76f698834c8f7bf8a837ad46c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -23427,6 +23466,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 1464563174}
   offset: 0
+  attachedToPlayer: 0
+--- !u!61 &1464563176
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464563172}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.063, y: 0.1375}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2, y: 2.0625}
+    newSize: {x: 2, y: 2.0625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.88, y: 0.15}
+  m_EdgeRadius: 0
 --- !u!1 &1475605963
 GameObject:
   m_ObjectHideFlags: 0
@@ -24451,7 +24517,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.10475138, y: -0.3519647}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -24462,7 +24528,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.94133943, y: 1.7039294}
   m_EdgeRadius: 0
 --- !u!114 &1703597357
 MonoBehaviour:
@@ -24596,7 +24662,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -852648331
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
