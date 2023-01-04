@@ -91,10 +91,10 @@ public class PlayerHotbar : MonoBehaviour
 
         if (itemData.itemType == "Sword")
         {
-            currentItem = (GameObject)Instantiate(itemData.hotbarItem, swordWeaponReference.transform.position, Quaternion.Euler(0, 0, 0));
+            currentItem = (GameObject)Instantiate(itemData.hotbarItem, swordWeaponReference.transform.position, swordWeaponReference.transform.rotation);
             currentItem.transform.parent = swordWeaponReference.transform;
             currentItem.transform.localScale = new Vector3(1, 1, 1);
-            currentItem.GetComponentInChildren<HotbarItem>().hotbarIndex = slotNum;
+            //currentItem.GetComponentInChildren<HotbarItem>().hotbarIndex = slotNum;
 
         }
         else if (itemData.itemType == "Ranged")
@@ -102,14 +102,14 @@ public class PlayerHotbar : MonoBehaviour
             currentItem = (GameObject)Instantiate(itemData.hotbarItem, rangedWeaponReference.transform.position, rangedWeaponReference.transform.rotation);
             currentItem.transform.parent = rangedWeaponReference.transform;
             currentItem.transform.localScale = new Vector3(1, 1, 1);
-            currentItem.GetComponentInChildren<HotbarItem>().hotbarIndex = slotNum;
+            //currentItem.GetComponentInChildren<HotbarItem>().hotbarIndex = slotNum;
         }
         else if (itemData.itemType == "Consumable")
         {
             currentItem = (GameObject)Instantiate(itemData.hotbarItem, consumableReference.transform.position, Quaternion.Euler(0, 0, 0));
             currentItem.transform.parent = consumableReference.transform;
             currentItem.transform.localScale = new Vector3(1, 1, 1);
-            currentItem.GetComponent<HotbarItem>().hotbarIndex = slotNum;
+            //currentItem.GetComponent<HotbarItem>().hotbarIndex = slotNum;
         }
     }
 }

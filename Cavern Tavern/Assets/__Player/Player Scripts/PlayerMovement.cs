@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour
     public HealthBarUI healthBarUI;
     private Rigidbody2D characterBody;
     private Vector2 inputMovement;
-    private Renderer rend;
-    private Color characterColor;
 
     public float moveSpeed;
     public float dashSpeed;
@@ -26,10 +24,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerBase = GetComponent<PlayerBase>();
         characterBody = GetComponent<Rigidbody2D>();
-        rend = GetComponent<Renderer>();
 
         activeMoveSpeed = moveSpeed;
-        characterColor = rend.material.color;
 
         amountOfDashes = maxDashes;
     }
@@ -45,9 +41,6 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(dash());
             nextRegenTime = Time.time + dashRegenLength;
         }
-
-
-        rend.material.color = characterColor;
     }
 
     void Movement()
@@ -66,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
         activeMoveSpeed = dashSpeed;
         isDashing = true;
         Physics2D.IgnoreLayerCollision(9, 10, true);
-        characterColor.a = 0.6f;
         amountOfDashes -= 1;
         healthBarUI.dashLerpTimer = 0f;
 
@@ -76,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
 
         Physics2D.IgnoreLayerCollision(9, 10, false);
-        characterColor.a = 1f;
     }
 
     void RegenerateDash()

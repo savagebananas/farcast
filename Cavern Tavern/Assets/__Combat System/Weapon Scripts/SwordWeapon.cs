@@ -24,13 +24,10 @@ public class SwordWeapon : HotbarItem
     public GameObject pivotPoint;
     public GameObject swordSlashAnimation;
 
-    private void Awake()
-    {
-        mainWeaponReference = GameObject.Find("WeaponRotationReference");
-    }
     void Start()
     {
         player = GameObject.Find("Player");
+        mainWeaponReference = GameObject.Find("WeaponRotationReference");
         playerMovement = player.GetComponent<PlayerMovement>();
     } 
     

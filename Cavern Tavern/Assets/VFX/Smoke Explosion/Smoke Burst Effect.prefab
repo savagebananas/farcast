@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8112009116763587415}
   - component: {fileID: 7562562428169801491}
   - component: {fileID: 1319207128555866818}
+  - component: {fileID: 1781532787638073771}
   m_Layer: 0
   m_Name: Smoke Explosion
   m_TagString: Untagged
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 649796965
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7909fa21eaf8bcb44903af8e23e49c1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,6 +106,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1781532787638073771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709023917696506290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7278995f10a88a44ab801d1a50d4574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 7562562428169801491}
+  offset: 0
+  attachedToPlayer: 0
 --- !u!1 &2617974842885477442
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +132,7 @@ GameObject:
   - component: {fileID: 3172474520124859683}
   - component: {fileID: 7938390157215987801}
   - component: {fileID: 7512829174102129489}
+  - component: {fileID: 8125363714367023576}
   m_Layer: 0
   m_Name: Smoke Particles
   m_TagString: Untagged
@@ -4943,7 +4960,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 649796965
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4975,6 +4992,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8125363714367023576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617974842885477442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7278995f10a88a44ab801d1a50d4574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
+  offset: 0
+  attachedToPlayer: 0
 --- !u!1 &9189012742142532560
 GameObject:
   m_ObjectHideFlags: 0

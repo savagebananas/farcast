@@ -31,7 +31,7 @@ public class SetOrderInLayer : MonoBehaviour
     {
         if (referenceObject != null)
         {
-            renderer.sortingOrder = referenceObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            renderer.sortingOrder = referenceObject.GetComponent<SpriteRenderer>().sortingOrder + 10;
         }
         else
         {
