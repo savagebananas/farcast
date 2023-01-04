@@ -42,7 +42,7 @@ public class SetOrderInLayer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y + offset, 0), 0.05f);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y + offset, 0), 0.1f);
     }
 }

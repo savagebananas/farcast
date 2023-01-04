@@ -8,5 +8,5 @@ public interface IInteractable
     public UnityAction<IInteractable> OnInteractionComplete { get; set; }
 
     public void Interact(Interactor interactor, out bool interactSuccessful);
-    public void EndInteraction();
+    public void EndInteraction(Interactor interactor, out bool interactSuccessful);
 }

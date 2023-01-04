@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 8
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -1838,7 +1838,7 @@ TextureImporter:
     nameFileIdTable:
       Bonsai Tree 1: -1391890648
       Stump 1: 173552855
-      Trees++_45: 625762644
+      Trees++_56: 1920920019
       Big Tree 2: -1747823742
       Trees++_19: 919537927
       Trees++_48: 279167314
@@ -1920,7 +1920,7 @@ TextureImporter:
       Trees++_84: -349339039
       Small Tree 1: -1586440415
       Trees++_50: 1094633709
-      Trees++_56: 1920920019
+      Trees++_45: 625762644
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -22,7 +22,7 @@ public class setWeaponPosition : MonoBehaviour
 
     void setPosition()
     {
-        transform.position = player.transform.position + new Vector3(0f, -0.5f, -1f);
+        transform.position = player.transform.position + new Vector3(0f, -0.75f, -1f);
     }
 
     void setRotation()

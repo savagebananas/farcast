@@ -22,13 +22,22 @@ public class Interactor : MonoBehaviour
                 {
                     isInteracting = true;
                     StartInteraction(interactable);
+                    //Debug.Log("Start interaction");
                 } 
             }
         }
 
         else if (Input.GetKeyDown(KeyCode.E) && isInteracting == true) //Exits the interaction using the same button
         {
-            isInteracting = false;
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                var interactable = colliders[i].GetComponent<IInteractable>();
+                if (interactable != null)
+                {
+                    isInteracting = false;
+                    EndInteraction(interactable);
+                }
+            }
         }
     }
 
@@ -43,15 +52,15 @@ public class Interactor : MonoBehaviour
         isInteracting = true;
     }
 
-    void EndInteraction()
+    void EndInteraction(IInteractable interactable)
     {
+        interactable.EndInteraction(this, out bool interactSuccessful);
         isInteracting = false;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        //Gizmos.DrawCircle(interactionPoint.position, interactionPointRadius);
         Gizmos.DrawWireSphere(this.transform.position, interactionPointRadius);
     }
 }

@@ -13,9 +13,10 @@ public class ChestInventory : InventoryHolder, IInteractable
         interactSuccessful = true;
     }
 
-    public void EndInteraction()
+    public void EndInteraction(Interactor interactor, out bool interactSuccessful)
     {
-        throw new System.NotImplementedException();
+        OnDynamicInventoryDisplayDestroy?.Invoke(inventorySystem);
+        interactSuccessful = true;
     }
 
 

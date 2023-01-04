@@ -17,11 +17,13 @@ public class InventoryUIController : MonoBehaviour
     private void OnEnable()
     {
         InventoryHolder.OnDynamicInventoryDisplayRequested += DisplayInventory;
+        InventoryHolder.OnDynamicInventoryDisplayDestroy += HideInventory;
     }
 
     private void OnDisable()
     {
         InventoryHolder.OnDynamicInventoryDisplayRequested -= DisplayInventory;
+        InventoryHolder.OnDynamicInventoryDisplayDestroy -= HideInventory;
     }
 
     void Update()
@@ -34,11 +36,6 @@ public class InventoryUIController : MonoBehaviour
         {
             backpackUI.SetActive(false);
         }
-        if (chestInventoryUI.activeInHierarchy && Input.GetKeyDown(KeyCode.E)) //Closes Chest UI
-        { 
-            chestInventoryUI.SetActive(false);
-            backpackUI.SetActive(false);
-        } 
     }
 
     void DisplayInventory(InventorySystem invToDisplay)
@@ -48,7 +45,7 @@ public class InventoryUIController : MonoBehaviour
         chestInventoryPanel.RefreshDynamicInventory(invToDisplay);
     }
 
-    public void HideInventory()
+    void HideInventory(InventorySystem invToDisplay)
     {
         chestInventoryUI.SetActive(false);
         backpackUI.SetActive(false);
