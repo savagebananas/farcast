@@ -49,7 +49,7 @@ public class WeaponState : State
 
     public void UseItem()
     {
-        if (Time.time >= nextAttackAllowedTime && playerMovement.isDashing == false)
+        if (Time.time >= nextAttackAllowedTime && playerMovement.isDashing == false && TimeManager.isPaused == false)
         {
             swordAttack();
 

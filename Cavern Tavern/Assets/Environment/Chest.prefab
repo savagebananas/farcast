@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6861698878139490322}
   - component: {fileID: 6861698878139490323}
-  - component: {fileID: 6861698878139490324}
   - component: {fileID: 6861698878139490321}
+  - component: {fileID: 6861698878139490324}
   - component: {fileID: 6861698878139490320}
   m_Layer: 7
   m_Name: Chest
@@ -87,21 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &6861698878139490324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6861698878139490325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecce8fede20b6244ca684a151a5776d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventorySize: 20
-  inventorySystem:
-    inventorySlots: []
 --- !u!61 &6861698878139490321
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -128,6 +113,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1666666, y: 0.9166667}
   m_EdgeRadius: 0
+--- !u!114 &6861698878139490324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861698878139490325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecce8fede20b6244ca684a151a5776d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySize: 20
+  inventorySystem:
+    inventorySlots: []
 --- !u!114 &6861698878139490320
 MonoBehaviour:
   m_ObjectHideFlags: 0

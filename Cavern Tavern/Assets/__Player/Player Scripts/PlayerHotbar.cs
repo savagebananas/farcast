@@ -17,6 +17,7 @@ public class PlayerHotbar : MonoBehaviour
     [SerializeField] private GameObject consumableReference;
 
     private int lastKeyPressed;
+    private int equipedItemNumber;
 
     private void Start()
     {
@@ -28,41 +29,49 @@ public class PlayerHotbar : MonoBehaviour
     }
 
     private void Update()
-    {
-        HotbarInputController();
-        foreach(InventorySlot slot in hotbarSlots) //if amount of item in a slot is 0, destroy currentItem and update UI
-        {
-            if(slot.StackSize <= 0 && slot.itemData != null)
+    {   
+        if(TimeManager.isPaused == false) HotbarInputController();
+
+        for(int i = 0; i < hotbarSlots.Count; i++) //updates equiped item number
+        { 
+            if (i == lastKeyPressed - 1)
             {
-                slot.ClearSlot();
-                Destroy(currentItem);
+                equipedItemNumber = i;
             }
-        } 
+        }
+
+        if (hotbarSlots[equipedItemNumber].itemData == null || hotbarSlots[equipedItemNumber].StackSize <= 0)
+        {
+            hotbarSlots[equipedItemNumber].ClearSlot();
+            Destroy(currentItem);
+        }
     }
+
+
 
     void HotbarInputController()
     {
-        if (Input.GetKeyDown("1"))
+        if (Input.GetKeyDown("1") && lastKeyPressed != 1)
         {
             EquipItem(1);
             lastKeyPressed = 1;
         }
-        if (Input.GetKeyDown("2"))
+        if (Input.GetKeyDown("2") && lastKeyPressed != 2)
         {
             EquipItem(2);
             lastKeyPressed = 2;
         }
-        if (Input.GetKeyDown("3"))
+        if (Input.GetKeyDown("3") && lastKeyPressed != 3)
         {
             EquipItem(3);
             lastKeyPressed = 3;
         }
-        if (Input.GetKeyDown("4"))
+        if (Input.GetKeyDown("4") && lastKeyPressed != 4)
         {
             EquipItem(4);
             lastKeyPressed = 4;
         }
-        if (Input.GetKeyDown("5"))
+        if (Input.GetKeyDown("5") && lastKeyPressed != 5)
         {
             EquipItem(5);
             lastKeyPressed = 5;

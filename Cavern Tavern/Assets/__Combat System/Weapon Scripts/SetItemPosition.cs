@@ -8,6 +8,24 @@ public class SetItemPosition : MonoBehaviour
     private bool facingRight;
     private bool facingLeft;
 
+    public static SetItemPosition instance;
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+    }
+
     void Update()
     {
         setPosition();

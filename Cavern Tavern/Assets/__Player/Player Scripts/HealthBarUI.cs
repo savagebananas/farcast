@@ -8,16 +8,16 @@ public class HealthBarUI : MonoBehaviour
     public PlayerBase playerBase;
     public PlayerMovement playerMovement;
 
-    public float health;
-    public float lerpTimer;
-    public float maxHealth;
-    public float chipSpeed = 3f;
+    private float health;
+    [HideInInspector] public float lerpTimer;
+    private float maxHealth;
+    public float chipSpeed;
     public Image frontHealthbar;
     public Image backHealthbar;
     public Color greenColor;
     public Color yellowColor;
 
-    public float dashLerpTimer;
+    [HideInInspector] public float dashLerpTimer;
     public Image frontDashbar1;
     public Image backDashbar1;
     public Image frontDashbar2;
@@ -29,7 +29,13 @@ public class HealthBarUI : MonoBehaviour
         health = playerBase.health;
         maxHealth = playerBase.maxHealth;
 
-    }
+        //frontHealthbar = Canvas.
+        //backHealthbar = GameObject.Find();
+        //frontDashbar1 = GameObject.Find();
+        //backDashbar1 = GameObject.Find();
+        //frontDashbar2 = GameObject.Find();
+        //backDashbar2 = GameObject.Find();
+}
 
     void Update()
     {

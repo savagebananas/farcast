@@ -15,6 +15,19 @@ public class PlayerBase : MonoBehaviour
     public bool isHurt = false;
     private bool isDead = false;
 
+    public static PlayerBase instance;
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,10 +37,6 @@ public class PlayerBase : MonoBehaviour
     void Update()
     {
         health = Mathf.Clamp(health, 0, maxHealth);
-        if (Input.GetKeyDown("x"))
-        {
-            RestoreHealth(Random.Range(5f, 15f));
-        }
     }
 
     #region hurt/knockback

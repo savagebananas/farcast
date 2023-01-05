@@ -7,7 +7,6 @@ public class Interactor : MonoBehaviour
     public LayerMask interactionLayer;
     public float interactionPointRadius = 1f;
     public bool isInteracting = false;
-    public InventoryUIController invUiController;
 
     private void Update()
     {
@@ -22,7 +21,6 @@ public class Interactor : MonoBehaviour
                 {
                     isInteracting = true;
                     StartInteraction(interactable);
-                    //Debug.Log("Start interaction");
                 } 
             }
         }

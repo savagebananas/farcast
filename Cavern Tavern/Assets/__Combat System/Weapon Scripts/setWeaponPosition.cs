@@ -8,16 +8,38 @@ using UnityEngine;
 IMPORTANT: RANGED WEAPONS WILL NOT BE FLIPPING
  */
 
-public class setWeaponPosition : MonoBehaviour
+public class SetWeaponPosition : MonoBehaviour
 {
     public GameObject player;
     private bool facingRight;
     private bool facingLeft;
 
+    public static SetWeaponPosition instance;
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+    }
+
     void Update()
     {
-        setPosition();
-        setRotation();
+        if (TimeManager.isPaused == false)
+        {
+            setPosition();
+            setRotation();
+        }
+
     }
 
     void setPosition()

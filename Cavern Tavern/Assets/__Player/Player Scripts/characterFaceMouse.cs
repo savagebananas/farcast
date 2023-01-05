@@ -5,20 +5,32 @@ using UnityEngine;
 public class characterFaceMouse : MonoBehaviour
 {
     public bool FacingRight  = true;
+    private SpriteRenderer sprite;
+
+    private void Start()
+    {
+        sprite = this.GetComponent<SpriteRenderer>();
+    }
 
     void Update()
     {
-        //flip to direction of cursor
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (mousePos.x < transform.position.x && FacingRight) { Flip(); }
-        if (mousePos.x > transform.position.x && !FacingRight) { Flip(); }
+        if (TimeManager.isPaused == false)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (mousePos.x < transform.position.x && FacingRight) FlipLeft(); //Face left
+            if (mousePos.x > transform.position.x && !FacingRight) FlipRight(); //Face right
+        }
     }
 
-    void Flip()
+    void FlipLeft()
     {
-        Vector3 tmpScale = transform.localScale;
-        tmpScale.x = -tmpScale.x;
-        transform.localScale = tmpScale;
-        FacingRight = !FacingRight;
+        sprite.flipX = true;
+        FacingRight = false;
+    }
+
+    void FlipRight()
+    {
+        sprite.flipX = false;
+        FacingRight = true;
     }
 }

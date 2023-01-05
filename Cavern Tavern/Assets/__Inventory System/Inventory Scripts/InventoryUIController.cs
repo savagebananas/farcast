@@ -16,39 +16,48 @@ public class InventoryUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        InventoryHolder.OnDynamicInventoryDisplayRequested += DisplayInventory;
-        InventoryHolder.OnDynamicInventoryDisplayDestroy += HideInventory;
+        InventoryHolder.OnDynamicInventoryDisplayRequested += DisplayChestInventory;
+        InventoryHolder.OnDynamicInventoryDisplayDestroy += HideAllInventory;
     }
 
     private void OnDisable()
     {
-        InventoryHolder.OnDynamicInventoryDisplayRequested -= DisplayInventory;
-        InventoryHolder.OnDynamicInventoryDisplayDestroy -= HideInventory;
+        InventoryHolder.OnDynamicInventoryDisplayRequested -= DisplayChestInventory;
+        InventoryHolder.OnDynamicInventoryDisplayDestroy -= HideAllInventory;
     }
 
     void Update()
     {
+        Backpack();
+    }
+
+    void Backpack()
+    {
         if (backpackUI.activeInHierarchy == false && Input.GetKeyDown(KeyCode.G)) //Opens Inventory UI
         {
             backpackUI.SetActive(true);
+            TimeManager.PauseGame();
         }
         else if (backpackUI.activeInHierarchy == true && Input.GetKeyDown(KeyCode.G))//Closes Inventory UI
         {
             backpackUI.SetActive(false);
+            TimeManager.UnpauseGame();
         }
     }
 
-    void DisplayInventory(InventorySystem invToDisplay)
+    void DisplayChestInventory(InventorySystem invToDisplay)
     {
         chestInventoryUI.SetActive(true);
         backpackUI.SetActive(true);
         chestInventoryPanel.RefreshDynamicInventory(invToDisplay);
+        TimeManager.PauseGame();
     }
 
-    void HideInventory(InventorySystem invToDisplay)
+    void HideAllInventory(InventorySystem invToDisplay)
     {
         chestInventoryUI.SetActive(false);
         backpackUI.SetActive(false);
+        TimeManager.UnpauseGame();
     }
 
 

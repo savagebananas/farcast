@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 5980940544258627383}
   - component: {fileID: 5980940544258627382}
   - component: {fileID: 5980940544258627385}
+  - component: {fileID: 1465151585}
   m_Layer: 8
   m_Name: Player Sprite
   m_TagString: Untagged
@@ -174,6 +175,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.88, y: 0.15}
   m_EdgeRadius: 0
+--- !u!114 &1465151585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980940544258627381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3135b3db539154d80a6a6c02d4b3d029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FacingRight: 1
 --- !u!1 &5980940544497809398
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +205,6 @@ GameObject:
   - component: {fileID: 5980940544497809406}
   - component: {fileID: 5980940544497809379}
   - component: {fileID: 5980940544497809378}
-  - component: {fileID: 5980940544497809404}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -350,7 +363,6 @@ MonoBehaviour:
     m_Bits: 128
   interactionPointRadius: 1.5
   isInteracting: 0
-  invUiController: {fileID: 0}
 --- !u!114 &5980940544497809378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,19 +390,6 @@ MonoBehaviour:
   backDashbar1: {fileID: 0}
   frontDashbar2: {fileID: 0}
   backDashbar2: {fileID: 0}
---- !u!114 &5980940544497809404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5980940544497809398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3135b3db539154d80a6a6c02d4b3d029, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FacingRight: 1
 --- !u!1 &5980940544560945813
 GameObject:
   m_ObjectHideFlags: 0
