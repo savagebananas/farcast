@@ -46,6 +46,7 @@ public class PlayerPickupItem : MonoBehaviour
 
     IEnumerator DestroyItemVisuals()
     {
+        //Debug.Log("destroy item");
         yield return new WaitForSeconds(0.1f);
         Destroy(itemGettingPickedUp);
     }

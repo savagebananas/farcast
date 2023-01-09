@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f19bed9896785e7469150adb1316964e, type: 3}
+  m_Name: Serpent's Whisper
+  m_EditorClassIdentifier: 
+  id: 3
+  displayName: Serpent's Whisper
+  description: 
+  itemType: Ranged
+  itemIcon: {fileID: 21300000, guid: b405ae0f3ab86404b85b2d022705fceb, type: 3}
+  maxStackSize: 1
+  goldValue: 35000
+  hotbarItem: {fileID: 1426516409968678924, guid: e30db3e09b2abcf45841491ac8192b79, type: 3}

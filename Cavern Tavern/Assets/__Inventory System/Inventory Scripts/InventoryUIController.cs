@@ -7,11 +7,13 @@ public class InventoryUIController : MonoBehaviour
     public DynamicInventoryDisplay chestInventoryPanel;
     public GameObject chestInventoryUI;
     public GameObject backpackUI;
+    public GameObject shopUI;
 
     private void Awake()
     {
         chestInventoryUI.SetActive(false);
         backpackUI.SetActive(false);
+        shopUI.SetActive(false);
     }
 
     private void OnEnable()

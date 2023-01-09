@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4315641675504743162}
   m_Layer: 0
   m_Name: Stump Brown 4
-  m_TagString: Untagged
+  m_TagString: Environment Colliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

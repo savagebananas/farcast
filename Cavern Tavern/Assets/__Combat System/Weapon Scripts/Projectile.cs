@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     Checks for collision with player or enemy, calls their hurt function and does a set damage
     Destroys itself after colliding with anything
     */
+    public GameObject ProjectileObject;
 
     public float damage;
     public float knockbackPower;
@@ -23,18 +24,18 @@ public class Projectile : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerBase>().hurt
                 (damage, knockbackPower, other.gameObject.transform.position - transform.position);
-            Destroy(gameObject);
+            Destroy(ProjectileObject);
         }
         if (other.CompareTag("Enemy") && damageEnemy == true)
         {
             other.gameObject.GetComponent<EnemyBase>().hurt
                 (damage, knockbackPower, (other.gameObject.transform.position - transform.position).normalized, effectMultiplier);
-            Destroy(gameObject);
+            Destroy(ProjectileObject);
         }
 
         if (other.CompareTag("Environment Colliders"))
         {
-            Destroy(gameObject);
+            Destroy(ProjectileObject);
         }
     }
 }
