@@ -39,11 +39,6 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        
-    }
-
     void StartInteraction(IInteractable interactable)
     {
         interactable.Interact(this, out bool interactSuccessful);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 
 public class RangedWeapon : HotbarItem
@@ -18,14 +19,21 @@ public class RangedWeapon : HotbarItem
     public float timePerShot;
     private float timer;
 
+    //Squash and stretch
+    public Animator squashAnimator;
+
+    //Screenshake
+    public CinemachineImpulseSource impulse;
+    [Range(0f, 1f)]public float screenshakeValue;
+
     public void Update()
     {
         
-        if (!autoShoot)
+        if (!autoShoot) //Semi Auto
         {
             if (Input.GetMouseButtonDown(0)) UseItem();
         }
-        else
+        else //Full Auto
         {
             if (Input.GetMouseButton(0))
             {
@@ -44,6 +52,7 @@ public class RangedWeapon : HotbarItem
     }    
     public override void UseItem()
     {
+        //Firing Projectile
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - weaponReference.transform.position;
         playerToCursorVector.Normalize();
         float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
@@ -58,5 +67,11 @@ public class RangedWeapon : HotbarItem
         projectileScript.damage = damage;
         projectileScript.effectMultiplier = effectMultiplier;
         projectileScript.damageEnemy = true;
+
+        //Squash and stretch weapon
+        if (squashAnimator != null) squashAnimator.SetTrigger("SquashAndStretch");
+
+        //screenshake
+        impulse.GenerateImpulse(screenshakeValue);
     }
 }

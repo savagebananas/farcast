@@ -15,7 +15,7 @@ public class Shop : InventoryHolder, IInteractable
 
     public void EndInteraction(Interactor interactor, out bool interactSuccessful)
     {
-        Debug.Log("sd");
+        Debug.Log("close shop");
         interactSuccessful = true;
     }
 
