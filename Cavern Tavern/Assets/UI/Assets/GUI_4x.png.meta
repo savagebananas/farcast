@@ -797,7 +797,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_4x_33
+      name: Inventory Slot Image
       rect:
         serializedVersion: 2
         x: 384
@@ -1302,6 +1302,7 @@ TextureImporter:
       GUI_4x_32: -1330339280
       GUI_4x_47: 1822552374
       GUI_4x_21: 1643993801
+      Inventory Slot Image: 378795484
       GUI_4x_17: -482673
       GUI_4x_29: -100524345
       GUI_4x_7: -1589574008
@@ -1320,7 +1321,6 @@ TextureImporter:
       GUI_4x_2: 1344523186
       GUI_4x_30: -1264877469
       GUI_4x_42: 814640995
-      GUI_4x_33: 378795484
       GUI_4x_46: 409842108
       GUI_4x_43: 735373711
       GUI_4x_15: 1704349351

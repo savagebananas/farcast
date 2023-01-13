@@ -7,6 +7,8 @@ TagManager:
   - ItemDrop
   - Environment Colliders
   - Enemy
+  - Interactable
+  - Canvas
   layers:
   - Default
   - TransparentFX
