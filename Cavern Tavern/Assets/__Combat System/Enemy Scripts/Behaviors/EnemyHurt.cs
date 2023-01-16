@@ -74,10 +74,10 @@ public class EnemyHurt : State
 
     private IEnumerator knockbackCo()
     {
-        if (enemyBase.health <= 0)
+        if (enemyBase.health <= 0) //enemy dead
         {
             //Camera Shake
-            impulse.GenerateImpulse(2f * weaponMultiplier * enemySizeScale);
+            impulse.GenerateImpulse(0.5f);
             //animation
             anchorAnimator.SetTrigger("SquashAndStretch");
             //particles
@@ -99,10 +99,8 @@ public class EnemyHurt : State
 
             Destroy(enemyBase.gameObject); //Destroy Enemy Object if dead
         }
-        else
+        else //enemy hurt
         {
-            //Camera Shake
-            impulse.GenerateImpulse(0.5f * weaponMultiplier * enemySizeScale);
             //animation
             anchorAnimator.SetTrigger("SquashAndStretch");
             //particles
