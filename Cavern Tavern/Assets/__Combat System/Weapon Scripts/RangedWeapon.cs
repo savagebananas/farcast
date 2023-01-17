@@ -72,6 +72,6 @@ public class RangedWeapon : HotbarItem
         if (squashAnimator != null) squashAnimator.SetTrigger("SquashAndStretch");
 
         //screenshake
-        impulse.GenerateImpulse(screenshakeValue);
+        if (impulse != null) impulse.GenerateImpulse(screenshakeValue);
     }
 }
