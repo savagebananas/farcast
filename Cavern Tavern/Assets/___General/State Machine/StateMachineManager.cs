@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Helps activate/cycle the behaviors of a game object
+
 public class StateMachineManager : MonoBehaviour
 {
     public State CurrentState;

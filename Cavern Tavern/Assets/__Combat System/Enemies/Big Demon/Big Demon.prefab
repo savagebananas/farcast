@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 5485669612064894095}
   - component: {fileID: 5485669612064894092}
   m_Layer: 10
-  m_Name: State Machine
+  m_Name: StateMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
