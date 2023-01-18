@@ -14,6 +14,7 @@ public class AttackPlayer : State
     private float knockbackPower;
     private float attackRange;
 
+    [HideInInspector] 
     public float enemyToPlayerDistance;
 
     private bool playerIsHurt;
