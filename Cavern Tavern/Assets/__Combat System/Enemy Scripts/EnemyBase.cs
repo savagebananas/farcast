@@ -21,18 +21,12 @@ public class EnemyBase : MonoBehaviour
     public float alertRange;
     public float attackRange;
 
+    [HideInInspector] public GameObject player;
+
     [Header("State Machine")]
     [Space(5)]
     public StateMachineManager stateMachineManager;
     public EnemyHurt enemyHurtState;
-
-    [Header("ReferencesToPlayer")]
-    [Space(5)]
-    public GameObject player;
-
-    [Header("Roaming Variables")]
-    [Space(5)]
-    public float roamingPointRange;
     
     [Header("Knockback Values (for when player hits enemy)")]
     [Space(5)]

@@ -586,10 +586,9 @@ MonoBehaviour:
   knockbackPower: 2
   alertRange: 10
   attackRange: 1.25
+  player: {fileID: 0}
   stateMachineManager: {fileID: 5485669612064894092}
   enemyHurtState: {fileID: 5485669612385442477}
-  player: {fileID: 0}
-  roamingPointRange: 5
   knockbackDuration: 0.25
   knockbackDistance: 5
 --- !u!1 &5485669613274213876
@@ -641,6 +640,6 @@ MonoBehaviour:
   enemyBase: {fileID: 5485669613260076990}
   followState: {fileID: 5485669611794785860}
   enemyTransform: {fileID: 5485669613260076986}
-  randomRoam: 1
+  randomRoaming: 1
   maxRoamingDistance: 8
   patrolPoints: []

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class EnemyPatrol : State
 {
+    [Header("Enemy References")]
+    [Space(5)]
     public EnemyBase enemyBase;
     public State followState;
     public Transform enemyTransform;
-
-    public bool randomRoam;
-
     private float speed;
     private float alertRange;
     private float enemyDistanceToPlayer;
+
+    [Header("On: randomly moves around || Off: goes through patrol points list")]
+    [Space(5)]
+    public bool randomRoaming;
 
     [Header("Roaming Variables")]
     [Space(5)]
@@ -39,11 +42,11 @@ public class EnemyPatrol : State
 
         if (enemyDistanceToPlayer >= alertRange) //enemy doesn't detect player
         {
-            if(randomRoam == true)
+            if(randomRoaming == true)
             {
                 Roam();
             }
-            if(randomRoam == false)
+            if(randomRoaming == false)
             {
                 Patrol();
             }
