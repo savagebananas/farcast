@@ -30,25 +30,18 @@ public class FollowPlayer : State
         {
             stateMachineManager.setNewState(attackState);
         }
-        else if (enemyBase.enemydDistanceFromPlayer() <= alertRange)
+        else if (enemyBase.enemydDistanceFromPlayer() <= alertRange) //Enemy is in follow range, continue moving towards player
         {
             animator.SetTrigger("isWalking");
             enemyBase.transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
-        else if (enemyBase.enemydDistanceFromPlayer() > alertRange)
+        else if (enemyBase.enemydDistanceFromPlayer() > alertRange) //Enemy is too far away, go back to roam/idle state
         {
             stateMachineManager.setNewState(roamingState);
         }
     }
 
     public override void OnLateUpdate() { }
-
-    Vector3 randomPositionNearPlayer()
-    {
-        float x = player.transform.position.x + Random.Range(-15,15);
-        float y = player.transform.position.y + Random.Range(-15,15);
-        return new Vector3(x, y, 0);
-    }
 
     void facePlayer()
     {

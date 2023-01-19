@@ -370,18 +370,18 @@ MonoBehaviour:
   stateMachineManager: {fileID: 5485669612064894092}
   animator: {fileID: 5485669612197879101}
   enemyBase: {fileID: 5485669613260076990}
-  rend: {fileID: 5485669612197879100}
+  rb: {fileID: 5485669613260076991}
+  enemySpriteRenderer: {fileID: 5485669612197879100}
   followState: {fileID: 5485669611794785860}
-  attackState: {fileID: 5485669612298744762}
+  meleeAttackState: {fileID: 0}
   bloodParticles: {fileID: 4424502421745766703, guid: a537d1252b9c0204fbb2c902b5f5178c, type: 3}
   deathParticles: {fileID: 7513167925493535505, guid: 456711314ee8fe7429c6e46c0b284d5e, type: 3}
   smokeParticles: {fileID: 9189012742142532560, guid: c20e0017f62c32d48a24fd70a033ecde, type: 3}
-  anchorAnimator: {fileID: 5485669611504870722}
+  squashAnimator: {fileID: 5485669611504870722}
   impulse: {fileID: 5485669612385442476}
   weaponMultiplier: 0
-  enemySizeScale: 1
   attackingColliderToEnemyVector: {x: 0, y: 0}
-  damage: 0
+  damageTaken: 0
   knockbackPower: 0
 --- !u!114 &5485669612385442476
 MonoBehaviour:
@@ -643,7 +643,4 @@ MonoBehaviour:
   enemyTransform: {fileID: 5485669613260076986}
   randomRoam: 1
   maxRoamingDistance: 8
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []

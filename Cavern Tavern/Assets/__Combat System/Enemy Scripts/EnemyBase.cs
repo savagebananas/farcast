@@ -54,7 +54,7 @@ public class EnemyBase : MonoBehaviour
 
     public void hurt(float damage, float knockbackPower, Vector2 attackingColliderToEnemyVector, float effectMultipler)
     {
-        enemyHurtState.damage = damage;
+        enemyHurtState.damageTaken = damage;
         enemyHurtState.knockbackPower = knockbackPower;
         enemyHurtState.attackingColliderToEnemyVector = attackingColliderToEnemyVector;
         enemyHurtState.weaponMultiplier = effectMultipler;
