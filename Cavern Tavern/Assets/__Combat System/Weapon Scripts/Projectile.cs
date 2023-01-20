@@ -16,6 +16,28 @@ public class Projectile : MonoBehaviour
     public float effectMultiplier;
     public bool damagePlayer = false;
     public bool damageEnemy = false;
+    public Vector2 direction;
+    public float speed;
+    Rigidbody2D rbody;
+
+    void Start()
+    {
+        rbody = GetComponent<Rigidbody2D>();
+    }
+
+
+    void Update()
+    {
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rbody.rotation = angle;
+    }
+
+    void FixedUpdate()
+    {
+        Vector2 newPosition = rbody.position + direction * speed * Time.deltaTime;
+        rbody.MovePosition(newPosition);
+        
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
