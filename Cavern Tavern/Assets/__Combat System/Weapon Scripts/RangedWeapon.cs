@@ -27,8 +27,7 @@ public class RangedWeapon : HotbarItem
     [Range(0f, 1f)]public float screenshakeValue;
 
     public void Update()
-    {
-        
+    { 
         if (!autoShoot) //Semi Auto
         {
             if (Input.GetMouseButtonDown(0)) UseItem();
@@ -52,18 +51,20 @@ public class RangedWeapon : HotbarItem
     }    
     public override void UseItem()
     {
-        //Firing Projectile
+        //Angles
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - weaponReference.transform.position;
         playerToCursorVector.Normalize();
         float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
-
         muzzleToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - muzzle.transform.position;
-
-        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, playerToCursorAngle - 45));
+        
+        //Instantiate
+        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, 0));
         Projectile projectileScript = bullet.GetComponentInChildren<Projectile>();
 
 
-        bullet.GetComponentInChildren<Rigidbody2D>().AddForce(playerToCursorVector.normalized * fireForce, ForceMode2D.Impulse);
+        //bullet.GetComponentInChildren<Rigidbody2D>().AddForce(playerToCursorVector.normalized * fireForce, ForceMode2D.Impulse);
+        projectileScript.direction = muzzleToCursorVector.normalized;
+        projectileScript.speed = 25;
         projectileScript.damage = damage;
         projectileScript.effectMultiplier = effectMultiplier;
         projectileScript.damageEnemy = true;

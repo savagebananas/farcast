@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     Checks for collision with player or enemy, calls their hurt function and does a set damage
     Destroys itself after colliding with anything
     */
+
     public GameObject ProjectileObject;
 
     public float damage;
@@ -18,24 +19,24 @@ public class Projectile : MonoBehaviour
     public bool damageEnemy = false;
     public Vector2 direction;
     public float speed;
-    Rigidbody2D rbody;
+    Rigidbody2D rb;
 
     void Start()
     {
-        rbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
 
     void Update()
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rbody.rotation = angle;
+        rb.rotation = angle;
     }
 
     void FixedUpdate()
     {
-        Vector2 newPosition = rbody.position + direction * speed * Time.deltaTime;
-        rbody.MovePosition(newPosition);
+        Vector2 newPosition = rb.position + direction * speed * Time.deltaTime;
+        rb.MovePosition(newPosition);
         
     }
 
