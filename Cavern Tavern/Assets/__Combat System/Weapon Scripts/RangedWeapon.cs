@@ -58,7 +58,7 @@ public class RangedWeapon : HotbarItem
         muzzleToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - muzzle.transform.position;
         
         //Instantiate
-        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, 0));
+        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, playerToCursorAngle-45));
         Projectile projectileScript = bullet.GetComponentInChildren<Projectile>();
 
 
