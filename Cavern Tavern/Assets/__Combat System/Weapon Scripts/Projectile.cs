@@ -11,15 +11,20 @@ public class Projectile : MonoBehaviour
     */
 
     public GameObject ProjectileObject;
+    Rigidbody2D rb;
 
     public float damage;
+    public float speed;
+
     public float knockbackPower;
     public float effectMultiplier;
+
     public bool damagePlayer = false;
     public bool damageEnemy = false;
-    public Vector2 direction;
-    public float speed;
-    Rigidbody2D rb;
+
+    [HideInInspector] public Vector2 direction;
+    
+
 
     void Start()
     {
@@ -29,15 +34,12 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
     }
 
     void FixedUpdate()
     {
         Vector2 newPosition = rb.position + direction * speed * Time.deltaTime;
         rb.MovePosition(newPosition);
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)

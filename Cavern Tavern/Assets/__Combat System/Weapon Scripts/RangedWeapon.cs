@@ -6,15 +6,16 @@ using Cinemachine;
 
 public class RangedWeapon : HotbarItem
 {
+    public GameObject bulletPrefab;
     public GameObject pivotPoint;
     public GameObject muzzle;
     private Vector2 muzzleToCursorVector;
-    public GameObject bulletPrefab;
-    public float fireForce;
 
     public float effectMultiplier;
     public float damage;
+    public float bulletSpeed;
 
+    //Automatic shooting
     public bool autoShoot;
     public float timePerShot;
     private float timer;
@@ -58,16 +59,18 @@ public class RangedWeapon : HotbarItem
         muzzleToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - muzzle.transform.position;
         
         //Instantiate
-        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, 0));
+        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, playerToCursorAngle));
         Projectile projectileScript = bullet.GetComponentInChildren<Projectile>();
 
 
         //bullet.GetComponentInChildren<Rigidbody2D>().AddForce(playerToCursorVector.normalized * fireForce, ForceMode2D.Impulse);
+        
+        
         projectileScript.direction = muzzleToCursorVector.normalized;
-        projectileScript.speed = 25;
+        projectileScript.speed = bulletSpeed;
         projectileScript.damage = damage;
         projectileScript.effectMultiplier = effectMultiplier;
-        projectileScript.damageEnemy = true;
+        projectileScript.damageEnemy = true; 
 
         //Squash and stretch weapon
         if (squashAnimator != null) squashAnimator.SetTrigger("SquashAndStretch");
