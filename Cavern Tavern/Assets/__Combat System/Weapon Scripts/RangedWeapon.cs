@@ -60,6 +60,7 @@ public class RangedWeapon : HotbarItem
         
         //Instantiate
         GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(0, 0, playerToCursorAngle));
+
         Projectile projectileScript = bullet.GetComponentInChildren<Projectile>();
 
 
