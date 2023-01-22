@@ -101,14 +101,17 @@ MonoBehaviour:
   player: {fileID: 0}
   weaponReference: {fileID: 0}
   hotbarIndex: 0
+  bulletPrefab: {fileID: 2400803709567857515, guid: e38fba1216f84c94d95c9284869ee439, type: 3}
   pivotPoint: {fileID: 1426516409968678924}
   muzzle: {fileID: 1426516409480829254}
-  bulletPrefab: {fileID: 2400803709567857515, guid: e38fba1216f84c94d95c9284869ee439, type: 3}
-  fireForce: 20
   effectMultiplier: 1
   damage: 2
+  bulletSpeed: 40
   autoShoot: 1
   timePerShot: 0.1
+  squashAnimator: {fileID: 0}
+  impulse: {fileID: 0}
+  screenshakeValue: 0
 --- !u!114 &1426516409266846004
 MonoBehaviour:
   m_ObjectHideFlags: 0
