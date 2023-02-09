@@ -58,7 +58,7 @@ public class RangedAttack : State
 
         //Instantiate
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.Euler(0, 0, enemyToPlayerAngle - 45));
-        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        Projectile projectileScript = projectile.GetComponentInChildren<Projectile>();
 
         //Assign Values
         //projectile.GetComponent<Rigidbody2D>().AddForce(enemyToPlayerVector.normalized * fireForce, ForceMode2D.Impulse);
@@ -82,7 +82,7 @@ public class RangedAttack : State
 
             //Instantiate projectile and set initial direction
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.Euler(0, 0, enemyToPlayerAngle - 45));
-            Projectile projectileScript = projectile.GetComponent<Projectile>();
+            Projectile projectileScript = projectile.GetComponentInChildren<Projectile>();
             projectileScript.direction = (Vector2) (Quaternion.Euler(0, 0, angleOfDegreeZero + angleIncrement * i) * Vector2.right);
 
             //projectile stats

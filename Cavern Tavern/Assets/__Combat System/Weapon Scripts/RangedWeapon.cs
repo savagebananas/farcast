@@ -31,7 +31,7 @@ public class RangedWeapon : HotbarItem
     { 
         if (!autoShoot) //Semi Auto
         {
-            if (Input.GetMouseButtonDown(0)) UseItem();
+            if (Input.GetMouseButtonDown(0)) ShootShotgunProjectile(10, 80f);//UseItem();
         }
         else //Full Auto
         {
@@ -72,6 +72,38 @@ public class RangedWeapon : HotbarItem
         projectileScript.damage = damage;
         projectileScript.effectMultiplier = effectMultiplier;
         projectileScript.damageEnemy = true; 
+
+        //Squash and stretch weapon
+        if (squashAnimator != null) squashAnimator.SetTrigger("SquashAndStretch");
+
+        //screenshake
+        if (impulse != null) impulse.GenerateImpulse(screenshakeValue);
+    }
+
+    void ShootShotgunProjectile(float numberOfBullets, float angleOfSpread)
+    {
+        //Angles
+        Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - weaponReference.transform.position;
+        playerToCursorVector.Normalize();
+        float playerToCursorAngle = Mathf.Atan2(playerToCursorVector.y, playerToCursorVector.x) * Mathf.Rad2Deg;
+        muzzleToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - muzzle.transform.position;
+
+        float angleIncrement = angleOfSpread / numberOfBullets; //how many degrees between each bullet
+        float angleOfDegreeZero = playerToCursorAngle - (angleOfSpread / 2f); //so that bullets spawn from 0 to angleSpread
+
+        for (int i = 0; i < numberOfBullets; i++)
+        {
+            //Instantiate projectile and set initial direction
+            GameObject projectile = Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0, 0, playerToCursorAngle));
+            Projectile projectileScript = projectile.GetComponentInChildren<Projectile>();
+            projectileScript.direction = (Vector2)(Quaternion.Euler(0, 0, angleOfDegreeZero + angleIncrement * i) * Vector2.right);
+
+            //projectile stats
+            projectileScript.speed = bulletSpeed;
+            projectileScript.damage = damage;
+            projectileScript.effectMultiplier = effectMultiplier;
+            projectileScript.damageEnemy = true;
+        }
 
         //Squash and stretch weapon
         if (squashAnimator != null) squashAnimator.SetTrigger("SquashAndStretch");
