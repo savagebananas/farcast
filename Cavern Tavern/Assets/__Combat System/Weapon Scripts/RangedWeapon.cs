@@ -18,7 +18,7 @@ public class RangedWeapon : HotbarItem
     //Automatic shooting
     public bool autoShoot;
     public float timePerShot;
-    private float timer;
+    private float timer = 0;
 
     //Squash and stretch
     public Animator squashAnimator;
@@ -31,7 +31,18 @@ public class RangedWeapon : HotbarItem
     { 
         if (!autoShoot) //Semi Auto
         {
-            if (Input.GetMouseButtonDown(0)) ShootShotgunProjectile(10, 80f);//UseItem();
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0)) 
+                { 
+                    ShootShotgunProjectile(5, 20f, 10f);//UseItem();
+                    timer = timePerShot;                
+                }
+            }
         }
         else //Full Auto
         {
@@ -80,7 +91,7 @@ public class RangedWeapon : HotbarItem
         if (impulse != null) impulse.GenerateImpulse(screenshakeValue);
     }
 
-    void ShootShotgunProjectile(float numberOfBullets, float angleOfSpread)
+    void ShootShotgunProjectile(float numberOfBullets, float angleOfSpread, float randomOffset)
     {
         //Angles
         Vector2 playerToCursorVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - weaponReference.transform.position;
@@ -96,7 +107,8 @@ public class RangedWeapon : HotbarItem
             //Instantiate projectile and set initial direction
             GameObject projectile = Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0, 0, playerToCursorAngle));
             Projectile projectileScript = projectile.GetComponentInChildren<Projectile>();
-            projectileScript.direction = (Vector2)(Quaternion.Euler(0, 0, angleOfDegreeZero + angleIncrement * i) * Vector2.right);
+            float randOffset = Random.Range(-randomOffset, randomOffset);
+            projectileScript.direction = (Vector2)(Quaternion.Euler(0, 0, angleOfDegreeZero + angleIncrement * i + randOffset) * Vector2.right);
 
             //projectile stats
             projectileScript.speed = bulletSpeed;
