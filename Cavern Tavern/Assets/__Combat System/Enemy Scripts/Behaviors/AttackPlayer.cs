@@ -46,7 +46,7 @@ public class AttackPlayer : State
 
     private IEnumerator AttackDelay()
     {
-        //animator.SetTrigger("attack");
+        animator.SetTrigger("attack");
         yield return new WaitForSeconds(attackDelay);
 
         if (enemyToPlayerDistance <= attackRange && !playerIsHurt) 

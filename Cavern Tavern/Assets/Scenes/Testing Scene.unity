@@ -1740,6 +1740,7 @@ Transform:
   m_Children:
   - {fileID: 1341607915}
   - {fileID: 742339861}
+  - {fileID: 493547740}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2089,15 +2090,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493547739}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -20, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.43171874, y: -19.444986, z: -10.467764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1324150454}
   - {fileID: 1950604503}
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_Father: {fileID: 232440970}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &493547741
 MonoBehaviour:
@@ -2111,9 +2112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baeb61e6f3b779242a7973a21d7e64dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 50
   damage: 2
-  speed: 11
+  speed: 5
   attackSpeed: 0.5
   knockbackPower: 0
   alertRange: 10
@@ -2121,8 +2122,8 @@ MonoBehaviour:
   player: {fileID: 0}
   stateMachineManager: {fileID: 1950604504}
   enemyHurtState: {fileID: 598132650}
-  knockbackDuration: 1
-  knockbackDistance: 1
+  knockbackDuration: 0.15
+  knockbackDistance: 5
 --- !u!61 &493547742
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3469,8 +3470,8 @@ MonoBehaviour:
   enemyBase: {fileID: 493547741}
   followState: {fileID: 1535396248}
   enemyTransform: {fileID: 493547740}
-  randomRoaming: 0
-  maxRoamingDistance: 0
+  randomRoaming: 1
+  maxRoamingDistance: 5
   patrolPoints: []
 --- !u!4 &1069654970
 Transform:
