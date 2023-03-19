@@ -2114,9 +2114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   damage: 2
-  speed: 5
-  attackSpeed: 0.5
-  knockbackPower: 0
+  speed: 10
+  attackSpeed: 0.3
+  knockbackPower: 1
   alertRange: 10
   attackRange: 1
   player: {fileID: 0}
