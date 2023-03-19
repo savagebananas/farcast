@@ -13,7 +13,6 @@ public class InventoryUIController : MonoBehaviour
     {
         chestInventoryUI.SetActive(false);
         backpackUI.SetActive(false);
-        shopUI.SetActive(false);
     }
 
     private void OnEnable()
