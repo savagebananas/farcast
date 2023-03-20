@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   displayName: Serpent's Whisper
-  description: 
+  description: Silent but deady. Summons ghostly snakes.
   itemType: Ranged
   itemIcon: {fileID: 21300000, guid: b405ae0f3ab86404b85b2d022705fceb, type: 3}
   maxStackSize: 1

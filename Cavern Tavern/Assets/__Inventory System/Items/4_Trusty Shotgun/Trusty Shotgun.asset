@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   displayName: Trusty Shotgun
-  description: 
+  description: Big Ball Gun
   itemType: Ranged
   itemIcon: {fileID: 21300000, guid: 274dd60f5a1653449a45720b0d0819b5, type: 3}
   maxStackSize: 1

@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Shop_UI : MonoBehaviour
 {
-    public Shop shop;
     public ShopSlot_UI[] itemUISlots;
+    private InventoryItemData selectedItemData;
 
+    [Header("Events")]
+    public GameEvent onBuyItem;
+
+    [Header("Selected Item UI")]
+    public Image selectedItemIconUI;
+    public TextMeshProUGUI selectedItemNameUI;
+    public TextMeshProUGUI selectedItemDescriptionUI;
 
     public void UpdateShopUI(Component sender, object data)
     {
@@ -31,15 +39,41 @@ public class Shop_UI : MonoBehaviour
                     itemUISlots[i].gameObject.SetActive(false);
                 }
             }
-        }
 
+            DisplaySelectedItem(this, shopItems[0]);
+        }
     }
 
     private void ClearAll()
     {
+        //Clear shop items UI (Box 1)
         for (int i = 0; i < itemUISlots.Length; i++)
         {
             itemUISlots[i].ClearSlot();
         }
+
+        //Clear select item UI (Box 2)
+        selectedItemIconUI.sprite = null;
+        selectedItemIconUI.color = new Color(255, 255, 255, 0);
+        selectedItemNameUI.text = "";
+        selectedItemDescriptionUI.text = "";
+    }
+
+    public void DisplaySelectedItem(Component sender, object data)
+    {
+
+        InventoryItemData itemData = (InventoryItemData) data;
+        selectedItemIconUI.sprite = itemData.itemIcon;
+        selectedItemIconUI.color = new Color(255, 255, 255, 255);
+        selectedItemNameUI.text = itemData.displayName;
+        selectedItemDescriptionUI.text = itemData.description;
+
+        selectedItemData = itemData;
+    }
+    
+
+    public void BuyCurrentItem()
+    {
+        onBuyItem.Raise(null, selectedItemData);
     }
 }

@@ -18,5 +18,5 @@ MonoBehaviour:
   itemType: Consumable
   itemIcon: {fileID: -741623664, guid: f880e95d10845d2449a98d486d7f24e8, type: 3}
   maxStackSize: 10
-  goldValue: 50
+  goldValue: 100
   hotbarItem: {fileID: 4294045515954324394, guid: 7defa7172affbe449a89b6c707f7e1e0, type: 3}

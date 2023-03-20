@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   displayName: Dwarven Greatsword
-  description: 
+  description: Forged by the mountain dwarfs, it is a hefty yet trusty partner on
+    the battlefield.
   itemType: Sword
   itemIcon: {fileID: 21300000, guid: 656b86c7607ecb24d96a28ed6edfcfe5, type: 3}
   maxStackSize: 1
-  goldValue: 0
+  goldValue: 135000
   hotbarItem: {fileID: 3946175074479748631, guid: cfb50f299fa15a2498967a2968a922e2, type: 3}

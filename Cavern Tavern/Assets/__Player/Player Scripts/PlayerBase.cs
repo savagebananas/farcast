@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
+    private Rigidbody2D rb;
+
+    [Header("Stats")]
     public float maxHealth = 100;
     public float health;
-    private Rigidbody2D rb;
-    public HealthBarUI healthBarUI;
-    
+    public float gold;
+    public InventoryHolder playerInventory;
+
+    [Header("Managers")]
+    public AudioManager audioManager;
+
+    [Header("Combat")]
     public float knockbackDistance;
     public float knockbackDuration;
-
-    public bool isHurt = false;
+    [HideInInspector] public bool isHurt = false;
     private bool isDead = false;
+
+    
+    private HealthBarUI healthBarUI;
 
     public static PlayerBase instance;
     private void Awake()
@@ -31,6 +40,7 @@ public class PlayerBase : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        healthBarUI = GetComponent<HealthBarUI>();
         health = maxHealth;
     }
 
@@ -80,4 +90,24 @@ public class PlayerBase : MonoBehaviour
         health += amount;
         healthBarUI.lerpTimer = 0f;
     }
+
+    #region Purchase Items
+
+    public void BuyItem(Component sender, object data)
+    {
+        InventoryItemData itemData = (InventoryItemData) data;
+        bool canPurchaseItem = gold >= itemData.goldValue;
+        if (canPurchaseItem)
+        {
+            gold -= itemData.goldValue;
+            playerInventory.InventorySystem.AddToInventory(itemData, 1);
+            //audioManager.PlaySound("moneySFX");
+        }
+        else
+        {
+            Debug.Log("Not enough money");
+        }
+    }
+
+    #endregion
 }
