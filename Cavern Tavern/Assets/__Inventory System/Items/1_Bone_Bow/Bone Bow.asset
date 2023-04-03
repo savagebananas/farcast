@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   displayName: Bone Bow
-  description: B O N E R S
+  description: B O N E R
   itemType: Ranged
   itemIcon: {fileID: 826637725, guid: da4ea5c568dfdb34dbde2dd053f42705, type: 3}
   maxStackSize: 1

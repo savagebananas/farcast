@@ -34,14 +34,12 @@ public class Interactor : MonoBehaviour
             {
                 StartInteraction(FindNearestInteractable().GetComponent<IInteractable>());
                 isInteracting = true;
-                TimeManager.PauseGame();
             }
 
             else if (Input.GetKeyDown(KeyCode.E) && isInteracting == true) //Exits the interaction using the same button
             {
                 EndInteraction(FindNearestInteractable().GetComponent<IInteractable>());
                 isInteracting = false;
-                TimeManager.UnpauseGame();
             }
         }
     }

@@ -101,7 +101,7 @@ public class PlayerBase : MonoBehaviour
         {
             gold -= itemData.goldValue;
             playerInventory.InventorySystem.AddToInventory(itemData, 1);
-            //audioManager.PlaySound("moneySFX");
+            audioManager.PlaySound("moneySFX");
         }
         else
         {

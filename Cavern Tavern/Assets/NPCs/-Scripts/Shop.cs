@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Shop : MonoBehaviour, IInteractable
+public class Shop : DialogueTrigger, IInteractable
 {
     public InventoryItemData[] shopItems;
     
@@ -28,15 +28,19 @@ public class Shop : MonoBehaviour, IInteractable
     public void Interact(Interactor interactor, out bool interactSuccessful)
     {
         interactSuccessful = true;
-        shopUI.SetActive(true);
-        openShopUI.Raise(this, shopItems);
+        TriggerDialogue();
 
-        //UpdateShopUI();
     }
 
     public void EndInteraction(Interactor interactor, out bool interactSuccessful)
     {
         interactSuccessful = true;
         shopUI.SetActive(false);
+    }
+
+    public override void EndDialogueEvent()
+    {
+        shopUI.SetActive(true);
+        openShopUI.Raise(this, shopItems);
     }
 }
