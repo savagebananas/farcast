@@ -10591,9 +10591,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 776208645}
+  - component: {fileID: 776208646}
   - component: {fileID: 776208648}
   - component: {fileID: 776208647}
-  - component: {fileID: 776208646}
   m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
@@ -10680,7 +10680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7278995f10a88a44ab801d1a50d4574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 0}
+  renderer: {fileID: 776208646}
   offset: 0
   attachedToPlayer: 0
 --- !u!95 &776208648
@@ -41694,7 +41694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7278995f10a88a44ab801d1a50d4574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 0}
+  renderer: {fileID: 1670354485}
   offset: 0
   attachedToPlayer: 0
 --- !u!95 &1670354487
