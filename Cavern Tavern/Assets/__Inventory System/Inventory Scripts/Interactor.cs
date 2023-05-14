@@ -9,6 +9,8 @@ public class Interactor : MonoBehaviour
     public float interactionPointRadius = 1f;
     public bool isInteracting = false;
 
+    public bool canExitInteraction;
+
     private void Update()
     {
         InteractionInput();
@@ -36,7 +38,7 @@ public class Interactor : MonoBehaviour
                 isInteracting = true;
             }
 
-            else if (Input.GetKeyDown(KeyCode.E) && isInteracting == true) //Exits the interaction using the same button
+            else if (Input.GetKeyDown(KeyCode.E) && isInteracting == true && canExitInteraction) //Exits the interaction using the same button
             {
                 EndInteraction(FindNearestInteractable().GetComponent<IInteractable>());
                 isInteracting = false;

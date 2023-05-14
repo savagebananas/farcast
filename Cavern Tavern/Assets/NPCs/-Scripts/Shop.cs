@@ -16,6 +16,9 @@ public class Shop : DialogueTrigger, IInteractable
     private GameObject shopUI;
     public GameObject shopSlotPrefab;
 
+    //Interactor
+    Interactor intr;
+
     public UnityAction<IInteractable> OnInteractionComplete { get; set; }
 
 
@@ -28,6 +31,8 @@ public class Shop : DialogueTrigger, IInteractable
     public void Interact(Interactor interactor, out bool interactSuccessful)
     {
         interactSuccessful = true;
+        intr = interactor;
+        intr.canExitInteraction = false; //doesn't allow player to trigger interaction repeatedly (while still in current interaction)
         TriggerDialogue();
 
     }
@@ -38,9 +43,10 @@ public class Shop : DialogueTrigger, IInteractable
         shopUI.SetActive(false);
     }
 
-    public override void EndDialogueEvent()
+    public override void EndDialogueEvent() //When dialogue ends, open shop ui
     {
         shopUI.SetActive(true);
         openShopUI.Raise(this, shopItems);
+        intr.canExitInteraction = true; //allows player to exit shop
     }
 }
