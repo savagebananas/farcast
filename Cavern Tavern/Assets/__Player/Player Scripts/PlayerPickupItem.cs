@@ -23,9 +23,9 @@ public class PlayerPickupItem : MonoBehaviour
     {
         if(itemGettingPickedUp = FindNearestItem())
         {
-            var itemData = itemGettingPickedUp.GetComponentInChildren<ItemGameObject>();
-            if (playerHotbar.InventorySystem.AddToInventory(itemData.item, itemData.amount)){}
-            else playerInventory.InventorySystem.AddToInventory(itemData.item, itemData.amount);
+            var itemData = itemGettingPickedUp.GetComponentInChildren<ItemDropData>();
+            if (playerHotbar.InventorySystem.AddToInventory(itemData.item, itemData.amount)){} //if hotbar has space, add to hotbar
+            else playerInventory.InventorySystem.AddToInventory(itemData.item, itemData.amount); //else add to bag
             
             Destroy(itemData);
             StartCoroutine(DestroyItemVisuals());
