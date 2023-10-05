@@ -7,7 +7,7 @@ public class Interactor : MonoBehaviour
     private GameObject currentInteractable;
 
     public float interactionPointRadius = 1f;
-    public bool isInteracting = false;
+    [SerializeField] private bool isInteracting = false;
 
     public bool canExitInteraction;
 
