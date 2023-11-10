@@ -63,4 +63,10 @@ public class Projectile : MonoBehaviour
             Destroy(ProjectileObject);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (transform.parent != null) Destroy(transform.parent.gameObject);
+        else Destroy(this.gameObject);
+    }
 }

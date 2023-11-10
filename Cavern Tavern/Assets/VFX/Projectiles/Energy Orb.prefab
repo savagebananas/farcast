@@ -9773,7 +9773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e69ac74b8a7c844829ed0d64c66fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectileObject: {fileID: 738318141922753182}
+  ProjectileObject: {fileID: 8437752325220331779}
   damage: 0
   speed: 0
   knockbackPower: 1
