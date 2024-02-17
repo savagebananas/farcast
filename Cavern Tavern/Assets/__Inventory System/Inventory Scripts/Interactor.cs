@@ -5,11 +5,19 @@ using UnityEngine;
 public class Interactor : MonoBehaviour
 {
     private GameObject currentInteractable;
-
     public float interactionPointRadius = 1f;
     [SerializeField] private bool isInteracting = false;
-
+    [SerializeField] private bool openedInventory = false;
     public bool canExitInteraction;
+
+    private InventoryUIController inventoryUIController;
+
+
+
+    private void Start()
+    {
+        inventoryUIController = GameObject.FindAnyObjectByType<Canvas>().GetComponentInChildren<InventoryUIController>();
+    }
 
     private void Update()
     {
@@ -30,15 +38,33 @@ public class Interactor : MonoBehaviour
 
     void InteractionInput()
     {
+        // Open Inventory
+        if (Input.GetKeyDown(KeyCode.G) && !isInteracting && !openedInventory)
+        {
+            inventoryUIController.DisplayBackpack();
+            isInteracting = true;
+            openedInventory = true;
+        }
+
+        // Close Inventory
+        else if (Input.GetKeyDown(KeyCode.G) && isInteracting && openedInventory && canExitInteraction)
+        {
+            inventoryUIController.HideBackpack();
+            isInteracting = false;
+            openedInventory = false;
+        }
+
         if (FindNearestInteractable() != null)
         {
-            if (Input.GetKeyDown(KeyCode.E) && isInteracting == false) //interacts if button pressed and player is not already interacting
+            // interacts if button pressed and player is not already interacting
+            if (Input.GetKeyDown(KeyCode.E) && isInteracting == false) 
             {
                 StartInteraction(FindNearestInteractable().GetComponent<IInteractable>());
                 isInteracting = true;
             }
 
-            else if (Input.GetKeyDown(KeyCode.E) && isInteracting == true && canExitInteraction) //Exits the interaction using the same button
+            // exits interaction using the same button (unless inventory is open, close with KeyCode.G)
+            else if (Input.GetKeyDown(KeyCode.E) && isInteracting && !openedInventory && canExitInteraction) 
             {
                 EndInteraction(FindNearestInteractable().GetComponent<IInteractable>());
                 isInteracting = false;
