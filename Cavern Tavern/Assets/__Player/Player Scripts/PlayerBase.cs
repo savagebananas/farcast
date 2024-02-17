@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
@@ -23,6 +24,7 @@ public class PlayerBase : MonoBehaviour
 
     
     private HealthBarUI healthBarUI;
+    private TextMeshProUGUI goldValueFrontend;
 
     public static PlayerBase instance;
     private void Awake()
@@ -41,6 +43,9 @@ public class PlayerBase : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         healthBarUI = GetComponent<HealthBarUI>();
+        goldValueFrontend = GameObject.Find("Gold Value Text").GetComponent<TextMeshProUGUI>(); 
+        
+        UpdateGoldFrontend();
         health = maxHealth;
     }
 
@@ -100,6 +105,8 @@ public class PlayerBase : MonoBehaviour
         if (canPurchaseItem)
         {
             gold -= itemData.goldValue;
+            // change frontend
+            UpdateGoldFrontend();
             playerInventory.InventorySystem.AddToInventory(itemData, 1);
             audioManager.PlaySound("moneySFX");
         }
@@ -107,6 +114,11 @@ public class PlayerBase : MonoBehaviour
         {
             Debug.Log("Not enough money");
         }
+    }
+
+    public void UpdateGoldFrontend()
+    {
+        goldValueFrontend.text = gold.ToString();
     }
 
     #endregion
