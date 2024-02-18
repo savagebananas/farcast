@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     public float dashSpeed;
     public float dashLength;
-    public float maxDashes = 2;
-    public float amountOfDashes;
+    public int maxDashes = 2;
+    public int amountOfDashes;
     public float dashRegenLength;
     private float nextRegenTime;
     public bool isDashing = false;
@@ -41,8 +41,8 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown("space") && amountOfDashes > 0 &&
                 (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))) 
             {
+                if (amountOfDashes == 2) nextRegenTime = Time.time + dashRegenLength;
                 StartCoroutine(dash());
-                nextRegenTime = Time.time + dashRegenLength;
             }
         }
 
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         Physics2D.IgnoreLayerCollision(9, 10, true); // ignore projectiles and enemy collision layers
         amountOfDashes -= 1;
-        healthBarUI.dashLerpTimer = 0f;
+        healthBarUI.reduceDash();
 
         yield return new WaitForSeconds(dashLength);
 
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (amountOfDashes < maxDashes)
         {
-            if (Time.time > nextRegenTime)
+            if (Time.time >= nextRegenTime)
             {
                 nextRegenTime = Time.time + dashRegenLength;
                 amountOfDashes++;

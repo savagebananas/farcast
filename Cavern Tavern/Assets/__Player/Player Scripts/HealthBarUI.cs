@@ -22,12 +22,23 @@ public class HealthBarUI : MonoBehaviour
     public Image backDashbar1;
     public Image frontDashbar2;
     public Image backDashbar2;
+    private float dashFill = 0f;
+    private float regenLength; 
+    private float maxDashes; 
+
 
 
     void Start()
     {
+        regenLength = playerMovement.dashRegenLength;
+        maxDashes = playerMovement.maxDashes;
         health = playerBase.health;
         maxHealth = playerBase.maxHealth;
+        dashLerpTimer = 2*regenLength;
+        frontDashbar1.enabled = true;
+        frontDashbar2.enabled = true;
+        backDashbar1.enabled = false;
+        backDashbar2.enabled = false;
 
         //frontHealthbar = Canvas.
         //backHealthbar = GameObject.Find();
@@ -73,10 +84,8 @@ public class HealthBarUI : MonoBehaviour
 
     private void UpdateDashUI() //Really bad code, needs revamp
     {
-        float maxDashes = playerMovement.maxDashes;
-        float amountOfDashes = playerMovement.amountOfDashes;
-        float regenLength = playerMovement.dashRegenLength;
-
+        int amountOfDashes = playerMovement.amountOfDashes;
+    /*
         float fillF1 = frontDashbar1.fillAmount;
         float fillB1 = backDashbar1.fillAmount;
         float fillF2 = frontDashbar2.fillAmount;
@@ -102,16 +111,52 @@ public class HealthBarUI : MonoBehaviour
             frontDashbar2.fillAmount = 0;
             backDashbar2.enabled = false;
         }
-
-        if(amountOfDashes < maxDashes)
+    */
+        if(amountOfDashes < maxDashes && dashFill < 2)
         {
             dashLerpTimer += Time.deltaTime;
-            float percentComplete = dashLerpTimer / regenLength;
-            fillAmount = Mathf.Lerp(0f, 1f, percentComplete);
-            if (fillAmount == 1) dashLerpTimer = 0f;
-        }
+            dashFill = dashLerpTimer/regenLength;
+            if (dashFill >= 1) {
+                backDashbar2.fillAmount = dashFill-1f;
+                if (!frontDashbar1.enabled)
+                backDashbar2.enabled = true;
+                backDashbar1.enabled = false;
+                frontDashbar1.enabled = true;
+                frontDashbar1.fillAmount = 1f;
+            }
+            if (dashFill < 1) {
+                backDashbar1.fillAmount =  dashFill;
+                if (frontDashbar2.enabled) {
+                    frontDashbar2.enabled = false;
 
-        backDashbar1.fillAmount = fillAmount;
-        backDashbar2.fillAmount = fillAmount;
+                }
+            }
+
+        backDashbar1.fillAmount = Mathf.Min(1, dashFill);
+        } else {
+            dashFill = 2f;
+            if (!frontDashbar2.enabled) {
+                frontDashbar2.enabled = true;
+                backDashbar2.enabled = false;
+                frontDashbar2.fillAmount = 1f;
+            }
+        }
+    }
+    public void reduceDash() {
+        int numDashes = playerMovement.amountOfDashes;
+        dashFill -= 1f;
+        dashLerpTimer -= regenLength;
+        if (numDashes == 1) {
+            frontDashbar2.enabled= false;
+            backDashbar2.enabled = true;
+            backDashbar2.fillAmount = 0f;
+        }
+        if (numDashes == 0) {
+            frontDashbar1.enabled = false;
+            backDashbar1.enabled = true;
+            backDashbar1.fillAmount = backDashbar2.fillAmount;
+            backDashbar2.fillAmount = 0f;
+            backDashbar2.enabled = false;
+        }
     }
 }

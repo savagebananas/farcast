@@ -41559,7 +41559,7 @@ MonoBehaviour:
   dashLength: 0.15
   maxDashes: 2
   amountOfDashes: 2
-  dashRegenLength: 2
+  dashRegenLength: 5
   isDashing: 0
 --- !u!50 &1703597353
 Rigidbody2D:
@@ -41701,6 +41701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPointRadius: 3
   isInteracting: 0
+  openedInventory: 0
   canExitInteraction: 1
 --- !u!114 &1703597363
 MonoBehaviour:
