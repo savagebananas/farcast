@@ -41559,7 +41559,7 @@ MonoBehaviour:
   dashLength: 0.15
   maxDashes: 2
   amountOfDashes: 2
-  dashRegenLength: 5
+  dashRegenLength: 2
   isDashing: 0
 --- !u!50 &1703597353
 Rigidbody2D:

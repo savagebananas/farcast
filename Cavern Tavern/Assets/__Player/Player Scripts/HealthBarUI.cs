@@ -112,7 +112,7 @@ public class HealthBarUI : MonoBehaviour
             backDashbar2.enabled = false;
         }
     */
-        if(amountOfDashes < maxDashes && dashFill < 2)
+        if(amountOfDashes < maxDashes && dashFill < maxDashes)
         {
             dashLerpTimer += Time.deltaTime;
             dashFill = dashLerpTimer/regenLength;
@@ -132,7 +132,6 @@ public class HealthBarUI : MonoBehaviour
                 }
             }
 
-        backDashbar1.fillAmount = Mathf.Min(1, dashFill);
         } else {
             dashFill = 2f;
             if (!frontDashbar2.enabled) {
