@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public HealthBarUI healthBarUI;
     private Rigidbody2D characterBody;
     private Vector2 inputMovement;
+    private bool canMove = true;
 
     public float moveSpeed;
     public float dashSpeed;
@@ -16,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float amountOfDashes;
     public float dashRegenLength;
     private float nextRegenTime;
-    public bool isDashing = false;
+    private bool isDashing = false;
     
     private float activeMoveSpeed;
     
@@ -32,15 +33,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Movement(); 
-        RegenerateDash();
-
-        if (Input.GetKeyDown("space") && amountOfDashes > 0 && 
-            (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))) //space pressed and movement key pressed
+        if (canMove)
         {
-            StartCoroutine(dash());
-            nextRegenTime = Time.time + dashRegenLength;
+            Movement();
+
+            // space pressed and movement key pressed -> dash
+            if (Input.GetKeyDown("space") && amountOfDashes > 0 &&
+                (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))) 
+            {
+                StartCoroutine(dash());
+                nextRegenTime = Time.time + dashRegenLength;
+            }
         }
+
+        RegenerateDash();
     }
 
     void Movement()
@@ -54,11 +60,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Changes the movement speed of the player temporarily
+    /// and ignores certain collisions
+    /// </summary>
     IEnumerator dash()
     {
         activeMoveSpeed = dashSpeed;
         isDashing = true;
-        Physics2D.IgnoreLayerCollision(9, 10, true);
+        Physics2D.IgnoreLayerCollision(9, 10, true); // ignore projectiles and enemy collision layers
         amountOfDashes -= 1;
         healthBarUI.dashLerpTimer = 0f;
 
@@ -80,5 +90,15 @@ public class PlayerMovement : MonoBehaviour
                 amountOfDashes++;
             }
         }
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
     }
 }
