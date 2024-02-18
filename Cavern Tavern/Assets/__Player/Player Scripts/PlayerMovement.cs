@@ -100,5 +100,6 @@ public class PlayerMovement : MonoBehaviour
     public void DisableMovement()
     {
         canMove = false;
+        characterBody.velocity = new Vector2(0, 0);
     }
 }

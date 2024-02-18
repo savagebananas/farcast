@@ -27,32 +27,12 @@ public class InventoryUIController : MonoBehaviour
         InventoryHolder.OnDynamicInventoryDisplayDestroy -= HideAllInventory;
     }
 
-    void Update()
-    {
-        //Backpack();
-    }
-
-    void Backpack()
-    {
-        if (backpackUI.activeInHierarchy == false && Input.GetKeyDown(KeyCode.G)) //Opens Inventory UI
-        {
-            backpackUI.SetActive(true);
-            TimeManager.PauseGame();
-        }
-        else if (backpackUI.activeInHierarchy == true && Input.GetKeyDown(KeyCode.G)) //Closes Inventory UI
-        {
-            backpackUI.SetActive(false);
-            TimeManager.UnpauseGame();
-        }
-    }
-
     /// <summary>
     /// Displays Inventory UI
     /// </summary>
     public void DisplayBackpack()
     {
         backpackUI.SetActive(true);
-        TimeManager.PauseGame();
     }
 
     /// <summary>
@@ -61,7 +41,6 @@ public class InventoryUIController : MonoBehaviour
     public void HideBackpack()
     {
         backpackUI.SetActive(false);
-        TimeManager.UnpauseGame();
     }
 
     public void DisplayChestInventory(InventorySystem invToDisplay)
@@ -69,14 +48,12 @@ public class InventoryUIController : MonoBehaviour
         chestInventoryUI.SetActive(true);
         backpackUI.SetActive(true);
         chestInventoryPanel.RefreshDynamicInventory(invToDisplay);
-        TimeManager.PauseGame();
     }
 
     public void HideAllInventory(InventorySystem invToDisplay)
     {
         chestInventoryUI.SetActive(false);
         backpackUI.SetActive(false);
-        TimeManager.UnpauseGame();
     }
 
 

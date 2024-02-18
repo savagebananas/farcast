@@ -11,12 +11,14 @@ public class Interactor : MonoBehaviour
     public bool canExitInteraction;
 
     private InventoryUIController inventoryUIController;
+    private PlayerMovement playerMovement;
 
 
 
     private void Start()
     {
         inventoryUIController = GameObject.FindAnyObjectByType<Canvas>().GetComponentInChildren<InventoryUIController>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -42,6 +44,7 @@ public class Interactor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G) && !isInteracting && !openedInventory)
         {
             inventoryUIController.DisplayBackpack();
+            playerMovement.DisableMovement();
             isInteracting = true;
             openedInventory = true;
         }
@@ -50,6 +53,7 @@ public class Interactor : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.G) && isInteracting && openedInventory && canExitInteraction)
         {
             inventoryUIController.HideBackpack();
+            playerMovement.EnableMovement();
             isInteracting = false;
             openedInventory = false;
         }
@@ -60,6 +64,7 @@ public class Interactor : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && isInteracting == false) 
             {
                 StartInteraction(FindNearestInteractable().GetComponent<IInteractable>());
+                playerMovement.DisableMovement();
                 isInteracting = true;
             }
 
@@ -67,6 +72,7 @@ public class Interactor : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.E) && isInteracting && !openedInventory && canExitInteraction) 
             {
                 EndInteraction(FindNearestInteractable().GetComponent<IInteractable>());
+                playerMovement.EnableMovement();
                 isInteracting = false;
             }
         }

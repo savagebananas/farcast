@@ -17,7 +17,10 @@ public class InventoryMouseItemData : MonoBehaviour
         itemCount.text = "";
     }
 
-    public void UpdateMouseSlot(InventorySlot inventorySlot) //if has an item, follow mouse pointer
+    /// <summary>
+    /// Updates Mouse Inventory Slot UI
+    /// </summary>
+    public void UpdateMouseSlot(InventorySlot inventorySlot) 
     {
         assignedInventorySlot.AssignItem(inventorySlot);
         itemSprite.sprite = inventorySlot.ItemData.itemIcon;
@@ -37,6 +40,7 @@ public class InventoryMouseItemData : MonoBehaviour
         if (assignedInventorySlot.ItemData != null) //if mouse currently has item
         {
             transform.position = Input.mousePosition;
+
             if (Input.GetMouseButtonDown(0) && !IsPointerOverUIObject())
             {
                 ClearSlot();
