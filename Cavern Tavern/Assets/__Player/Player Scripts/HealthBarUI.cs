@@ -34,11 +34,15 @@ public class HealthBarUI : MonoBehaviour
         maxDashes = playerMovement.maxDashes;
         health = playerBase.health;
         maxHealth = playerBase.maxHealth;
+
+        //setting up dash stuff
         dashLerpTimer = 2*regenLength;
         frontDashbar1.enabled = true;
         frontDashbar2.enabled = true;
-        backDashbar1.enabled = false;
-        backDashbar2.enabled = false;
+        backDashbar1.enabled = true;
+        backDashbar2.enabled = true;
+        frontDashbar1.fillAmount = 1f;
+        frontDashbar2.fillAmount = 1f;
 
         //frontHealthbar = Canvas.
         //backHealthbar = GameObject.Find();
@@ -119,16 +123,12 @@ public class HealthBarUI : MonoBehaviour
             if (dashFill >= 1) {
                 backDashbar2.fillAmount = dashFill-1f;
                 if (!frontDashbar1.enabled)
-                backDashbar2.enabled = true;
-                backDashbar1.enabled = false;
                 frontDashbar1.enabled = true;
-                frontDashbar1.fillAmount = 1f;
             }
-            if (dashFill < 1) {
+            if (dashFill <= 1) {
                 backDashbar1.fillAmount =  dashFill;
                 if (frontDashbar2.enabled) {
                     frontDashbar2.enabled = false;
-
                 }
             }
 
@@ -136,8 +136,6 @@ public class HealthBarUI : MonoBehaviour
             dashFill = 2f;
             if (!frontDashbar2.enabled) {
                 frontDashbar2.enabled = true;
-                backDashbar2.enabled = false;
-                frontDashbar2.fillAmount = 1f;
             }
         }
     }
@@ -147,15 +145,12 @@ public class HealthBarUI : MonoBehaviour
         dashLerpTimer -= regenLength;
         if (numDashes == 1) {
             frontDashbar2.enabled= false;
-            backDashbar2.enabled = true;
             backDashbar2.fillAmount = 0f;
         }
         if (numDashes == 0) {
             frontDashbar1.enabled = false;
-            backDashbar1.enabled = true;
             backDashbar1.fillAmount = backDashbar2.fillAmount;
             backDashbar2.fillAmount = 0f;
-            backDashbar2.enabled = false;
         }
     }
 }
