@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float amountOfDashes;
     public float dashRegenLength;
     private float nextRegenTime;
-    private bool isDashing = false;
+    public bool isDashing = false;
     
     private float activeMoveSpeed;
     
