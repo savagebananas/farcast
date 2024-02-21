@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttackPlayer : State
 {
     private PlayerBase playerBase;
-    public EnemyBase enemyBase;
+    private EnemyBase enemyBase;
     public State followPlayer;
 
     private float attackDelay;

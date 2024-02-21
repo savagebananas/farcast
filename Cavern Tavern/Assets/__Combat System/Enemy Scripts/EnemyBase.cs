@@ -28,7 +28,7 @@ public class EnemyBase : MonoBehaviour
     public StateMachineManager stateMachineManager;
     public EnemyHurt enemyHurtState;
     
-    [Header("Knockback Values (for when player hits enemy)")]
+    [Header("Knockback Received")]
     [Space(5)]
     public float knockbackDuration; 
     public float knockbackDistance;
