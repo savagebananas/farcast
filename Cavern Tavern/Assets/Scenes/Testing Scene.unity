@@ -55515,6 +55515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fdd1ce76b00e1a4dace07af4289468d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemDropPrefab: {fileID: 1275311588216450507, guid: 780ecf69ea487074fab5030b5c0c8d36, type: 3}
   itemSprite: {fileID: 2076901611}
   itemCount: {fileID: 2066888106}
   assignedInventorySlot:
