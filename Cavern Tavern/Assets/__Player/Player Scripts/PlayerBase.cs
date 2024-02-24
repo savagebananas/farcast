@@ -12,6 +12,7 @@ public class PlayerBase : MonoBehaviour
     public float health;
     public float gold;
     public InventoryHolder playerInventory;
+    public static Transform playerTransform;
 
     [Header("Managers")]
     public AudioManager audioManager;
@@ -42,6 +43,8 @@ public class PlayerBase : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerTransform = transform;
+
         healthBarUI = GetComponent<HealthBarUI>();
         goldValueFrontend = GameObject.Find("Gold Value Text").GetComponent<TextMeshProUGUI>(); 
         

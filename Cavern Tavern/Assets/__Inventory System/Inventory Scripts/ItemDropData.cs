@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ItemDropData : MonoBehaviour
 {
-    public InventoryItemData item; //the actual item to pickup
+    public InventoryItemData item;
     public int amount;
+
+    public void SetData(InventoryItemData item, int amount)
+    {
+        this.item = item;
+        this.amount = amount;
+    }
 }
