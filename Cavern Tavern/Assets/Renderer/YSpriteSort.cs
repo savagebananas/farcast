@@ -8,7 +8,7 @@ Objects on a lower y-value will be in front (higher order in layer)
 Items that the player is holding will have the same order number as player but +1
 */
 
-public class SetOrderInLayer : MonoBehaviour
+public class YSpriteSort : MonoBehaviour
 {
     public Renderer renderer;
     public float offset;
