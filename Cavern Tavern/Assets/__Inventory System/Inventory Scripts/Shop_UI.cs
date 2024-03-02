@@ -72,6 +72,9 @@ public class Shop_UI : MonoBehaviour
     }
     
 
+    /// <summary>
+    /// Raises event for PlayerBase to listen
+    /// </summary>
     public void BuyCurrentItem()
     {
         onBuyItem.Raise(null, selectedItemData);

@@ -12,6 +12,7 @@ public class PlayerBase : MonoBehaviour
     public float health;
     public float gold;
     public InventoryHolder playerInventory;
+    public InventoryHolder playerHotbar;
     public static Transform playerTransform;
 
     [Header("Managers")]
@@ -110,7 +111,9 @@ public class PlayerBase : MonoBehaviour
             gold -= itemData.goldValue;
             // change frontend
             UpdateGoldFrontend();
-            playerInventory.InventorySystem.AddToInventory(itemData, 1);
+            if (playerHotbar.InventorySystem.AddToInventory(itemData, 1)) { } //if hotbar has space, add to hotbar
+            else playerInventory.InventorySystem.AddToInventory(itemData, 1); //else add to bag
+            // playerInventory.InventorySystem.AddToInventory(itemData, 1);
             audioManager.PlaySound("moneySFX");
         }
         else

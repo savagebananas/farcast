@@ -19,15 +19,18 @@ public class PlayerPickupItem : MonoBehaviour
         if (FindNearestItem() != null) Debug.DrawLine(transform.position, FindNearestItem().transform.position, Color.red);
     }
 
-    void PickupNearestItem() //adds nearest item into inventory and destroys the physical one
+    /// <summary>
+    /// Adds nearest item into inventory and destroys the physical one
+    /// </summary>
+    void PickupNearestItem() 
     {
         if(itemGettingPickedUp = FindNearestItem())
         {
-            var itemData = itemGettingPickedUp.GetComponentInChildren<ItemDropData>();
-            if (playerHotbar.InventorySystem.AddToInventory(itemData.item, itemData.amount)){} //if hotbar has space, add to hotbar
-            else playerInventory.InventorySystem.AddToInventory(itemData.item, itemData.amount); //else add to bag
+            var itemDropData = itemGettingPickedUp.GetComponentInChildren<ItemDropData>();
+            if (playerHotbar.InventorySystem.AddToInventory(itemDropData.item, itemDropData.amount)){} //if hotbar has space, add to hotbar
+            else playerInventory.InventorySystem.AddToInventory(itemDropData.item, itemDropData.amount); //else add to bag
             
-            Destroy(itemData);
+            Destroy(itemDropData);
             StartCoroutine(DestroyItemVisuals());
         }
     }
