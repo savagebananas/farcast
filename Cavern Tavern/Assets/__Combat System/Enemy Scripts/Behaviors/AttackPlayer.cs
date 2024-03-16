@@ -22,6 +22,7 @@ public class AttackPlayer : State
     public override void OnStart()
     {
         playerBase = GameObject.Find("Player").GetComponent<PlayerBase>();
+        enemyBase = this.GetComponentInParent<EnemyBase>();
 
         attackDelay = enemyBase.attackSpeed;
         damage = enemyBase.damage;
@@ -33,7 +34,7 @@ public class AttackPlayer : State
 
     public override void OnUpdate()
     {
-        enemyToPlayerDistance = enemyBase.enemydDistanceFromPlayer();
+        enemyToPlayerDistance = enemyBase.enemyDistanceFromPlayer();
         playerIsHurt = playerBase.isHurt;
 
         facePlayer();

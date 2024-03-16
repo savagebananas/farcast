@@ -38,7 +38,7 @@ public class EnemyPatrol : State
 
     public override void OnUpdate()
     {
-        enemyDistanceToPlayer = enemyBase.enemydDistanceFromPlayer();
+        enemyDistanceToPlayer = enemyBase.enemyDistanceFromPlayer();
 
         if (enemyDistanceToPlayer >= alertRange) //enemy doesn't detect player
         {

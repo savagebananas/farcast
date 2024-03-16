@@ -56,7 +56,7 @@ public class EnemyHurt : State
     public override void OnUpdate()
     {
         //To Update Distance From Player and Stop Enemy From Attacking Outside Of Range
-        if (meleeAttackState != null) meleeAttackState.enemyToPlayerDistance = enemyBase.enemydDistanceFromPlayer(); 
+        if (meleeAttackState != null) meleeAttackState.enemyToPlayerDistance = enemyBase.enemyDistanceFromPlayer(); 
     }
     public override void OnLateUpdate(){}
 

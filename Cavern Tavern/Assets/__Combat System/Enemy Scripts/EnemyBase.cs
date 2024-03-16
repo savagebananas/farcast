@@ -39,7 +39,7 @@ public class EnemyBase : MonoBehaviour
         player = GameObject.Find("Player");
     }
 
-    public float enemydDistanceFromPlayer()
+    public float enemyDistanceFromPlayer()
     {
         float differenceX = player.transform.position.x - transform.position.x;
         float differenceY = player.transform.position.y - transform.position.y;

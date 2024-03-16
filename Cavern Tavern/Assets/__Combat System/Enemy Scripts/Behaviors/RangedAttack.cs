@@ -43,7 +43,7 @@ public class RangedAttack : State
             timeBtwShots -= Time.deltaTime;
         }
 
-        if (enemyBase.enemydDistanceFromPlayer() > attackRange)
+        if (enemyBase.enemyDistanceFromPlayer() > attackRange)
         {
             stateMachineManager.setNewState(followPlayer);
         }

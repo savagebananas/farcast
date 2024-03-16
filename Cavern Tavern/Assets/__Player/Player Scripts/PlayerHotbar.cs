@@ -10,13 +10,14 @@ public class PlayerHotbar : MonoBehaviour
 
     public GameObject currentItem;
     public List<InventorySlot> hotbarSlots;
+    public InventorySlot equippedItemSlot;
 
     //Item Position References
     [SerializeField] private GameObject swordWeaponReference;
     [SerializeField] private GameObject rangedWeaponReference;
     [SerializeField] private GameObject consumableReference;
 
-    private int lastKeyPressed;
+    public int lastKeyPressed;
     private int equipedItemNumber;
 
     private void Start()
@@ -85,11 +86,13 @@ public class PlayerHotbar : MonoBehaviour
         if (currentItem != null) //Item already in hand
         {
             Destroy(currentItem); //destroy previous item
+            equippedItemSlot = hotbarSlots[slotNum];
             InstantiateItem(slotNum);
         }
         else
         {
             InstantiateItem(slotNum);
+            equippedItemSlot = hotbarSlots[slotNum];
         }
 
     }

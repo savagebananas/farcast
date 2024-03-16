@@ -18,7 +18,7 @@ public class IdleState : State
 
     public override void OnUpdate()
     {
-        enemyDistanceToPlayer = enemyBase.enemydDistanceFromPlayer();
+        enemyDistanceToPlayer = enemyBase.enemyDistanceFromPlayer();
 
         if (enemyDistanceToPlayer <= alertRange) //player close to enemy
         {

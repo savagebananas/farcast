@@ -19,7 +19,7 @@ public class HealthConsumable : HotbarItem
     public void Start()
     {
         player = GameObject.Find("Player");
-        inventorySlot = player.GetComponent<PlayerHotbar>().hotbarSlots[hotbarIndex];
+        inventorySlot = player.GetComponent<PlayerHotbar>().equippedItemSlot;
         referenceAnimator = GameObject.Find("Consumable Position Reference").GetComponent<Animator>();
     }
 
@@ -36,11 +36,11 @@ public class HealthConsumable : HotbarItem
     public override void UseItem()
     {
             StartCoroutine(ConsumeItem());
-            nextCooldownEndTime = Time.time + cooldownTime;
     }
 
     IEnumerator ConsumeItem()
     {
+        nextCooldownEndTime = Time.time + cooldownTime;
         referenceAnimator.SetTrigger("ConsumeItem");//play animation first
         yield return new WaitForSeconds(0.2f); //wait for animation to end
         player.GetComponent<PlayerBase>().RestoreHealth(healthAmount); //Add health amount to player health

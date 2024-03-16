@@ -69,6 +69,11 @@ public class InventorySlot
     public void RemoveFromStack(int amount)
     {
         stackSize -= amount;
+        if (stackSize <= 0)
+        {
+            Debug.Log("Clear slot");
+            ClearSlot();
+        }
     }
 
     public bool SplitStack(out InventorySlot splitStack)
